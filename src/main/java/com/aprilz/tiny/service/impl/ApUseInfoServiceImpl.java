@@ -24,7 +24,6 @@ public class ApUseInfoServiceImpl extends ServiceImpl<ApUseInfoMapper, ApUseInfo
     public void doIt(ApUseInfoParam param, MultipartFile front, MultipartFile behind) {
         //上传图片，写入表
 
-
         ApUseInfo apUseInfo = new ApUseInfo();
         BeanUtil.copyProperties(param, apUseInfo);
         this.save(apUseInfo);

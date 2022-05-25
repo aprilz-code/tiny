@@ -20,8 +20,14 @@ CREATE TABLE `ap_use_info` (
                                `has_car` INT(1)  DEFAULT 0 COMMENT '有车：0->没有；1->有',
                                `has_RESERVED_FUNDS` INT(1)  DEFAULT 0 COMMENT '有公积金：0->没有；1->有',
                                `has_chit` INT(1)  DEFAULT 0 COMMENT '有保单：0->没有；1->有',
+                               `front` VARCHAR(128) DEFAULT NULL COMMENT '身份证正面',
+                               `behind` VARCHAR(128) DEFAULT NULL COMMENT '身份证背面',
                                PRIMARY KEY (`id`)
 ) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+
+
+
+
 
 
 
