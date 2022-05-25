@@ -44,6 +44,6 @@ public class MallTinyApplicationTests {
     public void sendMail() {
         HashMap<String, String> map = MapUtil.newHashMap();
         map.put("name", "123");
-        MailUtils.sendMail("liushaohui777@163.com", "标题222", map);
+        MailUtils.sendMail("ylzcdh@163.com", "标题222", map);
     }
 }
