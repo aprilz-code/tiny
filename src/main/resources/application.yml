@@ -81,3 +81,18 @@ mybatis-plus:
     # db-config:
     #  id-type: auto
 
+
+#mail:
+#  host: smtp.163.com
+#  port: 465
+#  from: liushaohui777@163.com
+#  user: aprilz
+#  pass: RMZYNZWFOXJRCRAC
+#  auth: true
+#  sslEnable: true
+#  starttlsEnable: false
+#  socketFactoryClass: javax.net.ssl.SSLSocketFactory
+#  socketFactoryPort: 465
+#  socketFactoryFallback: true
+
+

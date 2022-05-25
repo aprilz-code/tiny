@@ -1,13 +1,16 @@
 package com.aprilz.tiny;
 
+import cn.hutool.core.map.MapUtil;
 import com.aprilz.tiny.entity.FileInfo;
 import com.aprilz.tiny.mapper.FileInfoMapper;
 import com.aprilz.tiny.service.IFileInfoService;
+import com.aprilz.tiny.service.impl.ApCodeServiceImpl;
+import com.aprilz.tiny.utils.MailUtils;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 
 @SpringBootTest
 public class MallTinyApplicationTests {
@@ -15,6 +18,9 @@ public class MallTinyApplicationTests {
     @Resource
     IFileInfoService fileInfoService;
 
+
+    @Resource
+    ApCodeServiceImpl apCodeService;
 
     @Resource
     FileInfoMapper fileInfoMapper;
@@ -27,4 +33,17 @@ public class MallTinyApplicationTests {
         System.out.println(count);
     }
 
+
+    @Test
+    public void test2() {
+        apCodeService.newCode();
+    }
+
+
+    @Test
+    public void sendMail() {
+        HashMap<String, String> map = MapUtil.newHashMap();
+        map.put("name", "123");
+        MailUtils.sendMail("liushaohui777@163.com", "标题222", map);
+    }
 }

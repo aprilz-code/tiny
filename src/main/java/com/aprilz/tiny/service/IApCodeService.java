@@ -14,4 +14,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface IApCodeService extends IService<ApCode> {
 
     boolean verification(String token);
+
+    /**
+     * @author liushaohui
+     * @description 生成新的二维码
+     * @since  2022/5/25
+      * @param
+     * @return
+     **/
+    boolean newCode();
 }
