@@ -2,7 +2,6 @@ server:
   port: 11000
 
 spring:
-
   application:
     name: aprilz-freemark-tiny
     #数据库------------------------------------------------------
@@ -81,6 +80,6 @@ mybatis-plus:
     # db-config:
     #  id-type: auto
 
-filePath: H:\data
+filePath: var/xdData
 
 
