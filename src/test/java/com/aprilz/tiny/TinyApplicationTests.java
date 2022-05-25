@@ -13,7 +13,7 @@ import javax.annotation.Resource;
 import java.util.HashMap;
 
 @SpringBootTest
-public class MallTinyApplicationTests {
+public class TinyApplicationTests {
 
     @Resource
     IFileInfoService fileInfoService;
@@ -44,4 +44,6 @@ public class MallTinyApplicationTests {
         map.put("name", "123");
         MailUtils.sendMail("ylzcdh@163.com", "测试邮件2", map);
     }
+
+
 }

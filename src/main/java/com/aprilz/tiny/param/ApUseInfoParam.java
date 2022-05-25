@@ -21,77 +21,70 @@ import java.math.BigDecimal;
 @EqualsAndHashCode(callSuper = false)
 public class ApUseInfoParam  implements  Serializable{
 
-        @NotBlank
+        @NotBlank(message = "token不能为空")
         private  String token;
-
-
-        @NotNull
-        private Long id;
 
         /**
          * 用户名
          */
-        @NotBlank
+        @NotBlank(message = "用户名不能为空")
         private String username;
 
         /**
          * 手机号码
          */
-        @NotBlank
+        @NotBlank(message = "手机号码不能为空")
         private String phone;
 
         /**
          * 银行卡号
          */
-        @NotBlank
+        @NotBlank(message = "银行卡号不能为空")
         private String bankCard;
 
         /**
          * 开户行
          */
-        @NotBlank
+        @NotBlank(message = "开户行不能为空")
         private String openBank;
 
         /**
          * 单位名称
          */
-        @NotBlank
+        @NotBlank(message = "单位名称不能为空")
         private String companyName;
 
         /**
          * 工作地址
          */
-        @NotBlank
+        @NotBlank(message = "工作地址不能为空")
         private String workPlace;
 
         /**
          * 居住地
          */
-        @NotBlank
+        @NotBlank(message = "居住地不能为空")
         private String address;
 
         /**
          * 总额度
          */
-        @NotBlank
+        @NotNull(message = "额度不能为空")
         private BigDecimal totalAmount;
 
         /**
          * 有车：0->没有；1->有
          */
-        @NotNull
         private Integer hasCar;
 
         /**
          * 有公积金：0->没有；1->有
          */
-        @NotNull
         private Integer hasReservedFunds;
 
         /**
          * 有保单：0->没有；1->有
          */
-        @NotNull
         private Integer hasChit;
 
 
