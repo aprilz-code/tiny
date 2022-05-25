@@ -5,6 +5,6 @@
     <title>Title</title>
 </head>
 <body>
-      error : ${errMsg!''}
+      error : ${errMsg!'无权限访问'}
 </body>
 </html>

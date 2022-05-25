@@ -5,13 +5,13 @@ import com.aprilz.tiny.entity.ApUseInfo;
 import com.aprilz.tiny.mapper.ApUseInfoMapper;
 import com.aprilz.tiny.param.ApUseInfoParam;
 import com.aprilz.tiny.service.IApUseInfoService;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -40,7 +40,17 @@ public class ApUseInfoServiceImpl extends ServiceImpl<ApUseInfoMapper, ApUseInfo
         BeanUtil.copyProperties(param, apUseInfo);
         apUseInfo.setFront(uploadFile(path, front));
         apUseInfo.setBehind(uploadFile(path, behind));
-        this.save(apUseInfo);
+        LambdaQueryWrapper<ApUseInfo> lw = new LambdaQueryWrapper<ApUseInfo>();
+        lw.eq(ApUseInfo::getPhone, apUseInfo.getPhone());
+        int count = this.count(lw);
+        if (count > 0) {
+            LambdaQueryWrapper<ApUseInfo> wrapper = new LambdaQueryWrapper<>();
+            wrapper.eq(ApUseInfo::getPhone, apUseInfo.getPhone()); // 设置查询条件
+            this.update(apUseInfo, wrapper);
+        } else {
+            this.save(apUseInfo);
+        }
+
 
     }
 

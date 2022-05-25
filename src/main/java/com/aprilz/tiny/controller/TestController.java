@@ -1,13 +1,16 @@
 package com.aprilz.tiny.controller;
 
+import com.aprilz.tiny.utils.IpUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -25,8 +28,17 @@ public class TestController {
 
 
     @GetMapping("/test")
-    public String getInsertUser(){
+    public String test(){
         return "test";
+    }
+
+
+    @GetMapping("/getIp")
+    @ResponseBody
+    public String getIp(HttpServletRequest request) throws Exception {
+
+        System.out.println(IpUtils.getOutIPV4());
+        return IpUtils.getIpAddr(request);
     }
 
 

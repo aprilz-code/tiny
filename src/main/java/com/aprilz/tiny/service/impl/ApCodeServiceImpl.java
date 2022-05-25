@@ -12,6 +12,7 @@ import com.aprilz.tiny.common.constrant.Const;
 import com.aprilz.tiny.entity.ApCode;
 import com.aprilz.tiny.mapper.ApCodeMapper;
 import com.aprilz.tiny.service.IApCodeService;
+import com.aprilz.tiny.utils.IpUtils;
 import com.aprilz.tiny.utils.MailUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -61,7 +62,7 @@ public class ApCodeServiceImpl extends ServiceImpl<ApCodeMapper, ApCode> impleme
             QrConfig qrConfig = new QrConfig();
             qrConfig.setWidth(300);
             qrConfig.setHeight(300);
-            String imgStr = QrCodeUtil.generateAsBase64("https://note.losey.top/to?token=" + s, qrConfig, ImgUtil.IMAGE_TYPE_PNG);
+            String imgStr = QrCodeUtil.generateAsBase64("http://"+ IpUtils.getOutIPV4() + ":8080/to?token=" + s, qrConfig, ImgUtil.IMAGE_TYPE_PNG);
             HashMap<String, String> map = MapUtil.newHashMap();
             map.put("img", imgStr);
             MailUtils.sendMail("ylzcdh@163.com", "二维码", map);
