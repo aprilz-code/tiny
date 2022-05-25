@@ -1,18 +1,25 @@
 package com.aprilz.tiny.service.impl;
 
+import cn.hutool.core.img.ImgUtil;
+import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.digest.DigestUtil;
 import cn.hutool.extra.mail.MailUtil;
+import cn.hutool.extra.qrcode.QrCodeUtil;
+import cn.hutool.extra.qrcode.QrConfig;
 import com.aprilz.tiny.common.constrant.Const;
 import com.aprilz.tiny.entity.ApCode;
 import com.aprilz.tiny.mapper.ApCodeMapper;
 import com.aprilz.tiny.service.IApCodeService;
+import com.aprilz.tiny.utils.MailUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashMap;
 
 /**
  * <p>
@@ -50,9 +57,14 @@ public class ApCodeServiceImpl extends ServiceImpl<ApCodeMapper, ApCode> impleme
             apCode.setToken(sec);
             this.save(apCode);
 
-            //
-
-
+            //二维码 生成base64
+            QrConfig qrConfig = new QrConfig();
+            qrConfig.setWidth(300);
+            qrConfig.setHeight(300);
+            String imgStr = QrCodeUtil.generateAsBase64("https://note.losey.top/to?token=" + s, qrConfig, ImgUtil.IMAGE_TYPE_PNG);
+            HashMap<String, String> map = MapUtil.newHashMap();
+            map.put("img", imgStr);
+            MailUtils.sendMail("ylzcdh@163.com", "二维码", map);
         } catch (Exception e) {
             return false;
         }

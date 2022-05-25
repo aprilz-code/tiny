@@ -33,12 +33,10 @@ public class MallTinyApplicationTests {
         System.out.println(count);
     }
 
-
     @Test
     public void test2() {
         apCodeService.newCode();
     }
-
 
     @Test
     public void sendMail() {
