@@ -31,12 +31,13 @@ public class WriteController {
     @Autowired
     private IApUseInfoService apUseInfoService;
 
-    @GetMapping({"/to", "/"})
+    @GetMapping( "/")
     public ModelAndView index(@RequestParam("token") String token) {
         ModelAndView model = new ModelAndView();
-        boolean bool = apCodeService.verification(token);
+        //boolean bool = apCodeService.verification(token);
+        boolean bool = true;
         if (bool) {
-            model.setViewName("writePage");
+            model.setViewName("form");
         } else {
             model.addObject("errMsg", "无权访问");
             model.setViewName("error");
