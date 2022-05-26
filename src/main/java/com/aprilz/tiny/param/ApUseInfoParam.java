@@ -87,6 +87,9 @@ public class ApUseInfoParam  implements  Serializable{
          */
         private Integer hasChit;
 
-
+        /**
+         *  关联人ID
+         */
+        private String relationId;
 
 }
