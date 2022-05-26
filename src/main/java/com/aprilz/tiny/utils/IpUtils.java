@@ -1,5 +1,8 @@
 package com.aprilz.tiny.utils;
 
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.http.HttpUtil;
+import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
@@ -415,5 +418,15 @@ public class IpUtils {
         }
         return ip;
     }
+
+    public static String getOutIp() {
+        String apiUrl = "http://pv.sohu.com/cityjson?ie=utf-8";
+        String apiResult = StrUtil.subBetween(HttpUtil.get(apiUrl), "=", ";");
+        log.info("apiResult=" + apiResult);
+        String outIp = JSONUtil.getByPath(JSONUtil.parse(apiResult), "$.cip").toString();
+        log.info("ip=" + outIp);
+        return outIp;
+    }
+
 
 }

@@ -38,7 +38,7 @@ public class TestController {
     public String getIp(HttpServletRequest request) throws Exception {
 
         System.out.println(IpUtils.getOutIPV4());
-        return IpUtils.getIpAddr(request);
+        return IpUtils.getOutIp();
     }
 
 
