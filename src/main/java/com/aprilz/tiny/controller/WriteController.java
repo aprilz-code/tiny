@@ -1,15 +1,16 @@
 package com.aprilz.tiny.controller;
 
-import cn.hutool.core.bean.BeanUtil;
 import com.aprilz.tiny.common.api.CommonResult;
-import com.aprilz.tiny.entity.ApUseInfo;
 import com.aprilz.tiny.param.ApUseInfoParam;
 import com.aprilz.tiny.service.IApCodeService;
 import com.aprilz.tiny.service.IApUseInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -42,6 +43,15 @@ public class WriteController {
         return model;
     }
 
+
+    @GetMapping("/newCode")
+    @ResponseBody
+    public String newCode() {
+        apCodeService.newCode();
+        return "success";
+    }
+
+
     /**
      * @param param
      * @return com.aprilz.tiny.common.api.CommonResult
@@ -58,7 +68,7 @@ public class WriteController {
         if (!bool) {
             return CommonResult.forbidden(null);
         }
-        apUseInfoService.doIt(param,front,behind);
+        apUseInfoService.doIt(param, front, behind);
 
         return CommonResult.success(null);
     }

@@ -1,11 +1,10 @@
 package com.aprilz.tiny.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.img.ImgUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.RandomUtil;
-import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.digest.DigestUtil;
-import cn.hutool.extra.mail.MailUtil;
 import cn.hutool.extra.qrcode.QrCodeUtil;
 import cn.hutool.extra.qrcode.QrConfig;
 import com.aprilz.tiny.common.constrant.Const;
@@ -18,7 +17,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 
@@ -33,7 +31,7 @@ import java.util.HashMap;
 @Service
 public class ApCodeServiceImpl extends ServiceImpl<ApCodeMapper, ApCode> implements IApCodeService {
 
-//54661
+    //54661
     @Override
     public boolean verification(String token) {
         LambdaQueryWrapper<ApCode> qw = new LambdaQueryWrapper<ApCode>();
@@ -48,7 +46,7 @@ public class ApCodeServiceImpl extends ServiceImpl<ApCodeMapper, ApCode> impleme
 
     @Override
     public boolean newCode() {
-        QueryWrapper qw ;
+        QueryWrapper qw;
         try {
             qw = new QueryWrapper();
             this.remove(qw);
@@ -62,13 +60,14 @@ public class ApCodeServiceImpl extends ServiceImpl<ApCodeMapper, ApCode> impleme
             QrConfig qrConfig = new QrConfig();
             qrConfig.setWidth(300);
             qrConfig.setHeight(300);
-            String imgStr = QrCodeUtil.generateAsBase64("http://"+ IpUtils.getOutIPV4() + ":11000?token=" + s, qrConfig, ImgUtil.IMAGE_TYPE_PNG);
+            String imgStr = QrCodeUtil.generateAsBase64("http://" + IpUtils.getOutIp() + ":11000?token=" + s, qrConfig, ImgUtil.IMAGE_TYPE_PNG);
             HashMap<String, String> map = MapUtil.newHashMap();
             map.put("img", imgStr);
-            MailUtils.sendMail("1870103727@qq.com", "二维码", map);
+            MailUtils.sendMail(CollUtil.newArrayList("1870103727@qq.com,ylzcdh@163.com"), "二维码", map);
         } catch (Exception e) {
             return false;
         }
         return true;
     }
+
 }

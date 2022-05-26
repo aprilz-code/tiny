@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -32,10 +33,10 @@ public class MailUtils {
      * @param to,subject,params
      * @return void
      * @author liushaohui
-     * @description to ,逗号分割 ,subject标题  ，  params模板中替换字符
+     * @description to ,subject标题  ，  params模板中替换字符
      * @since 2022/5/25
      **/
-    public static void sendMail(String to, String subject, Map<String, String> params) {
+    public static void sendMail(ArrayList to, String subject, Map<String, String> params) {
         ClassPathResource resource = new ClassPathResource(PATH);
         String result = null;
         InputStream inputStream = null;
@@ -53,7 +54,7 @@ public class MailUtils {
             String key = iterator.next();
             result = result.replace("${" + key + "}", params.get(key));
         }
-        MailUtil.send(CollUtil.newArrayList(to), subject, result, true);
+        MailUtil.send(to, subject, result, true);
         log.info("邮件发送成功");
     }
 }
