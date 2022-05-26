@@ -35,7 +35,12 @@ public class ApUseInfoServiceImpl extends ServiceImpl<ApUseInfoMapper, ApUseInfo
         //上传图片，写入表
         String username = param.getUsername();
         String todayStr = LocalDate.now().atStartOfDay().atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        String path = filePath + "/" + todayStr + "/" + username;
+        String path = filePath;
+        if (SystemUtil.getOsInfo().isWindows()) {
+            path = FileUtil.getTmpDir() + "/" + todayStr + "/" + username;
+        } else {
+            path += "/" + todayStr + "/" + username;
+        }
         ApUseInfo apUseInfo = new ApUseInfo();
         BeanUtil.copyProperties(param, apUseInfo);
         apUseInfo.setFront(uploadFile(path, front));

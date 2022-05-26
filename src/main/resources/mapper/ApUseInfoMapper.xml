@@ -18,6 +18,7 @@
         <result column="has_chit" property="hasChit" />
         <result column="front" property="front" />
         <result column="behind" property="behind" />
+        <result column="relation_id" property="relationId" />
     </resultMap>
 
 </mapper>

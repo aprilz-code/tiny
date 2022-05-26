@@ -99,6 +99,11 @@ public class ApUseInfo extends Model<ApUseInfo> {
      */
     private String behind;
 
+    /**
+     *  关联人ID
+     */
+    private String relationId;
+
 
     @Override
     protected Serializable pkVal() {
