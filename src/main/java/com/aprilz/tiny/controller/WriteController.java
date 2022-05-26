@@ -4,6 +4,7 @@ import com.aprilz.tiny.common.api.CommonResult;
 import com.aprilz.tiny.param.ApUseInfoParam;
 import com.aprilz.tiny.service.IApCodeService;
 import com.aprilz.tiny.service.IApUseInfoService;
+import com.aprilz.tiny.utils.CheckUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -64,6 +65,11 @@ public class WriteController {
     public CommonResult doIt(@Valid ApUseInfoParam param, @RequestParam("front") MultipartFile front, @RequestParam("behind") MultipartFile behind) {
         Assert.notNull(front, "身份证正面不能为空");
         Assert.notNull(behind, "身份证背面不能为空");
+        Boolean isMobile = CheckUtils.checkMobileNumber(param.getPhone());
+        if(!isMobile){
+            return CommonResult.failed("请输入合法的手机号");
+        }
+
         boolean bool = apCodeService.verification(param.getToken());
         if (!bool) {
             return CommonResult.forbidden(null);
