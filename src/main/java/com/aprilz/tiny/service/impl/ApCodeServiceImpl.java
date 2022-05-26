@@ -62,10 +62,10 @@ public class ApCodeServiceImpl extends ServiceImpl<ApCodeMapper, ApCode> impleme
             QrConfig qrConfig = new QrConfig();
             qrConfig.setWidth(300);
             qrConfig.setHeight(300);
-            String imgStr = QrCodeUtil.generateAsBase64("http://"+ IpUtils.getOutIPV4() + ":8080/to?token=" + s, qrConfig, ImgUtil.IMAGE_TYPE_PNG);
+            String imgStr = QrCodeUtil.generateAsBase64("http://"+ IpUtils.getOutIPV4() + ":11000?token=" + s, qrConfig, ImgUtil.IMAGE_TYPE_PNG);
             HashMap<String, String> map = MapUtil.newHashMap();
             map.put("img", imgStr);
-            MailUtils.sendMail("ylzcdh@163.com", "二维码", map);
+            MailUtils.sendMail("1870103727@qq.com", "二维码", map);
         } catch (Exception e) {
             return false;
         }
