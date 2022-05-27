@@ -69,7 +69,7 @@ public class ApUseInfoParam  implements  Serializable{
         /**
          * 总额度
          */
-        @NotNull(message = "额度不能为空")
+
         private BigDecimal totalAmount;
 
         /**
@@ -90,6 +90,6 @@ public class ApUseInfoParam  implements  Serializable{
         /**
          *  关联人ID
          */
-        private String relationId;
+        private Long relationId;
 
 }

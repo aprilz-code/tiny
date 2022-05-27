@@ -142,7 +142,7 @@
       <div class="top">
          <div class="user-info">
             <img src="../imgs/head.png" alt="">
-            <span>工藤新一</span>
+            <span>${username!}</span>
          </div>
       </div>
       <section>
@@ -159,7 +159,7 @@
                   <div class="box">
                       <div class="wrap">
                         <div class="quota_title">初审额度</div>
-                        <h2 class="quota_value">372,400.00</h2>
+                        <h2 class="quota_value">${totalAmount!}</h2>
                         <div class="rate_title">初审年利率</div>
                         <h2 class="rate_value">*</h2>
                       </div>
@@ -223,7 +223,7 @@
          },
          methods:{
             to(){
-               window.location.href='form.html';
+               window.location.href='/form?token=${token!}&relationId=${relationId!}';
             }
          }
       })

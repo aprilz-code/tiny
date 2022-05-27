@@ -15,5 +15,5 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface IApUseInfoService extends IService<ApUseInfo> {
 
-    void doIt(ApUseInfoParam param, MultipartFile front, MultipartFile behind);
+    Long doIt(ApUseInfoParam param, MultipartFile front, MultipartFile behind);
 }

@@ -102,7 +102,7 @@ public class ApUseInfo extends Model<ApUseInfo> {
     /**
      *  关联人ID
      */
-    private String relationId;
+    private Long relationId;
 
 
     @Override

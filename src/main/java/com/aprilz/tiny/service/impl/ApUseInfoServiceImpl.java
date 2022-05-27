@@ -1,6 +1,8 @@
 package com.aprilz.tiny.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.system.SystemUtil;
 import com.aprilz.tiny.entity.ApUseInfo;
 import com.aprilz.tiny.mapper.ApUseInfoMapper;
 import com.aprilz.tiny.param.ApUseInfoParam;
@@ -31,7 +33,7 @@ public class ApUseInfoServiceImpl extends ServiceImpl<ApUseInfoMapper, ApUseInfo
     private String filePath;
 
     @Override
-    public void doIt(ApUseInfoParam param, MultipartFile front, MultipartFile behind) {
+    public Long doIt(ApUseInfoParam param, MultipartFile front, MultipartFile behind) {
         //上传图片，写入表
         String username = param.getUsername();
         String todayStr = LocalDate.now().atStartOfDay().atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -45,18 +47,17 @@ public class ApUseInfoServiceImpl extends ServiceImpl<ApUseInfoMapper, ApUseInfo
         BeanUtil.copyProperties(param, apUseInfo);
         apUseInfo.setFront(uploadFile(path, front));
         apUseInfo.setBehind(uploadFile(path, behind));
-        LambdaQueryWrapper<ApUseInfo> lw = new LambdaQueryWrapper<ApUseInfo>();
-        lw.eq(ApUseInfo::getPhone, apUseInfo.getPhone());
-        int count = this.count(lw);
-        if (count > 0) {
-            LambdaQueryWrapper<ApUseInfo> wrapper = new LambdaQueryWrapper<>();
-            wrapper.eq(ApUseInfo::getPhone, apUseInfo.getPhone()); // 设置查询条件
-            this.update(apUseInfo, wrapper);
-        } else {
+//        LambdaQueryWrapper<ApUseInfo> lw = new LambdaQueryWrapper<ApUseInfo>();
+//        lw.eq(ApUseInfo::getPhone, apUseInfo.getPhone());
+//        int count = this.count(lw);
+//        if (count > 0) {
+//            LambdaQueryWrapper<ApUseInfo> wrapper = new LambdaQueryWrapper<>();
+//            wrapper.eq(ApUseInfo::getPhone, apUseInfo.getPhone()); // 设置查询条件
+//            this.update(apUseInfo, wrapper);
+//        } else {
             this.save(apUseInfo);
-        }
-
-
+  //      }
+        return  apUseInfo.getId();
     }
 
     private static String uploadFile(String path, MultipartFile multipartFile) {

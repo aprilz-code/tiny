@@ -16,6 +16,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
+import java.net.URLDecoder;
+import java.util.Objects;
 
 /**
  * @description: 二维码
@@ -31,17 +35,37 @@ public class WriteController {
     @Autowired
     private IApUseInfoService apUseInfoService;
 
-    @GetMapping( "/")
-    public ModelAndView index(@RequestParam("token") String token) {
+    @GetMapping({"/","/form"})
+    public ModelAndView index(@RequestParam("token") String token,@RequestParam(value = "relationId",required = false) Long relationId) {
         ModelAndView model = new ModelAndView();
-        //boolean bool = apCodeService.verification(token);
-        boolean bool = true;
+        boolean bool = apCodeService.verification(token);
         if (bool) {
+            model.addObject("token", token);
+            model.addObject("relationId", relationId);
             model.setViewName("form");
         } else {
             model.addObject("errMsg", "无权访问");
             model.setViewName("error");
         }
+        return model;
+    }
+
+    @GetMapping("/home")
+    public ModelAndView home(@RequestParam("username") String username,@RequestParam("totalAmount") BigDecimal totalAmount,@RequestParam("token") String token,@RequestParam("relationId") Long relationId) throws UnsupportedEncodingException {
+        ModelAndView model = new ModelAndView();
+        model.addObject("username", URLDecoder.decode(username, "UTF-8"));
+        model.addObject("totalAmount", totalAmount);
+        model.addObject("token", token);
+        model.addObject("relationId", relationId);
+        model.setViewName("home");
+        return model;
+    }
+
+    @GetMapping("/result")
+    public ModelAndView result() {
+        ModelAndView model = new ModelAndView();
+
+        model.setViewName("result");
         return model;
     }
 
@@ -67,17 +91,23 @@ public class WriteController {
         Assert.notNull(front, "身份证正面不能为空");
         Assert.notNull(behind, "身份证背面不能为空");
         Boolean isMobile = CheckUtils.checkMobileNumber(param.getPhone());
-        if(!isMobile){
-            return CommonResult.failed("请输入合法的手机号");
-        }
+         Assert.isTrue(isMobile,"请输入合法的手机号");
+         if(Objects.isNull(param.getRelationId())){
+             Assert.notNull(param.getTotalAmount(), "额度不能为空");
+         }
 
         boolean bool = apCodeService.verification(param.getToken());
-        if (!bool) {
-            return CommonResult.forbidden(null);
+        Assert.isTrue(bool,"无权访问");
+        Long relationId = apUseInfoService.doIt(param, front, behind);
+        ApUseInfoParam data = new ApUseInfoParam();
+        data.setUsername(param.getUsername());
+        data.setTotalAmount(param.getTotalAmount());
+        //代表第一次进来
+        if(Objects.isNull(param.getRelationId())){
+            data.setRelationId(relationId);
         }
-        apUseInfoService.doIt(param, front, behind);
-
-        return CommonResult.success(null);
+        data.setToken(param.getToken());
+        return CommonResult.success(data);
     }
 
 }

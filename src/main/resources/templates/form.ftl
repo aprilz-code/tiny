@@ -8,6 +8,147 @@
    <title>填写信息</title>
    <link rel="stylesheet" href="../css/icon/iconfont.css">
    <script src="../js/jquery-3.6.0.min.js"></script>
+   <script type="text/javascript">
+      $(function (){
+         $('#load').css("display","none");
+         $('#tip').css("display","none");
+
+
+
+      });
+
+
+      function imgChange1(e) {
+            console.info(e.target.files[0]);//图片文件
+            var dom =$("#front")[0];
+            console.info(dom.value);//这个是文件的路径 C:fakepathicon (5).png
+            console.log(e.target.value);//这个也是文件的路径和上面的dom.value是一样的
+            var reader = new FileReader();
+            reader.onload = (function (file) {
+               return function (e) {
+                  console.info(this.result); //这个就是base64的数据了
+                  $("#m1")[0].src=this.result;
+                  $("#a1").hide();
+                  $("#m1").show();
+               };
+            })(e.target.files[0]);
+            reader.readAsDataURL(e.target.files[0]);
+      };
+
+      function imgChange2(e) {
+         console.info(e.target.files[0]);//图片文件
+         var dom =$("#behind")[0];
+         console.info(dom.value);//这个是文件的路径 C:fakepathicon (5).png
+         console.log(e.target.value);//这个也是文件的路径和上面的dom.value是一样的
+         var reader = new FileReader();
+         reader.onload = (function (file) {
+            return function (e) {
+               console.info(this.result); //这个就是base64的数据了
+               $("#m2")[0].src=this.result;
+               $("#a2").hide();
+               $("#m2").show();
+            };
+         })(e.target.files[0]);
+         reader.readAsDataURL(e.target.files[0]);
+      };
+
+      function  openFront(){
+         $('#front').val('');
+         $('#front').click();
+      }
+
+      function  openBehind(){
+         $('#behind').val('');
+         $('#behind').click();
+      }
+
+      function onSubmit(){
+
+         if($('#username') .val().length <=0){
+            alert("请填写用户名！");
+            return;
+         }
+
+         if($('#phone') .val().length <=0){
+            alert("请填写手机号码！");
+            return;
+         }
+
+         if($('#bankCard') .val().length <=0){
+            alert("请填写银行卡号！");
+            return;
+         }
+         if($('#openBank') .val().length <=0){
+            alert("请填写开户行！");
+            return;
+         }
+
+
+         if($('#companyName') .val().length <=0){
+            alert("请填写单位名称！");
+            return;
+         }
+
+         if($('#workPlace') .val().length <=0){
+            alert("请填写工作地址！");
+            return;
+         }
+
+         if($('#address') .val().length <=0){
+            alert("请填写居住地！");
+            return;
+         }
+         <#if !relationId??>
+            if($('#totalAmount').val().length <=0){
+               alert("请填写总额度！");
+               return;
+            }
+         </#if>
+
+
+         if($('#front').val().length <=0){
+            alert("请选择身份证正面！");
+            return;
+         }
+
+         if($('#behind').val().length <=0){
+            alert("请选择身份证反面！");
+            return;
+         }
+
+         var formData = new FormData(document.getElementById("form"));//表单id
+         $('#load').css("display","block");
+         $.ajax({
+            url: "/doIt",
+            type: "post",
+            cache: false,
+            contentType: false,
+            processData: false,
+            data:  formData,
+            //dataType:  html,
+            success: function (result) {
+               $('#load').css("display","none");
+               if(result.code !== 200){
+                  alert(result.message);
+               }else{
+                  var data = result.data;
+                  //go result
+                  if(data.relationId != '' && data.relationId != undefined ){
+                     window. location. href = "/home?username=" + encodeURI(data.username) + "&totalAmount=" + data.totalAmount
+                             + "&token=" + data.token+ "&relationId=" + data.relationId;
+                  }else{
+                     window. location. href = "/result";
+                  }
+
+               }
+            },
+            error : function(e){
+               $('#load').css("display","none");
+               alert(JSON.parse(e.responseText).message);
+            }
+         })
+      }
+   </script>
    <style>
       html,
       body {
@@ -15,8 +156,10 @@
          padding: 0px;
          background-color: #F7F8FA;
       }
+
       /* 身份证部分 */
-      .id-positive,.id-back {
+      .id-positive,
+      .id-back {
          width: 95%;
          height: 180px;
          border: dashed 1px #1989fa;
@@ -24,6 +167,7 @@
          position: relative;
          border-radius: 5px;
       }
+
       .id-back span {
          position: absolute;
          left: 50%;
@@ -31,6 +175,7 @@
          transform: translate(-50%, -50%);
          color: #409eff;
       }
+
       .id-positive span {
          position: absolute;
          left: 50%;
@@ -38,6 +183,7 @@
          transform: translate(-50%, -50%);
          color: #409eff;
       }
+
       /* 表单部分 */
       .cell {
          position: relative;
@@ -53,7 +199,8 @@
          line-height: 24px;
          background-color: #fff;
       }
-     .cell .field_label{
+
+      .cell .field_label {
          -webkit-box-flex: 0;
          -webkit-flex: none;
          flex: none;
@@ -64,10 +211,12 @@
          text-align-last: justify;
          word-wrap: break-word;
       }
-      .field_label::after{
+
+      .field_label::after {
          content: '：';
       }
-      .field_control{
+
+      .field_control {
          display: block;
          box-sizing: border-box;
          width: 100%;
@@ -80,8 +229,9 @@
          background-color: transparent;
          border: 0;
          resize: none;
-         outline:none;
+         outline: none;
       }
+
       .cell_value {
          position: relative;
          overflow: hidden;
@@ -90,7 +240,8 @@
          vertical-align: middle;
          word-wrap: break-word;
       }
-      .field__body{
+
+      .field__body {
          display: -webkit-box;
          display: -webkit-flex;
          display: flex;
@@ -98,13 +249,15 @@
          -webkit-align-items: center;
          align-items: center;
       }
+
       /* 额度部分 */
       .quota {
          margin: 10px 0;
          background-color: #FFF;
          padding: 10px;
       }
-      .quota_value{
+
+      .quota_value {
          display: block;
          box-sizing: border-box;
          width: 100%;
@@ -117,12 +270,12 @@
          background-color: transparent;
          border: 0;
          resize: none;
-         outline:none;
+         outline: none;
          font-size: 15px;
       }
 
       /* 提交按钮 */
-      footer{
+      footer {
          /* position: fixed; */
          /* bottom: 0px; */
          /* left: 0; */
@@ -131,7 +284,7 @@
          margin-top: 10px;
       }
 
-      .button_block{
+      .button_block {
          display: block;
          width: 90%;
          color: #fff;
@@ -141,11 +294,16 @@
          font-size: 14px;
          padding: 10px 0px;
          border-radius: 20px;
-         outline:none;
+         outline: none;
       }
-      #prizeFile {height: 0; transform: translateX(-100%);}
-       /* 底部tabber */
-       .tabber{
+
+      #prizeFile {
+         height: 0;
+         transform: translateX(-100%);
+      }
+
+      /* 底部tabber */
+      .tabber {
          z-index: 1;
          display: -webkit-box;
          display: -webkit-flex;
@@ -158,7 +316,8 @@
          bottom: 0;
          left: 0;
       }
-      .tabbar-item{
+
+      .tabbar-item {
          display: -webkit-box;
          display: -webkit-flex;
          display: flex;
@@ -180,12 +339,14 @@
          line-height: 1;
          /* cursor: pointer; */
       }
-      .tabbar-item_icon{
+
+      .tabbar-item_icon {
          position: relative;
          margin-bottom: 4px;
          font-size: 22px;
       }
-      .block{
+
+      .block {
          width: 150px;
          height: 120px;
          background-color: rgba(0, 0, 0, 0.5);
@@ -198,17 +359,25 @@
          display: flex;
          justify-content: center;
          align-items: center;
-         flex-direction: column; 
+         flex-direction: column;
       }
-      .icon{
+
+      .icon {
          font-size: 30px;
-         animation:fadenum 1s infinite linear; 
+         animation: fadenum 1s infinite linear;
       }
-       @keyframes fadenum{
-         0%{transform:rotate(0deg);}
-         100%{transform:rotate(360deg);}
+
+      @keyframes fadenum {
+         0% {
+            transform: rotate(0deg);
+         }
+
+         100% {
+            transform: rotate(360deg);
+         }
       }
-      .overlay{
+
+      .overlay {
          position: fixed;
          top: 0;
          left: 0;
@@ -222,24 +391,31 @@
 
 <body>
    <main id="app">
-      <form  id="form-add">
-      <div class="id-positive" onclick="openFront">
-         <span>身份证正面</span>
+      <form  id="form"  >
+         <input type="file"  id="front" name="front" accept="image/*" onchange="imgChange1(event)"  hidden>
+         <input type="file" id="behind" name="behind" accept="image/*"onchange="imgChange2(event)"   hidden>
+         <input name="token" value="${token}"  type="hidden">
+         <input name="relationId" value="${relationId!''}"  type="hidden">
+
+      <div class="id-positive" onclick="openFront()">
+         <span  id="a1">身份证正面</span>
+         <img id="m1"   class="img" ref="img" style="width: 100%;height: 100%;display: none" />
       </div>
-      <div class="id-back" onclick="openBehind">
-         <span>身份证反面</span>
+      <div class="id-back" onclick="openBehind()">
+         <span id="a2">身份证反面</span>
+         <img id="m2"  class="img" ref="img" style="width: 100%;height: 100%;display: none" />
       </div>
-      <input type="file" id="front" name="front" accept="image/*"  style="display: none">
-      <input type="file" id="behind" name="behind" accept="image/*"  style="display: none">
+
       <section>
-         <div class="form">
+         <div class="form" >
+
             <div class="cell field">
                <div class="field_label">
                   姓名
                </div>
                <div class="cell_value">
                   <div class="field__body">
-                     <input v-model="form.name" class="field_control" placeholder="请输入姓名" type="text">
+                     <input name="username" id="username" class="field_control"   placeholder="请输入姓名" type="text">
                   </div>
                </div>
             </div>
@@ -249,7 +425,7 @@
                </div>
                <div class="cell_value">
                   <div class="field__body">
-                     <input v-model="form.tel" type="tel" class="field_control" placeholder="请输入手机号">
+                     <input id="phone"  name="phone" type="tel" class="field_control"   placeholder="请输入手机号">
                   </div>
                </div>
             </div>
@@ -259,7 +435,7 @@
                </div>
                <div class="cell_value">
                   <div class="field__body">
-                     <input v-model="form.bankNo" type="number" oninput="if(value.length>24)value=value.slice(0,24)" class="field_control" placeholder="请输入银行卡号">
+                     <input name="bankCard" id="bankCard" type="number"   oninput="if(value.length>24)value=value.slice(0,24)" class="field_control" placeholder="请输入银行卡号">
                   </div>
                </div>
             </div>
@@ -269,7 +445,7 @@
                </div>
                <div class="cell_value">
                   <div class="field__body">
-                     <input v-model="form.bankName" class="field_control" placeholder="请输入开户行" type="text">
+                     <input name="openBank" id="openBank" class="field_control"   placeholder="请输入开户行" type="text">
                   </div>
                </div>
             </div>
@@ -279,7 +455,7 @@
                </div>
                <div class="cell_value">
                   <div class="field__body">
-                     <input v-model="form.company" class="field_control" placeholder="请输入单位名称" type="text">
+                     <input name="companyName"  id="companyName"  class="field_control"   placeholder="请输入单位名称" type="text">
                   </div>
                </div>
             </div>
@@ -289,7 +465,7 @@
                </div>
                <div class="cell_value">
                   <div class="field__body">
-                     <input v-model="form.address1" class="field_control" placeholder="请输入工作地址" type="text">
+                     <input name="workPlace" id="workPlace" class="field_control"   placeholder="请输入工作地址" type="text">
                   </div>
                </div>
             </div>
@@ -299,22 +475,27 @@
                </div>
                <div class="cell_value">
                   <div class="field__body">
-                     <input v-model="form.address2" class="field_control" placeholder="请输入居住地址" type="text">
+                     <input name="address" id="address"  class="field_control"   placeholder="请输入居住地址" type="text">
                   </div>
                </div>
             </div>
          </div>
-         <div class="quota" v-if="show">
-            <input v-model="form.quota" class="quota_value" placeholder="请输入额度" type="text">
-         </div>
+         <#if  relationId?? >
+
+            <#else >
+               <div class="quota" v-if="show">
+                  <input name="totalAmount" id="totalAmount"  class="quota_value"   placeholder="请输入额度" type="number">
+               </div>
+         </#if>
+
          <div class="cell field">
             <div class="field_label">
                有房(车)
             </div>
             <div class="cell_value">
                <div class="field__body">
-                  <label><input v-model="form.value1"  name="value1" type="radio" value="1" />是</label> 
-                  <label><input v-model="form.value1"  name="value1" type="radio" value="0" />否</label> 
+                  <label><input  name="hasCar" type="radio" value="1" />是</label>
+                  <label><input  name="hasCar" type="radio" value="0"  checked="checked"/>否</label>
                </div>
             </div>
          </div>
@@ -324,8 +505,8 @@
             </div>
             <div class="cell_value">
                <div class="field__body">
-                  <label><input v-model="form.value2"  name="value2" type="radio" value="1" />是</label> 
-                  <label><input v-model="form.value2"  name="value2" type="radio" value="0" />否</label> 
+                  <label><input  name="hasReservedFunds" type="radio" value="1" />是</label>
+                  <label><input  name="hasReservedFunds" type="radio" value="0" checked="checked"/>否</label>
                </div>
             </div>
          </div>
@@ -335,18 +516,17 @@
             </div>
             <div class="cell_value">
                <div class="field__body">
-                  <label><input v-model="form.value3" name="value3" type="radio" value="1" />是</label> 
-                  <label><input  v-model="form.value3" name="value3" type="radio" value="0" />否</label> 
+                  <label><input  name="hasChit" type="radio" value="1" />是</label>
+                  <label><input  name="hasChit" type="radio" value="0"  checked="checked"/>否</label>
                </div>
             </div>
          </div>
       </section>
-
       </form>
    </main>
 
    <footer>
-      <button class="button_block" @click="onSubmit">提交</button>
+      <button class="button_block" type="button"  onclick="onSubmit()">提交</button>
    </footer>
 
    <div style="height: 50px;"></div>
@@ -378,24 +558,6 @@
    </div >
 </body>
 
-
-<script>
-   $(function (){
-      $('#load').css("display","none");
-      $('#tip').css("display","none");
-   });
-
-   function  openFront(){
-      $('#front').val('');
-      $('#front').click();
-   }
-
-   function  openBehind(){
-      $('#behind').val('');
-      $('#behind').click();
-   }
-
-</script>
 <#--   <script>-->
 <#--      new Vue({-->
 <#--         el:'#app',-->
