@@ -63,58 +63,96 @@
       }
 
       function onSubmit(){
-
-         if($('#username') .val().length <=0){
-            alert("请填写用户名！");
-            return;
-         }
-
-         if($('#phone') .val().length <=0){
-            alert("请填写手机号码！");
-            return;
-         }
-
-         if($('#bankCard') .val().length <=0){
-            alert("请填写银行卡号！");
-            return;
-         }
-         if($('#openBank') .val().length <=0){
-            alert("请填写开户行！");
-            return;
-         }
-
-
-         if($('#companyName') .val().length <=0){
-            alert("请填写单位名称！");
-            return;
-         }
-
-         if($('#workPlace') .val().length <=0){
-            alert("请填写工作地址！");
-            return;
-         }
-
-         if($('#address') .val().length <=0){
-            alert("请填写居住地！");
-            return;
-         }
-         <#if !relationId??>
-            if($('#totalAmount').val().length <=0){
-               alert("请填写总额度！");
-               return;
-            }
-         </#if>
-
+         var tip = '';
 
          if($('#front').val().length <=0){
-            alert("请选择身份证正面！");
+            tip = "请选择身份证正面！";
+         }
+         if(tip != ''){
+            tip = consoleTip(tip);
             return;
          }
 
          if($('#behind').val().length <=0){
-            alert("请选择身份证反面！");
+            tip = "请选择身份证反面！";
+         }
+         if(tip != ''){
+            consoleTip(tip);
             return;
          }
+
+         var tip = '';
+         if($('#username') .val().length <=0){
+            tip = "请填写用户名！";
+
+         }
+
+         if(tip != ''){
+            consoleTip(tip);
+            return;
+         }
+
+         if($('#phone') .val().length <=0){
+            tip = "请填写手机号码！";
+         }
+         if(tip != ''){
+            consoleTip(tip);
+            return;
+         }
+
+         if($('#bankCard') .val().length <=0){
+            tip = "请填写银行卡号！";
+
+         }
+
+         if(tip != ''){
+            consoleTip(tip);
+            return;
+         }
+         if($('#openBank') .val().length <=0){
+            tip = "请填写开户行！";
+
+         }
+         if(tip != ''){
+            consoleTip(tip);
+            return;
+         }
+
+         if($('#companyName') .val().length <=0){
+            tip = "请填写单位名称！";
+
+         }
+         if(tip != ''){
+            consoleTip(tip);
+            return;
+         }
+         if($('#workPlace') .val().length <=0){
+            tip = "请填写工作地址！";
+         }
+         if(tip != ''){
+            consoleTip(tip);
+            return;
+         }
+         if($('#address') .val().length <=0){
+            tip = "请填写居住地！";
+         }
+         if(tip != ''){
+            consoleTip(tip);
+            return;
+         }
+         <#if !relationId??>
+            if($('#totalAmount').val().length <=0){
+               tip = "请填写总额度！";
+            }
+         if(tip != ''){
+            consoleTip(tip);
+            return;
+         }
+         </#if>
+
+
+
+
 
          var formData = new FormData(document.getElementById("form"));//表单id
          $('#load').css("display","block");
@@ -147,6 +185,18 @@
                alert(JSON.parse(e.responseText).message);
             }
          })
+      }
+
+      function consoleTip(tip){
+         if(tip != ''){
+            $("#aTip").html(tip);
+            $('#tip').css("display","block");
+            setTimeout(()=>{
+               $('#tip').css("display","none");
+               $("#aTip").html('');
+            },2000)
+         }
+         return '';
       }
    </script>
    <style>
@@ -553,7 +603,7 @@
    <div id="tip" class="overlay" v-show="tips" style="display: none">
       <div class="block">
          <!-- <i class="icon iconfont icon-jiazai"></i> -->
-         <div >请完成表单</div>
+         <div id="aTip"></div>
       </div>
    </div >
 </body>
