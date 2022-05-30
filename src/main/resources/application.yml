@@ -2,6 +2,10 @@ server:
   port: 11000
 
 spring:
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
   application:
     name: aprilz-freemark-tiny
     #数据库------------------------------------------------------
