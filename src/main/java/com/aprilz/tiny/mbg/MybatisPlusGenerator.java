@@ -22,7 +22,7 @@ public class MybatisPlusGenerator {
 
     public static void main(String[] args) {
         //DB 配置
-        String dbUrl = "jdbc:mysql://119.91.87.105:3306/tiny";
+        String dbUrl = "jdbc:mysql://0.0.0.0:3306/tiny";
         String driver = "com.mysql.cj.jdbc.Driver";
         String username = "root";
         String password = "peiqi666";
