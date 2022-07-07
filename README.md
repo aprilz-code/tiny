@@ -1,3 +1,3 @@
 # tiny
 
-基础框架
+Mybatis-Plus基础框架,包括Mybatis-Plus-Generator
