@@ -1,2 +1,3 @@
-# aprilz-freemark-tiny
-单体freemark小应用
+# tiny
+
+基础框架
