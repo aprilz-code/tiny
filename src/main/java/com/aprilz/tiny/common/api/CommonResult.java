@@ -2,7 +2,7 @@ package com.aprilz.tiny.common.api;
 
 /**
  * 通用返回对象
- * Created by aprilz
+ * Created by aprilz on 2019/4/19.
  */
 public class CommonResult<T> {
     private long code;

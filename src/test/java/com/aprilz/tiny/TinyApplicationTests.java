@@ -1,44 +1,30 @@
 package com.aprilz.tiny;
 
-import cn.hutool.core.map.MapUtil;
-import com.aprilz.tiny.entity.FileInfo;
-import com.aprilz.tiny.mapper.FileInfoMapper;
-import com.aprilz.tiny.service.IFileInfoService;
-import com.aprilz.tiny.service.impl.ApCodeServiceImpl;
-import com.aprilz.tiny.utils.MailUtils;
+
+import com.aprilz.tiny.common.api.PageVO;
+import com.aprilz.tiny.common.utils.PageUtil;
+import com.aprilz.tiny.mapper.ApAdminMapper;
+import com.aprilz.tiny.mbg.entity.ApAdminEntity;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
 
 @SpringBootTest
 public class TinyApplicationTests {
 
     @Resource
-    IFileInfoService fileInfoService;
-
-
-    @Resource
-    ApCodeServiceImpl apCodeService;
-
-    @Resource
-    FileInfoMapper fileInfoMapper;
+    private ApAdminMapper apAdminMapper;
 
     @Test
     public void contextLoads() {
-        FileInfo byId = fileInfoService.getById(1);
-        System.out.println(byId);
-        Integer count = fileInfoMapper.getCount();
-        System.out.println(count);
+        LambdaQueryWrapper<ApAdminEntity> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(ApAdminEntity::getId, 1);
+        Page<ApAdminEntity> apAdminEntityPage = apAdminMapper.selectPage(PageUtil.initPage(new PageVO()), wrapper);
+        System.out.println(apAdminEntityPage);
+
     }
-
-    @Test
-    public void test2() {
-        apCodeService.newCode();
-    }
-
-
-
 
 }
