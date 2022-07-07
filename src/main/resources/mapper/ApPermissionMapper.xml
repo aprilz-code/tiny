@@ -2,4 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aprilz.tiny.mapper.ApPermissionMapper">
 
+    <select id="getPermissionList" resultType="com.aprilz.tiny.mbg.entity.ApPermissionEntity">
+        SELECT p.*
+        FROM ap_admin_role_relation ar
+                 LEFT JOIN ap_role r ON ar.role_id = r.id
+                 LEFT JOIN ap_role_permission_relation rp ON r.id = rp.role_id
+                 LEFT JOIN ap_permission p ON rp.permission_id = p.id
+        WHERE ar.admin_id = #{adminId}
+          AND p.id IS NOT NULL
+          AND p.id NOT IN (
+            SELECT p.id
+            FROM ap_admin_permission_relation pr
+                     LEFT JOIN ap_permission p ON pr.permission_id = p.id
+            WHERE pr.type = - 1
+              AND pr.admin_id = #{adminId}
+        )
+        UNION
+        SELECT p.*
+        FROM ap_admin_permission_relation pr
+                 LEFT JOIN ap_permission p ON pr.permission_id = p.id
+        WHERE pr.type = 1
+          AND pr.admin_id = #{adminId}
+
+    </select>
 </mapper>
