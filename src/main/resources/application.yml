@@ -1,5 +1,7 @@
 server:
   port: 8080
+  servlet:
+    context-path: /buyer
 
 spring:
   datasource:
@@ -35,6 +37,6 @@ redis:
 # 自定义jwt key
 jwt:
   tokenHeader: auth_token #JWT存储的请求头
-  secret: mySecret #JWT加解密使用的密钥
+  secret: peiqidaddy0411 #JWT加解密使用的密钥
   expiration: 604800 #JWT的超期限时间(60*60*24)
-  tokenHead: Bearer  #JWT负载中拿到开头
+  tokenHead: Aprilz  #JWT负载中拿到开头
