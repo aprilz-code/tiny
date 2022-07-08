@@ -2,7 +2,6 @@ package com.aprilz.tiny.config;
 
 import com.aprilz.tiny.component.JwtAuthenticationTokenFilter;
 import com.aprilz.tiny.component.RestAuthenticationEntryPoint;
-import com.aprilz.tiny.component.RestfulAccessDeniedHandler;
 import com.aprilz.tiny.dto.AdminUserDetails;
 import com.aprilz.tiny.mbg.entity.ApAdminEntity;
 import com.aprilz.tiny.mbg.entity.ApPermissionEntity;
@@ -37,8 +36,8 @@ import java.util.List;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private IApAdminService adminService;
-    @Autowired
-    private RestfulAccessDeniedHandler restfulAccessDeniedHandler;
+    //    @Autowired
+//    private RestfulAccessDeniedHandler restfulAccessDeniedHandler;
     @Autowired
     private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 
@@ -75,7 +74,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         //添加自定义未授权和未登录结果返回
         httpSecurity.exceptionHandling()
-                .accessDeniedHandler(restfulAccessDeniedHandler)
+                //全局拦截器影响会失效
+                //    .accessDeniedHandler(restfulAccessDeniedHandler)
                 .authenticationEntryPoint(restAuthenticationEntryPoint);
     }
 

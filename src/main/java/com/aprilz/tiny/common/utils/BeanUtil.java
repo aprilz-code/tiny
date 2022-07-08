@@ -8,7 +8,7 @@ import java.lang.reflect.Method;
 /**
  * 对象属性复制
  *
- * @author Chopper
+ * @author aprilz
  */
 public class BeanUtil {
 

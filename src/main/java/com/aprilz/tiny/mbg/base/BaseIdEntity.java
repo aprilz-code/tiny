@@ -13,7 +13,7 @@ import java.io.Serializable;
 /**
  * 数据库基础实体类
  *
- * @author Chopper
+ * @author aprilz
  * @version v1.0
  * @since 2020/8/20 14:34
  */

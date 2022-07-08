@@ -11,6 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -59,7 +60,7 @@ public class ApMemberController {
     public CommonResult<ApAdminEntity> register(@RequestBody ApAdminEntity ApAdminParam, BindingResult result) {
         ApAdminEntity ApAdmin = adminService.register(ApAdminParam);
         if (ApAdmin == null) {
-            CommonResult.failed();
+            CommonResult.error();
         }
         return CommonResult.success(ApAdmin);
     }
@@ -81,6 +82,7 @@ public class ApMemberController {
     @ApiOperation("获取用户所有权限（包括+-权限）")
     @RequestMapping(value = "/permission/{adminId}", method = RequestMethod.GET)
     @ResponseBody
+    @PreAuthorize("hasAuthority('sso:permission:read')")
     public CommonResult<List<ApPermissionEntity>> getPermissionList(@PathVariable Long adminId) {
         List<ApPermissionEntity> permissionList = adminService.getPermissionList(adminId);
         return CommonResult.success(permissionList);
