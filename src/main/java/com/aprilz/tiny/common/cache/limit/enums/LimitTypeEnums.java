@@ -4,7 +4,7 @@ package com.aprilz.tiny.common.cache.limit.enums;
 /**
  * redis 限流类型
  *
- * @author Chopper
+ * @author aprilz
  * @since 2018年2月02日 下午4:58:52
  */
 

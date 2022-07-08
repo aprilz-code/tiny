@@ -7,7 +7,7 @@ import java.lang.annotation.*;
 /**
  * 限流注解
  *
- * @author Chopper
+ * @author aprilz
  * @since 2018-02-05
  */
 @Target({ElementType.METHOD, ElementType.TYPE})

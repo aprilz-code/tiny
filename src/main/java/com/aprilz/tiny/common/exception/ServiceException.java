@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 /**
  * 全局业务异常类
  *
- * @author Chopper
+ * @author aprilz
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

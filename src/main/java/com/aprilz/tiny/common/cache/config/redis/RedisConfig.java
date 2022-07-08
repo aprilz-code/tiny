@@ -43,7 +43,7 @@ import java.util.Map;
 /**
  * 自定义redis配置
  *
- * @author Chopper
+ * @author aprilz
  * @version v4.0
  * @since 2021/3/20 09:37
  */

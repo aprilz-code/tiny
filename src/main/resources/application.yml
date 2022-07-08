@@ -40,3 +40,23 @@ jwt:
   secret: peiqidaddy0411 #JWT加解密使用的密钥
   expiration: 604800 #JWT的超期限时间(60*60*24)
   tokenHead: Aprilz  #JWT负载中拿到开头
+
+# 忽略TOKEN 鉴权 的url
+ignored:
+  urls:
+    - /druid/**
+    - /swagger-ui.html
+    - /doc.html
+    - /swagger-resources/**
+    - /swagger/**
+    - /webjars/**
+    - /v2/api-docs
+    - /configuration/ui
+    - /boot-admin
+    - /**/*.html
+    - /**/*.js
+    - /**/*.css
+    - /**/*.png
+    - /**/*.ico
+    - /favicon.ico
+    - /*.html
