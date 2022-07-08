@@ -1,6 +1,7 @@
 package com.aprilz.tiny.config;
 
 import com.aprilz.tiny.common.properties.IgnoredUrlsProperties;
+import com.aprilz.tiny.common.utils.SpringContextUtil;
 import com.aprilz.tiny.component.JwtAuthenticationTokenFilter;
 import com.aprilz.tiny.component.RestAuthenticationEntryPoint;
 import com.aprilz.tiny.dto.AdminUserDetails;
@@ -24,6 +25,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -61,10 +63,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             registry.antMatchers(url).permitAll();
         }
 
-        httpSecurity.csrf()// 由于使用的是JWT，我们这里不需要csrf
-                .disable()
+        httpSecurity
+                //禁止网页iframe
+                .headers().frameOptions().disable()
+                .and()
+                .logout()
+                .permitAll()
+                .and()
+                // 由于使用的是JWT，我们这里不需要csrf
+                .csrf().disable()
                 .sessionManagement()// 基于token，所以不需要session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                //允许跨域
+                .and()
+                .cors().configurationSource((CorsConfigurationSource) SpringContextUtil.getBean("corsConfigurationSource"))
                 .and()
                 .authorizeRequests()
                 .antMatchers("/sso/login", "/sso/register")// 对登录注册要允许匿名访问
