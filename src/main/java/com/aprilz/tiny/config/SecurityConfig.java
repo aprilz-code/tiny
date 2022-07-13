@@ -1,7 +1,6 @@
 package com.aprilz.tiny.config;
 
 import com.aprilz.tiny.common.properties.IgnoredUrlsProperties;
-import com.aprilz.tiny.common.utils.SpringContextUtil;
 import com.aprilz.tiny.component.JwtAuthenticationTokenFilter;
 import com.aprilz.tiny.component.RestAuthenticationEntryPoint;
 import com.aprilz.tiny.dto.AdminUserDetails;
@@ -25,9 +24,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -76,8 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 //允许跨域
                 .and()
-                .cors().configurationSource((CorsConfigurationSource) SpringContextUtil.getBean("corsConfigurationSource"))
-                .and()
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeRequests()
                 .antMatchers("/sso/login", "/sso/register")// 对登录注册要允许匿名访问
                 .permitAll()
@@ -96,6 +98,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //全局拦截器影响会失效
                 //    .accessDeniedHandler(restfulAccessDeniedHandler)
                 .authenticationEntryPoint(restAuthenticationEntryPoint);
+    }
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        // 允许跨域访问的主机
+        //    if (environment.acceptsProfiles(Profiles.of("dev"))) {
+        configuration.setAllowedOrigins(Collections.singletonList("http://10.1.129.68"));
+        //     } else {
+        //          configuration.setAllowedOrigins(Collections.singletonList("http://域名"));
+        //     }
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Collections.singletonList("*"));
+        configuration.addExposedHeader("X-Authenticate");
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 
     @Override
