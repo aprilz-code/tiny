@@ -3,6 +3,7 @@ package com.aprilz.tiny.component;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +24,7 @@ public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
     public void insertFill(MetaObject metaObject) {
         //  log.info("start insert fill ....");
         String username = "ADMIN";
-        if (SecurityContextHolder.getContext().getAuthentication() != null) {
+        if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
             username = SecurityContextHolder.getContext().getAuthentication().getName();
         }
         if (metaObject.hasGetter("createTime")) {
@@ -51,7 +52,7 @@ public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
     public void updateFill(MetaObject metaObject) {
         //    log.info("start update fill ....");
         String username = "ADMIN";
-        if (SecurityContextHolder.getContext().getAuthentication() != null) {
+        if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
             username = SecurityContextHolder.getContext().getAuthentication().getName();
         }
         if (metaObject.hasGetter("updateTime")) {
