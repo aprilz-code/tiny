@@ -5,6 +5,7 @@ import com.aprilz.tiny.common.api.CommonResult;
 import com.aprilz.tiny.common.api.ResultCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
@@ -73,25 +74,14 @@ public class GlobalControllerExceptionHandler {
         return CommonResult.error(ResultCode.FAILED.code(), errorMsg);
     }
 
-
-//   /**
-//    * 通用的接口映射异常处理方
-//    */
-//   @Override
-//   protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
-//       if (ex instanceof MethodArgumentNotValidException) {
-//           MethodArgumentNotValidException exception = (MethodArgumentNotValidException) ex;
-//           return new ResponseEntity<>(new ResultUtil<>().setErrorMsg(exception.getBindingResult().getAllErrors().get(0).getDefaultMessage()), status);
-//       }
-//       if (ex instanceof MethodArgumentTypeMismatchException) {
-//           MethodArgumentTypeMismatchException exception = (MethodArgumentTypeMismatchException) ex;
-//           logger.error("参数转换失败，方法：" + exception.getParameter().getMethod().getName() + "，参数：" + exception.getName()
-//                   + ",信息：" + exception.getLocalizedMessage());
-//           return new ResponseEntity<>(new ResultUtil<>().setErrorMsg("参数转换失败"), status);
-//       }
-//       ex.printStackTrace();
-//       return new ResponseEntity<>(new ResultUtil<>().setErrorMsg("未知异常，请联系管理员"), status);
-//   }
+    /**
+     * @description http请求参数转换异常
+     **/
+    @ExceptionHandler({HttpMessageNotReadableException.class})
+    public CommonResult messageExceptionHandler(HttpMessageNotReadableException e) {
+        log.warn("http请求参数转换异常: " + e.getMessage());
+        return CommonResult.error(ResultCode.PARAMS_ERROR);
+    }
 
     /**
      * bean校验未通过异常

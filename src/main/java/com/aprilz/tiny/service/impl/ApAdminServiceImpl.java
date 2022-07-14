@@ -65,7 +65,7 @@ public class ApAdminServiceImpl extends ServiceImpl<ApAdminMapper, ApAdminEntity
         ApAdminEntity apAdmin = new ApAdminEntity();
         BeanUtils.copyProperties(apAdminParam, apAdmin);
         apAdmin.setCreateTime(new Date());
-        apAdmin.setStatus(1);
+        apAdmin.setStatus(true);
         //查询是否有相同用户名的用户
         LambdaQueryWrapper<ApAdminEntity> queryWrapper = new LambdaQueryWrapper();
         queryWrapper.eq(ApAdminEntity::getUsername, apAdminParam.getUsername());

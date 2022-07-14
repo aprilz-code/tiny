@@ -26,11 +26,15 @@ public class Config {
     /** 目录名：xml */
     public static final String DIR_NAME_XML = "mapper";
 
-    /** 文件名后缀：Entity */
-    public static final String FILE_NAME_ENTITY = "%sEntity";
+    /**
+     * 文件名后缀：Entity
+     */
+    public static final String FILE_NAME_ENTITY = "%s";
 
-    /** 文件名后缀：Dao */
-    public static final String FILE_NAME_DAO = "I%sDao";
+    /**
+     * 文件名后缀：Dao
+     */
+    public static final String FILE_NAME_DAO = "I%sMapper";
 
     /** 文件名后缀：Mapper */
     public static final String FILE_NAME_XML = "%sMapper";

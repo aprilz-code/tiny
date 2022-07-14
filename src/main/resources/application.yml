@@ -1,9 +1,11 @@
 server:
   port: 8080
   servlet:
-    context-path: /buyer
+    context-path: /wx
 
 spring:
+  application:
+    name: tinymall
   datasource:
     url: jdbc:mysql://0.0.0.0:3306/tiny?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
@@ -13,7 +15,7 @@ spring:
     database: 0 # Redis数据库索引（默认为0）
     port: 6379 # Redis服务器连接端口
     password:  # Redis服务器连接密码（默认为空）
-    jedis:
+    lettuce:
       pool:
         # 连接池最大连接数（使用负值表示没有限制） 默认 8
         max-active: 200
@@ -23,11 +25,37 @@ spring:
         max-idle: 10
         # 连接池中的最小空闲连接 默认 8
         min-idle: 8
+    timeout: 7200
 
-mybatis:
-  mapper-locations:
-    - classpath:mapper/*.xml
-    - classpath*:com/**/mapper/*.xml
+
+#mybatis
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.aprilz.tiny.mbg.entity
+  global-config:
+    # 数据库相关配置
+    db-config:
+      #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+      id-type: AUTO
+      #字段策略 IGNORED:"忽略判断",NOT_NULL:"非 NULL 判断"),NOT_EMPTY:"非空判断"
+      field-strategy: NOT_EMPTY
+      #驼峰下划线转换
+      column-underline: true
+      #数据库大写下划线转换
+      #capital-mode: true
+      #逻辑删除配置
+      logic-delete-value: 0
+      logic-not-delete-value: 1
+      db-type: mysql
+    #刷新mapper 调试神器
+    refresh: true
+  # 原生配置
+  configuration:
+    map-underscore-to-camel-case: true
+    #开启 Mybatis 二级缓存，默认为 true。
+    cache-enabled: false
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
 
 # 自定义redis key
 redis:
@@ -43,6 +71,10 @@ jwt:
   secret: peiqidaddy0411 #JWT加解密使用的密钥
   expiration: 604800 #JWT的超期限时间(60*60*24)
   tokenHead: Aprilz  #JWT负载中拿到开头
+
+logging:
+  level:
+    com.baomidou.example.mapper: DEBUG
 
 # 忽略TOKEN 鉴权 的url
 ignored:
@@ -63,3 +95,4 @@ ignored:
     - /**/*.ico
     - /favicon.ico
     - /*.html
+    - /auth/login

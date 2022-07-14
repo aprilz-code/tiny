@@ -57,7 +57,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 
     private static final String REDIS_PREFIX = "redis://";
 
-    @Value("${lili.cache.timeout:7200}")
+    @Value("${spring.redis.timeout:7200}")
     private Integer timeout;
 
     /**
@@ -141,6 +141,7 @@ public class RedisConfig extends CachingConfigurerSupport {
             if (CharSequenceUtil.isNotEmpty(redisProperties.getPassword())) {
                 singleServerConfig.setPassword(redisProperties.getPassword());
             }
+            //heartbeat
             singleServerConfig.setPingConnectionInterval(1000);
         }
 

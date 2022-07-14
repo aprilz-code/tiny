@@ -1,6 +1,7 @@
 package com.aprilz.tiny.mbg.base;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
@@ -30,12 +31,12 @@ import java.util.Date;
 @Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class BaseEntity<A extends BaseEntity> extends Model  {
+public abstract class BaseEntity<A extends BaseEntity> extends Model {
 
     private static final long serialVersionUID = 1L;
 
-
-    @TableId
+    /*当Mybatis-Plus实体类没有显示设置主键策略时，将默认使用雪花算法生成，也就是IdType.ID_WORKER或者IdType.ID_WORKER_STR，具体是long类型的19位还是字符串的19位，应该是根据字段定义类型来判断。*/
+    @TableId(value = "id", type = IdType.AUTO)
     @ApiModelProperty(value = "唯一标识", hidden = true)
     private Long id;
 
@@ -66,7 +67,7 @@ public abstract class BaseEntity<A extends BaseEntity> extends Model  {
 
     @TableField(fill = FieldFill.INSERT)
     @ApiModelProperty(value = "删除标志 0->删除；1->未删除", hidden = true)
-    private Integer status;
+    private Boolean status;
 
 
 }

@@ -21,18 +21,18 @@ USE `tiny`;
 
 DROP TABLE IF EXISTS `ap_admin`;
 
-CREATE TABLE `ap_admin` (
-  `id` bigint(20) NOT NULL,
-  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-  `create_time` datetime(6) DEFAULT NULL,
-  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-  `update_time` datetime(6) DEFAULT NULL,
-  `status` bit(1) DEFAULT b'1' COMMENT '帐号启用状态：0->禁用；1->启用',
-  `username` varchar(64) DEFAULT NULL,
-  `password` varchar(64) DEFAULT NULL,
-  `icon` varchar(500) DEFAULT NULL COMMENT '头像',
-  `email` varchar(100) DEFAULT NULL COMMENT '邮箱',
-  `nick_name` varchar(200) DEFAULT NULL COMMENT '昵称',
+CREATE TABLE `ap_admin`(
+                           `id`          bigint(20) NOT NULL AUTO_INCREMENT,
+                           `create_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+                           `create_time` datetime(6) DEFAULT NULL,
+                           `update_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+                           `update_time` datetime(6) DEFAULT NULL,
+                           `status`      bit(1)                                                DEFAULT b'1' COMMENT '帐号启用状态：0->禁用；1->启用',
+                           `username`    varchar(64)                                           DEFAULT NULL,
+                           `password`    varchar(64)                                           DEFAULT NULL,
+                           `icon`        varchar(500)                                          DEFAULT NULL COMMENT '头像',
+                           `email`       varchar(100)                                          DEFAULT NULL COMMENT '邮箱',
+                           `nick_name`   varchar(200)                                          DEFAULT NULL COMMENT '昵称',
   `note` varchar(500) DEFAULT NULL COMMENT '备注信息',
   `login_time` datetime DEFAULT NULL COMMENT '最后登录时间',
   PRIMARY KEY (`id`)
@@ -46,17 +46,18 @@ insert  into `ap_admin`(`id`,`create_by`,`create_time`,`update_by`,`update_time`
 
 DROP TABLE IF EXISTS `ap_admin_permission_relation`;
 
-CREATE TABLE `ap_admin_permission_relation` (
-  `id` bigint(20) NOT NULL,
-  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-  `create_time` datetime(6) DEFAULT NULL,
-  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-  `update_time` datetime(6) DEFAULT NULL,
-  `status` bit(1) DEFAULT NULL COMMENT '状态：0->无效；1->有效',
-  `admin_id` bigint(20) DEFAULT NULL,
-  `permission_id` bigint(20) DEFAULT NULL,
-  `type` int(1) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE `ap_admin_permission_relation`
+(
+    `id`            bigint(20) NOT NULL AUTO_INCREMENT,
+    `create_by`     varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+    `create_time`   datetime(6) DEFAULT NULL,
+    `update_by`     varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+    `update_time`   datetime(6) DEFAULT NULL,
+    `status`        bit(1)                                                DEFAULT NULL COMMENT '状态：0->无效；1->有效',
+    `admin_id`      bigint(20) DEFAULT NULL,
+    `permission_id` bigint(20) DEFAULT NULL,
+    `type`          int(1) DEFAULT NULL,
+    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='后台用户和权限关系表(除角色中定义的权限以外的加减权限)';
 
 /*Data for the table `ap_admin_permission_relation` */
@@ -65,16 +66,17 @@ CREATE TABLE `ap_admin_permission_relation` (
 
 DROP TABLE IF EXISTS `ap_admin_role_relation`;
 
-CREATE TABLE `ap_admin_role_relation` (
-  `id` bigint(20) NOT NULL,
-  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-  `create_time` datetime(6) DEFAULT NULL,
-  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-  `update_time` datetime(6) DEFAULT NULL,
-  `status` bit(1) DEFAULT NULL COMMENT '状态：0->无效；1->有效',
-  `admin_id` bigint(20) DEFAULT NULL,
-  `role_id` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE `ap_admin_role_relation`
+(
+    `id`          bigint(20) NOT NULL AUTO_INCREMENT,
+    `create_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+    `create_time` datetime(6) DEFAULT NULL,
+    `update_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+    `update_time` datetime(6) DEFAULT NULL,
+    `status`      bit(1)                                                DEFAULT NULL COMMENT '状态：0->无效；1->有效',
+    `admin_id`    bigint(20) DEFAULT NULL,
+    `role_id`     bigint(20) DEFAULT NULL,
+    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='后台用户和角色关系表';
 
 /*Data for the table `ap_admin_role_relation` */
@@ -85,18 +87,19 @@ insert  into `ap_admin_role_relation`(`id`,`create_by`,`create_time`,`update_by`
 
 DROP TABLE IF EXISTS `ap_permission`;
 
-CREATE TABLE `ap_permission` (
-  `id` bigint(20) NOT NULL,
-  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-  `create_time` datetime(6) DEFAULT NULL,
-  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-  `update_time` datetime(6) DEFAULT NULL,
-  `status` bit(1) DEFAULT NULL COMMENT '状态：0->无效；1->有效',
-  `pid` bigint(20) DEFAULT NULL COMMENT '父级权限id',
-  `name` varchar(100) DEFAULT NULL COMMENT '名称',
-  `value` varchar(200) DEFAULT NULL COMMENT '权限值',
-  `icon` varchar(500) DEFAULT NULL COMMENT '图标',
-  `type` int(1) DEFAULT NULL COMMENT '权限类型：0->目录；1->菜单；2->按钮（接口绑定权限）',
+CREATE TABLE `ap_permission`
+(
+    `id`          bigint(20) NOT NULL AUTO_INCREMENT,
+    `create_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+    `create_time` datetime(6) DEFAULT NULL,
+    `update_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+    `update_time` datetime(6) DEFAULT NULL,
+    `status`      bit(1)                                                DEFAULT NULL COMMENT '状态：0->无效；1->有效',
+    `pid`         bigint(20) DEFAULT NULL COMMENT '父级权限id',
+    `name`        varchar(100)                                          DEFAULT NULL COMMENT '名称',
+    `value`       varchar(200)                                          DEFAULT NULL COMMENT '权限值',
+    `icon`        varchar(500)                                          DEFAULT NULL COMMENT '图标',
+    `type`        int(1) DEFAULT NULL COMMENT '权限类型：0->目录；1->菜单；2->按钮（接口绑定权限）',
   `uri` varchar(200) DEFAULT NULL COMMENT '前端资源路径',
   `sort` int(11) DEFAULT NULL COMMENT '排序',
   PRIMARY KEY (`id`)
@@ -110,18 +113,19 @@ insert  into `ap_permission`(`id`,`create_by`,`create_time`,`update_by`,`update_
 
 DROP TABLE IF EXISTS `ap_role`;
 
-CREATE TABLE `ap_role` (
-  `id` bigint(20) NOT NULL,
-  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-  `create_time` datetime(6) DEFAULT NULL,
-  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-  `update_time` datetime(6) DEFAULT NULL,
-  `status` bit(1) DEFAULT NULL COMMENT '状态：0->无效；1->有效',
-  `name` varchar(100) DEFAULT NULL COMMENT '名称',
-  `description` varchar(500) DEFAULT NULL COMMENT '描述',
-  `admin_count` int(11) DEFAULT NULL COMMENT '后台用户数量',
-  `sort` int(11) DEFAULT '0',
-  PRIMARY KEY (`id`)
+CREATE TABLE `ap_role`
+(
+    `id`          bigint(20) NOT NULL AUTO_INCREMENT,
+    `create_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+    `create_time` datetime(6) DEFAULT NULL,
+    `update_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+    `update_time` datetime(6) DEFAULT NULL,
+    `status`      bit(1)                                                DEFAULT NULL COMMENT '状态：0->无效；1->有效',
+    `name`        varchar(100)                                          DEFAULT NULL COMMENT '名称',
+    `description` varchar(500)                                          DEFAULT NULL COMMENT '描述',
+    `admin_count` int(11) DEFAULT NULL COMMENT '后台用户数量',
+    `sort`        int(11) DEFAULT '0',
+    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='后台用户角色表';
 
 /*Data for the table `ap_role` */
@@ -132,16 +136,17 @@ insert  into `ap_role`(`id`,`create_by`,`create_time`,`update_by`,`update_time`,
 
 DROP TABLE IF EXISTS `ap_role_permission_relation`;
 
-CREATE TABLE `ap_role_permission_relation` (
-  `id` bigint(20) NOT NULL,
-  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-  `create_time` datetime(6) DEFAULT NULL,
-  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-  `update_time` datetime(6) DEFAULT NULL,
-  `status` bit(1) DEFAULT NULL COMMENT '状态：0->无效；1->有效',
-  `role_id` bigint(20) DEFAULT NULL,
-  `permission_id` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE `ap_role_permission_relation`
+(
+    `id`            bigint(20) NOT NULL AUTO_INCREMENT,
+    `create_by`     varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+    `create_time`   datetime(6) DEFAULT NULL,
+    `update_by`     varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+    `update_time`   datetime(6) DEFAULT NULL,
+    `status`        bit(1)                                                DEFAULT NULL COMMENT '状态：0->无效；1->有效',
+    `role_id`       bigint(20) DEFAULT NULL,
+    `permission_id` bigint(20) DEFAULT NULL,
+    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='后台用户角色和权限关系表';
 
 /*Data for the table `ap_role_permission_relation` */

@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.aprilz.tiny</groupId>
-    <artifactId>tiny</artifactId>
+    <artifactId>tinyMall</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>mall-tiny-05</name>
     <description>Demo project for Spring Boot</description>
@@ -112,6 +112,11 @@
                     <groupId>org.slf4j</groupId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
