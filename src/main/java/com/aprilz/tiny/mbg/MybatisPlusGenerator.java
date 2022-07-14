@@ -29,7 +29,7 @@ public class MybatisPlusGenerator {
 
 
         //逗号分割
-        String tableName = "";
+        String tableName = "ap_admin_user";
 
         CodeGeneratorBo bo = new CodeGeneratorBo();
         bo.setDbUrl(dbUrl).setDriver(driver).setUsername(username).setPassword(password)
@@ -124,7 +124,7 @@ public class MybatisPlusGenerator {
                     .logicDeleteColumnName(Config.FIELD_LOGIC_DELETE_NAME)
                     .logicDeletePropertyName(Config.FIELD_LOGIC_DELETE_NAME)
                     .superClass(BaseEntity.class)
-                    .addSuperEntityColumns("id,createBy,createTime,updateBy,updateTime,status")
+                    .addSuperEntityColumns("id", "createBy", "createTime", "updateBy", "updateTime", "status")
                     .controllerBuilder()
                     .enableRestStyle()
                     .enableHyphenStyle();

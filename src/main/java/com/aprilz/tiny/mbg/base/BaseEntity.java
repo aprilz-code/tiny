@@ -38,34 +38,35 @@ public abstract class BaseEntity<A extends BaseEntity> extends Model {
     /*当Mybatis-Plus实体类没有显示设置主键策略时，将默认使用雪花算法生成，也就是IdType.ID_WORKER或者IdType.ID_WORKER_STR，具体是long类型的19位还是字符串的19位，应该是根据字段定义类型来判断。*/
     @TableId(value = "id", type = IdType.AUTO)
     @ApiModelProperty(value = "唯一标识", hidden = true)
+
     private Long id;
 
 
     @CreatedBy
-    @TableField(fill = FieldFill.INSERT)
+    @TableField(value = "create_by", fill = FieldFill.INSERT)
     @ApiModelProperty(value = "创建者", hidden = true)
     private String createBy;
 
     @CreatedDate
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @TableField(fill = FieldFill.INSERT)
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
     @ApiModelProperty(value = "创建时间", hidden = true)
     private Date createTime;
 
     @LastModifiedBy
-    @TableField(fill = FieldFill.UPDATE)
+    @TableField(value = "update_by", fill = FieldFill.UPDATE)
     @ApiModelProperty(value = "更新者", hidden = true)
     private String updateBy;
 
     @LastModifiedDate
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @TableField(fill = FieldFill.INSERT_UPDATE)
+    @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
     @ApiModelProperty(value = "更新时间", hidden = true)
     private Date updateTime;
 
-    @TableField(fill = FieldFill.INSERT)
+    @TableField(value = "status", fill = FieldFill.INSERT)
     @ApiModelProperty(value = "删除标志 0->删除；1->未删除", hidden = true)
     private Boolean status;
 
