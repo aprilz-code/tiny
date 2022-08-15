@@ -27,7 +27,7 @@ public class PageUtil {
      * Mybatis-Plus分页封装
      *
      * @param page 分页VO
-     * @param <T> 范型
+     * @param <T>  范型
      * @return 分页响应
      */
     public static <T> Page<T> initPage(PageVO page) {
@@ -85,7 +85,7 @@ public class PageUtil {
     /**
      * 生成条件搜索 全对象对比
      *
-     * @param object 对象
+     * @param object   对象
      * @param searchVo 查询条件
      * @return 查询wrapper
      */
@@ -154,8 +154,8 @@ public class PageUtil {
      * 转换分页类型
      *
      * @param originPage 原分页
-     * @param records 新分页数据
-     * @param <T> 新类型
+     * @param records    新分页数据
+     * @param <T>        新类型
      * @return 新类型分页
      */
     public static <T> IPage<T> convertPage(IPage originPage, List<T> records) {

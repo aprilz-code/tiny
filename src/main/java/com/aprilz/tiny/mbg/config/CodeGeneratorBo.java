@@ -27,15 +27,15 @@ public class CodeGeneratorBo {
     private String driver;
 
     // 表名
-    private String [] tableNames;
+    private String[] tableNames;
     // 表前缀
-    private String [] tablePrefixes;
+    private String[] tablePrefixes;
     // 字段前缀
-    private String  fieldPrefixes;
+    private String fieldPrefixes;
     // 排出表的表名
-    private String [] excludeTableNames;
+    private String[] excludeTableNames;
     // 忽略的字段
-    private String [] ignoreColumns;
+    private String[] ignoreColumns;
 
     // 作者
     private String author;
