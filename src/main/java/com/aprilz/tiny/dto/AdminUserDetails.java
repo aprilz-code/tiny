@@ -1,7 +1,7 @@
 package com.aprilz.tiny.dto;
 
-import com.aprilz.tiny.mbg.entity.ApAdminEntity;
-import com.aprilz.tiny.mbg.entity.ApPermissionEntity;
+import com.aprilz.tiny.mbg.entity.ApAdmin;
+import com.aprilz.tiny.mbg.entity.ApPermission;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,12 +15,16 @@ import java.util.stream.Collectors;
  * Created by aprilz on 2018/4/26.
  */
 public class AdminUserDetails implements UserDetails {
-    private ApAdminEntity apAdminEntity;
-    private List<ApPermissionEntity> permissionList;
+    private ApAdmin apAdmin;
+    private List<ApPermission> permissionList;
 
-    public AdminUserDetails(ApAdminEntity apAdminEntity, List<ApPermissionEntity> permissionList) {
-        this.apAdminEntity = apAdminEntity;
+    public AdminUserDetails(ApAdmin apAdmin, List<ApPermission> permissionList) {
+        this.apAdmin = apAdmin;
         this.permissionList = permissionList;
+    }
+
+    public ApAdmin getApAdmin() {
+        return apAdmin;
     }
 
     @Override
@@ -34,12 +38,12 @@ public class AdminUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return apAdminEntity.getPassword();
+        return apAdmin.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return apAdminEntity.getUsername();
+        return apAdmin.getUsername();
     }
 
     @Override
@@ -59,6 +63,6 @@ public class AdminUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return apAdminEntity.getStatus();
+        return apAdmin.getStatus();
     }
 }

@@ -23,6 +23,10 @@ public class CommonResult<T> {
         this.data = data;
     }
 
+    public static <T> CommonResult<T> success() {
+        return new CommonResult<T>(ResultCode.SUCCESS.code(), ResultCode.SUCCESS.message(), null);
+    }
+
     /**
      * 成功返回结果
      *

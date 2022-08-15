@@ -1,6 +1,6 @@
 package com.aprilz.tiny.mapper;
 
-import com.aprilz.tiny.mbg.entity.ApRoleEntity;
+import com.aprilz.tiny.mbg.entity.ApRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author aprilz
- * @since 2022-07-07
+ * @since 2022-08-11
  */
-public interface ApRoleMapper extends BaseMapper<ApRoleEntity> {
+public interface ApRoleMapper extends BaseMapper<ApRole> {
 
 }

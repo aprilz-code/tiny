@@ -33,6 +33,8 @@ public interface Cache<T> {
     String getString(Object key);
 
 
+    Integer getInteger(Object key);
+
     /**
      * multiGet
      *
@@ -273,7 +275,7 @@ public interface Cache<T> {
      * @param value 值
      * @return 增加状态
      */
-    boolean zAdd(String key, long score, String value);
+    boolean zAdd(String key, String value, long score);
 
 
     /**

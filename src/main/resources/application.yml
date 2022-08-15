@@ -1,20 +1,20 @@
 server:
-  port: 8080
+  port: 8084
   servlet:
-    context-path: /wx
+    context-path: /admin
 
 spring:
   application:
-    name: tinymall
+    name: tiny
   datasource:
-    url: jdbc:mysql://0.0.0.0:3306/tiny?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
-    username: root
-    password: root
+    url: jdbc:mysql://119.91.87.105:3306/tinymall?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull
+    username: tinymall
+    password: tinymall123456
   redis:
-    host: 0.0.0.0 # Redis服务器地址
+    host: 119.91.87.105 # Redis服务器地址
     database: 0 # Redis数据库索引（默认为0）
     port: 6379 # Redis服务器连接端口
-    password:  # Redis服务器连接密码（默认为空）
+    password: lilishop # Redis服务器连接密码（默认为空）
     lettuce:
       pool:
         # 连接池最大连接数（使用负值表示没有限制） 默认 8
@@ -25,9 +25,11 @@ spring:
         max-idle: 10
         # 连接池中的最小空闲连接 默认 8
         min-idle: 8
-    timeout: 7200
-
-
+    timeout: 10000
+    # 全局日期格式化
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
 #mybatis
 mybatis-plus:
   mapper-locations: classpath:/mapper/*Mapper.xml
@@ -57,24 +59,22 @@ mybatis-plus:
     cache-enabled: false
     log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
 
-# 自定义redis key
-redis:
-  key:
-    prefix:
-      authCode: "portal:authCode:"
-    expire:
-      authCode: 120 # 验证码超期时间
 
 # 自定义jwt key
 jwt:
-  tokenHeader: auth_token #JWT存储的请求头
+  tokenHeader: X-AP-Token #JWT存储的请求头
   secret: peiqidaddy0411 #JWT加解密使用的密钥
-  expiration: 604800 #JWT的超期限时间(60*60*24)
+  expiration: 60 #JWT的超期限时间(60分钟)
   tokenHead: Aprilz  #JWT负载中拿到开头
 
-logging:
-  level:
-    com.baomidou.example.mapper: DEBUG
+#logging:
+#  level:
+#    com.baomidou.example.mapper: DEBUG
+#    org.springframework.web: info
+#    com.github.binarywang.demo.wx.miniapp: debug
+#    cn.binarywang.wx.miniapp: debug
+#    com.github.binarywang.demo.wx.pay: debug
+#    com.github.binarywang.wxpay: debug
 
 # 忽略TOKEN 鉴权 的url
 ignored:
@@ -95,4 +95,114 @@ ignored:
     - /**/*.ico
     - /favicon.ico
     - /*.html
-    - /auth/login
+    - /sso/login
+
+# wx相关配置
+wx:
+  miniapp:
+    configs:
+      - appid: wxa088d5a52ee4c3ed #微信小程序的appid
+        secret: 72cac1dd7a512c9ce11a1579f23a7da4 #微信小程序的Secret
+        token: peiqi666 #微信小程序消息服务器配置的token https://wx.losey.top/wx/msg/config
+        aesKey: EOeTD9SGiUla0Rd6efJTsztRMyOWE5aYIjRFsaoauUy #微信小程序消息服务器配置的EncodingAESKey
+        msgDataFormat: JSON
+
+
+ap:
+
+  #通知相关配置
+  notify:
+    mail:
+      # 邮件通知配置,邮箱一般用于接收业务通知例如收到新的订单，sendto 定义邮件接收者，通常为商城运营人员
+      enable: false
+      host: smtp.exmail.qq.com
+      username: ex@ex.com.cn
+      password: XXXXXXXXXXXXX
+      sendfrom: ex@ex.com.cn
+      sendto: ex@qq.com
+      port: 465
+    # 短消息模版通知配置
+    # 短信息用于通知客户，例如发货短信通知，注意配置格式；template-name，template-templateId 请参考 NotifyType 枚举值
+    sms:
+      enable: false
+      # 如果是腾讯云短信，则设置active的值tencent
+      # 如果是阿里云短信，则设置active的值aliyun
+      active: tencent
+      sign: litemall
+      template:
+        - name: paySucceed
+          templateId: 156349
+        - name: captcha
+          templateId: 156433
+        - name: ship
+          templateId: 158002
+        - name: refund
+          templateId: 159447
+      tencent:
+        appid: 111111111
+        appkey: xxxxxxxxxxxxxx
+      aliyun:
+        regionId: xxx
+        accessKeyId: xxx
+        accessKeySecret: xxx
+
+  # 快鸟物流查询配置
+  express:
+    enable: false
+    appId: "XXXXXXXXX"
+    appKey: "XXXXXXXXXXXXXXXXXXXXXXXXX"
+    vendors:
+      - code: "ZTO"
+        name: "中通快递"
+      - code: "YTO"
+        name: "圆通速递"
+      - code: "YD"
+        name: "韵达速递"
+      - code: "YZPY"
+        name: "邮政快递包裹"
+      - code: "EMS"
+        name: "EMS"
+      - code: "DBL"
+        name: "德邦快递"
+      - code: "FAST"
+        name: "快捷快递"
+      - code: "ZJS"
+        name: "宅急送"
+      - code: "TNT"
+        name: "TNT快递"
+      - code: "UPS"
+        name: "UPS"
+      - code: "DHL"
+        name: "DHL"
+      - code: "FEDEX"
+        name: "FEDEX联邦(国内件)"
+      - code: "FEDEX_GJ"
+        name: "FEDEX联邦(国际件)"
+  # 对象存储配置
+  storage:
+    # 当前工作的对象存储模式，分别是local、aliyun、tencent、qiniu
+    active: local
+    # 本地对象存储配置信息
+    local:
+      storagePath: storage
+      # 这个地方应该是wx模块的WxStorageController的fetch方法对应的地址
+      address: http://10.1.129.68:8082/wx/storage/fetch/
+    # 阿里云对象存储配置信息
+    aliyun:
+      endpoint: oss-cn-shenzhen.aliyuncs.com
+      accessKeyId: 111111
+      accessKeySecret: xxxxxx
+      bucketName: litemall
+    # 腾讯对象存储配置信息
+    # 请参考 https://cloud.tencent.com/document/product/436/6249
+    tencent:
+      secretId: AKIDOccMr856uoU1Tsa2MQL5aqseBUWRrb5i
+      secretKey: XqtgEhIdrupTs4ygaWlkUUXv3w3FiwuD
+      region: ap-shanghai
+      bucketName: vytech-1300096589
+    # 七牛云对象存储配置信息
+    qiniu:
+      endpoint: http://pd5cb6ulu.bkt.clouddn.com
+      accessKey: 111111
+      secretKey: xxxxxx
+      bucketName: litemall

@@ -1,7 +1,7 @@
 package com.aprilz.tiny.service.impl;
 
-import com.aprilz.tiny.mbg.entity.ApAdminPermissionRelationEntity;
 import com.aprilz.tiny.mapper.ApAdminPermissionRelationMapper;
+import com.aprilz.tiny.mbg.entity.ApAdminPermissionRelation;
 import com.aprilz.tiny.service.IApAdminPermissionRelationService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author aprilz
- * @since 2022-07-07
+ * @since 2022-08-11
  */
 @Service
-public class ApAdminPermissionRelationServiceImpl extends ServiceImpl<ApAdminPermissionRelationMapper, ApAdminPermissionRelationEntity> implements IApAdminPermissionRelationService {
+public class ApAdminPermissionRelationServiceImpl extends ServiceImpl<ApAdminPermissionRelationMapper, ApAdminPermissionRelation> implements IApAdminPermissionRelationService {
 
 }

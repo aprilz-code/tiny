@@ -1,6 +1,6 @@
 package com.aprilz.tiny.service;
 
-import com.aprilz.tiny.mbg.entity.ApAdminRoleRelationEntity;
+import com.aprilz.tiny.mbg.entity.ApAdminRoleRelation;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author aprilz
- * @since 2022-07-07
+ * @since 2022-08-11
  */
-public interface IApAdminRoleRelationService extends IService<ApAdminRoleRelationEntity> {
+public interface IApAdminRoleRelationService extends IService<ApAdminRoleRelation> {
 
 }

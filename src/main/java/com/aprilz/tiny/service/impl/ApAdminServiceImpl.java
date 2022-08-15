@@ -3,9 +3,10 @@ package com.aprilz.tiny.service.impl;
 import com.aprilz.tiny.common.utils.JwtTokenUtil;
 import com.aprilz.tiny.mapper.ApAdminMapper;
 import com.aprilz.tiny.mapper.ApPermissionMapper;
-import com.aprilz.tiny.mbg.entity.ApAdminEntity;
-import com.aprilz.tiny.mbg.entity.ApPermissionEntity;
+import com.aprilz.tiny.mbg.entity.ApAdmin;
+import com.aprilz.tiny.mbg.entity.ApPermission;
 import com.aprilz.tiny.service.IApAdminService;
+import com.aprilz.tiny.vo.Token;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -31,11 +32,11 @@ import java.util.List;
  * </p>
  *
  * @author aprilz
- * @since 2022-07-07
+ * @since 2022-08-11
  */
 @Slf4j
 @Service
-public class ApAdminServiceImpl extends ServiceImpl<ApAdminMapper, ApAdminEntity> implements IApAdminService {
+public class ApAdminServiceImpl extends ServiceImpl<ApAdminMapper, ApAdmin> implements IApAdminService {
     @Autowired
     private UserDetailsService userDetailsService;
     @Autowired
@@ -50,26 +51,22 @@ public class ApAdminServiceImpl extends ServiceImpl<ApAdminMapper, ApAdminEntity
     private ApPermissionMapper apPermissionMapper;
 
     @Override
-    public ApAdminEntity getAdminByUsername(String username) {
-        LambdaQueryWrapper<ApAdminEntity> queryWrapper = new LambdaQueryWrapper();
-        queryWrapper.eq(ApAdminEntity::getUsername, username);
-        List<ApAdminEntity> adminList = adminMapper.selectList(queryWrapper);
-        if (adminList != null && adminList.size() > 0) {
-            return adminList.get(0);
-        }
-        return null;
+    public ApAdmin getAdminByUsernameOrMobile(String username) {
+        LambdaQueryWrapper<ApAdmin> queryWrapper = new LambdaQueryWrapper();
+        queryWrapper.eq(ApAdmin::getUsername, username).or().eq(ApAdmin::getMobile, username).last("limit 1");
+        return adminMapper.selectOne(queryWrapper);
     }
 
     @Override
-    public ApAdminEntity register(ApAdminEntity apAdminParam) {
-        ApAdminEntity apAdmin = new ApAdminEntity();
+    public ApAdmin register(ApAdmin apAdminParam) {
+        ApAdmin apAdmin = new ApAdmin();
         BeanUtils.copyProperties(apAdminParam, apAdmin);
         apAdmin.setCreateTime(new Date());
         apAdmin.setStatus(true);
         //查询是否有相同用户名的用户
-        LambdaQueryWrapper<ApAdminEntity> queryWrapper = new LambdaQueryWrapper();
-        queryWrapper.eq(ApAdminEntity::getUsername, apAdminParam.getUsername());
-        List<ApAdminEntity> apAdminList = adminMapper.selectList(queryWrapper);
+        LambdaQueryWrapper<ApAdmin> queryWrapper = new LambdaQueryWrapper();
+        queryWrapper.eq(ApAdmin::getUsername, apAdminParam.getUsername());
+        List<ApAdmin> apAdminList = adminMapper.selectList(queryWrapper);
         if (apAdminList.size() > 0) {
             return null;
         }
@@ -90,7 +87,8 @@ public class ApAdminServiceImpl extends ServiceImpl<ApAdminMapper, ApAdminEntity
             }
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            token = jwtTokenUtil.generateToken(userDetails);
+            Token tk = jwtTokenUtil.generateToken(userDetails);
+            token = tk.getToken();
         } catch (AuthenticationException e) {
             log.warn("登录异常:{}", e.getMessage());
         }
@@ -99,7 +97,7 @@ public class ApAdminServiceImpl extends ServiceImpl<ApAdminMapper, ApAdminEntity
 
 
     @Override
-    public List<ApPermissionEntity> getPermissionList(Long adminId) {
+    public List<ApPermission> getPermissionList(Long adminId) {
         return apPermissionMapper.getPermissionList(adminId);
     }
 }

@@ -1,6 +1,6 @@
 package com.aprilz.tiny.mapper;
 
-import com.aprilz.tiny.mbg.entity.ApPermissionEntity;
+import com.aprilz.tiny.mbg.entity.ApPermission;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -12,14 +12,9 @@ import java.util.List;
  * </p>
  *
  * @author aprilz
- * @since 2022-07-07
+ * @since 2022-08-11
  */
-public interface ApPermissionMapper extends BaseMapper<ApPermissionEntity> {
+public interface ApPermissionMapper extends BaseMapper<ApPermission> {
 
-
-    /**
-     * 获取用户所有权限(包括+-权限)
-     */
-    List<ApPermissionEntity> getPermissionList(@Param("adminId") Long adminId);
-
+    List<ApPermission> getPermissionList(@Param("adminId") Long adminId);
 }

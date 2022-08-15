@@ -1,6 +1,6 @@
 package com.aprilz.tiny.mapper;
 
-import com.aprilz.tiny.mbg.entity.ApAdminRoleRelationEntity;
+import com.aprilz.tiny.mbg.entity.ApAdminRoleRelation;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -9,9 +9,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author aprilz
- * @since 2022-07-07
+ * @since 2022-08-11
  */
-public interface ApAdminRoleRelationMapper extends BaseMapper<ApAdminRoleRelationEntity> {
-
+public interface ApAdminRoleRelationMapper extends BaseMapper<ApAdminRoleRelation> {
 
 }

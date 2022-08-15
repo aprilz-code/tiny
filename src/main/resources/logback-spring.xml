@@ -23,6 +23,7 @@
               value="[${APP_NAME}] %d{yyyy-MM-dd HH:mm:ss.SSS} %level ${PID} [%thread] %logger %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
 
 
+
     <!-- 控制台日志 -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <withJansi>true</withJansi>
@@ -77,12 +78,15 @@
         </filter>
     </appender>
 
-    <root level="DEBUG">
+    <root level="INFO">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="ERROR"/>
         <appender-ref ref="INFO"/>
     </root>
+
+
     <logger name="org.springframework" level="ERROR"/>
-    <logger name="org.mybatis" level="ERROR"/>
+    <logger name="com.aprilz.tiny.mapper" level="DEBUG"/>
+    <!--    <logger name="com.baomidou.example.mapper" level="DEBUG"/>-->
 
 </configuration>

@@ -1,11 +1,12 @@
 package com.aprilz.tiny.config;
 
+import com.aprilz.tiny.common.cache.Cache;
 import com.aprilz.tiny.common.properties.IgnoredUrlsProperties;
 import com.aprilz.tiny.component.JwtAuthenticationTokenFilter;
 import com.aprilz.tiny.component.RestAuthenticationEntryPoint;
 import com.aprilz.tiny.dto.AdminUserDetails;
-import com.aprilz.tiny.mbg.entity.ApAdminEntity;
-import com.aprilz.tiny.mbg.entity.ApPermissionEntity;
+import com.aprilz.tiny.mbg.entity.ApAdmin;
+import com.aprilz.tiny.mbg.entity.ApPermission;
 import com.aprilz.tiny.service.IApAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +24,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -45,17 +45,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private IApAdminService adminService;
 
-
     /**
      * 忽略验权配置
      */
     @Resource
     private IgnoredUrlsProperties ignoredUrlsProperties;
 
-    //    @Autowired
-//    private RestfulAccessDeniedHandler restfulAccessDeniedHandler;
+
+    @Autowired
+    private Cache<String> cache;
+
     @Autowired
     private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
@@ -81,8 +83,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeRequests()
-                .antMatchers("/sso/login", "/sso/register")// 对登录注册要允许匿名访问
-                .permitAll()
+//                .antMatchers("/sso/login", "/sso/register")// 对登录注册要允许匿名访问
+//                .permitAll()
                 .antMatchers(HttpMethod.OPTIONS)//跨域请求会先进行一次options请求
                 .permitAll()
 //                .antMatchers("/**")//测试时全部运行访问
@@ -92,7 +94,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // 禁用缓存
         httpSecurity.headers().cacheControl();
         // 添加JWT filter
-        httpSecurity.addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.addFilter(jwtAuthenticationTokenFilter());
         //添加自定义未授权和未登录结果返回
         httpSecurity.exceptionHandling()
                 //全局拦截器影响会失效
@@ -133,9 +135,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public UserDetailsService userDetailsService() {
         //获取登录用户信息
         return username -> {
-            ApAdminEntity admin = adminService.getAdminByUsername(username);
+            ApAdmin admin = adminService.getAdminByUsernameOrMobile(username);
             if (admin != null) {
-                List<ApPermissionEntity> permissionList = adminService.getPermissionList(admin.getId());
+                List<ApPermission> permissionList = adminService.getPermissionList(admin.getId());
                 return new AdminUserDetails(admin, permissionList);
             }
             throw new UsernameNotFoundException("用户名或密码错误");
@@ -143,8 +145,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter() {
-        return new JwtAuthenticationTokenFilter();
+    public JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter() throws Exception {
+        return new JwtAuthenticationTokenFilter(authenticationManager(), cache);
     }
 
     @Bean
@@ -152,5 +154,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+
 
 }

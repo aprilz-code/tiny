@@ -1,6 +1,6 @@
 package com.aprilz.tiny.service;
 
-import com.aprilz.tiny.mbg.entity.ApRoleEntity;
+import com.aprilz.tiny.mbg.entity.ApRole;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author aprilz
- * @since 2022-07-07
+ * @since 2022-08-11
  */
-public interface IApRoleService extends IService<ApRoleEntity> {
+public interface IApRoleService extends IService<ApRole> {
 
 }

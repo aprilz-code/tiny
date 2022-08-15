@@ -1,10 +1,17 @@
 package com.aprilz.tiny.common.utils;
 
+import cn.hutool.json.JSONUtil;
+import com.aprilz.tiny.common.cache.Cache;
+import com.aprilz.tiny.common.cache.CachePrefix;
+import com.aprilz.tiny.dto.AdminUserDetails;
+import com.aprilz.tiny.mbg.entity.ApUser;
+import com.aprilz.tiny.vo.Token;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -12,6 +19,8 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 /**
  * JwtToken生成的工具类
@@ -27,22 +36,41 @@ import java.util.Map;
 @Component
 public class JwtTokenUtil {
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtTokenUtil.class);
-    private static final String CLAIM_KEY_USERNAME = "sub";
+    private static final String CLAIM_KEY_USERINFO = "sub";
     private static final String CLAIM_KEY_CREATED = "created";
     @Value("${jwt.secret}")
     private String secret;
     @Value("${jwt.expiration}")
     private Long expiration;
 
+    @Autowired
+    private Cache cache;
+
     /**
      * 根据负责生成JWT的token
      */
-    private String generateToken(Map<String, Object> claims) {
-        return Jwts.builder()
+    private Token generateToken(Map<String, Object> claims) {
+        Token tokens = new Token();
+        String token = Jwts.builder()
                 .setClaims(claims)
-                .setExpiration(generateExpirationDate())
+                .setExpiration(generateExpirationDate(expiration))
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
+        cache.put(CachePrefix.AUTH_TOKEN + token, 1,
+                expiration, TimeUnit.MINUTES);
+
+        String refreshToken = Jwts.builder()
+                .setClaims(claims)
+                .setExpiration(generateExpirationDate(expiration * 2))
+                .signWith(SignatureAlgorithm.HS512, secret)
+                .compact();
+
+        cache.put(CachePrefix.REFRESH_TOKEN + refreshToken, 1,
+                expiration * 2, TimeUnit.MINUTES);
+
+        tokens.setToken(token);
+        tokens.setRefreshToken(refreshToken);
+        return tokens;
     }
 
     /**
@@ -62,24 +90,34 @@ public class JwtTokenUtil {
     }
 
     /**
-     * 生成token的过期时间
+     * 生成token的过期时间  分钟计算
      */
-    private Date generateExpirationDate() {
-        return new Date(System.currentTimeMillis() + expiration * 1000);
+    private Date generateExpirationDate(Long expiration) {
+        return new Date(System.currentTimeMillis() + expiration * 60 * 1000);
     }
 
     /**
      * 从token中获取登录用户名
      */
-    public String getUserNameFromToken(String token) {
-        String username;
+//    public String getUserNameFromToken(String token) {
+//        String username;
+//        try {
+//            Claims claims = getClaimsFromToken(token);
+//            username =  claims.getSubject();
+//        } catch (Exception e) {
+//            username = null;
+//        }
+//        return username;
+//    }
+    public ApUser getUserInfoFromToken(String token) {
+        ApUser userInfo;
         try {
             Claims claims = getClaimsFromToken(token);
-            username =  claims.getSubject();
+            userInfo = JSONUtil.toBean(claims.getSubject(), ApUser.class);
         } catch (Exception e) {
-            username = null;
+            userInfo = null;
         }
-        return username;
+        return userInfo;
     }
 
     /**
@@ -89,8 +127,11 @@ public class JwtTokenUtil {
      * @param userDetails 从数据库中查询出来的用户信息
      */
     public boolean validateToken(String token, UserDetails userDetails) {
-        String username = getUserNameFromToken(token);
-        return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
+        ApUser apUser = getUserInfoFromToken(token);
+        if (Objects.isNull(apUser)) {
+            return false;
+        }
+        return apUser.getUsername().equals(userDetails.getUsername()) && !isTokenExpired(token);
     }
 
     /**
@@ -112,9 +153,10 @@ public class JwtTokenUtil {
     /**
      * 根据用户信息生成token
      */
-    public String generateToken(UserDetails userDetails) {
+    public Token generateToken(UserDetails userDetails) {
+        AdminUserDetails userInfo = (AdminUserDetails) userDetails;
         Map<String, Object> claims = new HashMap<>();
-        claims.put(CLAIM_KEY_USERNAME, userDetails.getUsername());
+        claims.put(CLAIM_KEY_USERINFO, JSONUtil.toJsonStr(userInfo.getApAdmin().setPassword(null)));
         claims.put(CLAIM_KEY_CREATED, new Date());
         return generateToken(claims);
     }
@@ -129,7 +171,7 @@ public class JwtTokenUtil {
     /**
      * 刷新token
      */
-    public String refreshToken(String token) {
+    public Token refreshToken(String token) {
         Claims claims = getClaimsFromToken(token);
         claims.put(CLAIM_KEY_CREATED, new Date());
         return generateToken(claims);

@@ -5,7 +5,7 @@ import lombok.experimental.Accessors;
 
 /**
  * @description: 基础配置类
- * @author: liushaohui
+ * @author: aprilz
  * @since: 2022/7/7
  **/
 @Data

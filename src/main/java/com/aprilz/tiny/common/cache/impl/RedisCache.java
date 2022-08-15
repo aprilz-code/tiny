@@ -46,6 +46,16 @@ public class RedisCache implements Cache {
     }
 
     @Override
+    public Integer getInteger(Object key) {
+        try {
+            return (Integer) redisTemplate.opsForValue().get(key);
+        } catch (Exception e) {
+            return null;
+        }
+
+    }
+
+    @Override
     public List multiGet(Collection keys) {
         return redisTemplate.opsForValue().multiGet(keys);
 
@@ -277,7 +287,7 @@ public class RedisCache implements Cache {
      * @return 增加状态
      */
     @Override
-    public boolean zAdd(String key, long score, String value) {
+    public boolean zAdd(String key, String value, long score) {
         return redisTemplate.opsForZSet().add(key, value, score);
 
     }

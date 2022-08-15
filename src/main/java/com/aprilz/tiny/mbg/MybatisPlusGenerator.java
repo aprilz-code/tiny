@@ -15,21 +15,21 @@ import java.util.List;
 
 /**
  * @description: 执行main
- * @author: liushaohui
+ * @author: aprilz
  * @since: 2022/7/7
  **/
 public class MybatisPlusGenerator {
 
     public static void main(String[] args) {
         //DB 配置
-        String dbUrl = "jdbc:mysql://0.0.0.0:3306/tiny";
+        String dbUrl = "jdbc:mysql://119.91.87.105:3306/tinymall";
         String driver = "com.mysql.cj.jdbc.Driver";
-        String username = "root";
-        String password = "peiqi666";
+        String username = "tinymall";
+        String password = "tinymall123456";
 
 
         //逗号分割
-        String tableName = "ap_admin_user";
+        String tableName = "ap_role_permission_relation";
 
         CodeGeneratorBo bo = new CodeGeneratorBo();
         bo.setDbUrl(dbUrl).setDriver(driver).setUsername(username).setPassword(password)
@@ -124,7 +124,7 @@ public class MybatisPlusGenerator {
                     .logicDeleteColumnName(Config.FIELD_LOGIC_DELETE_NAME)
                     .logicDeletePropertyName(Config.FIELD_LOGIC_DELETE_NAME)
                     .superClass(BaseEntity.class)
-                    .addSuperEntityColumns("id", "createBy", "createTime", "updateBy", "updateTime", "status")
+                    .addSuperEntityColumns("id", "createBy", "createTime", "updateBy", "updateTime", "deleteFlag")
                     .controllerBuilder()
                     .enableRestStyle()
                     .enableHyphenStyle();

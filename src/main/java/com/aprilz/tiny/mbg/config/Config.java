@@ -31,9 +31,7 @@ public class Config {
      */
     public static final String FILE_NAME_ENTITY = "%s";
 
-    /**
-     * 文件名后缀：Dao
-     */
+    /** 文件名后缀：Dao */
     public static final String FILE_NAME_DAO = "I%sMapper";
 
     /** 文件名后缀：Mapper */

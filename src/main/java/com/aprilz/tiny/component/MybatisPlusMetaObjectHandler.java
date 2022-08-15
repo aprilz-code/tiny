@@ -13,7 +13,7 @@ import java.util.Objects;
 
 /**
  * @description: mybatisplus拦截器
- * @author: liushaohui
+ * @author: aprilz
  * @since: 2022/7/13
  **/
 @Slf4j
@@ -27,23 +27,23 @@ public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
         if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
             username = SecurityContextHolder.getContext().getAuthentication().getName();
         }
-        if (metaObject.hasGetter("createTime")) {
+        if (metaObject.hasGetter("createTime") && Objects.isNull(metaObject.getValue("createTime"))) {
             this.strictInsertFill(metaObject, "createTime", () -> new Date(), Date.class);
         }
-        if (metaObject.hasGetter("updateTime")) {
+        if (metaObject.hasGetter("updateTime") && Objects.isNull(metaObject.getValue("updateTime"))) {
             this.strictUpdateFill(metaObject, "updateTime", () -> new Date(), Date.class);
         }
-        if (metaObject.hasGetter("createBy")) {
+        if (metaObject.hasGetter("createBy") && Objects.isNull(metaObject.getValue("createBy"))) {
             this.strictInsertFill(metaObject, "createBy", String.class, username);
         }
-        if (metaObject.hasGetter("updateBy")) {
+        if (metaObject.hasGetter("updateBy") && Objects.isNull(metaObject.getValue("updateBy"))) {
             this.strictUpdateFill(metaObject, "updateBy", String.class, username);
         }
 
-        if (metaObject.hasGetter("status")) {
+        if (metaObject.hasGetter("deleteFlag")) {
             //无值则写入
-            if (Objects.isNull(metaObject.getValue("status"))) {
-                this.setFieldValByName("status", true, metaObject);
+            if (Objects.isNull(metaObject.getValue("deleteFlag"))) {
+                this.setFieldValByName("deleteFlag", false, metaObject);
             }
         }
     }
@@ -55,10 +55,10 @@ public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
         if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
             username = SecurityContextHolder.getContext().getAuthentication().getName();
         }
-        if (metaObject.hasGetter("updateTime")) {
+        if (metaObject.hasGetter("updateTime") && Objects.isNull(metaObject.getValue("updateTime"))) {
             this.strictUpdateFill(metaObject, "updateTime", () -> LocalDateTime.now(), LocalDateTime.class);
         }
-        if (metaObject.hasGetter("updateBy")) {
+        if (metaObject.hasGetter("updateBy") && Objects.isNull(metaObject.getValue("updateBy"))) {
             this.strictUpdateFill(metaObject, "updateBy", String.class, username);
         }
     }
