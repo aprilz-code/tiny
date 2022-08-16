@@ -5,7 +5,7 @@ MySQL - 5.7.38-log : Database - tinymall
 */
 
 
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 /*!40101 SET SQL_MODE=''*/;
 
@@ -10926,7 +10926,7 @@ CREATE TABLE `ap_user`
     `session_key`     varchar(100) NOT NULL                                 DEFAULT '' COMMENT '微信登录会话KEY',
     PRIMARY KEY (`id`),
     UNIQUE KEY `user_name` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
 
 /*Data for the table `ap_user` */
 

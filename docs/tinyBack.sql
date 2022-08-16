@@ -5,7 +5,7 @@ MySQL - 5.7.38-log : Database - tinymall
 */
 
 
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4  */;
 
 /*!40101 SET SQL_MODE=''*/;
 
@@ -108,7 +108,7 @@ CREATE TABLE `ap_admin`
     `login_time`  datetime                                               DEFAULT NULL COMMENT '最后登录时间',
     `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '备注',
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='后台用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='后台用户表';
 
 /*Data for the table `ap_admin` */
 
@@ -136,7 +136,7 @@ CREATE TABLE `ap_admin_permission_relation`
     `permission_id` bigint(20) DEFAULT NULL,
     `type`          int(1) DEFAULT NULL,
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='后台用户和权限关系表(除角色中定义的权限以外的加减权限)';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='后台用户和权限关系表(除角色中定义的权限以外的加减权限)';
 
 /*Data for the table `ap_admin_permission_relation` */
 
@@ -155,7 +155,7 @@ CREATE TABLE `ap_admin_role_relation`
     `admin_id`    bigint(20) DEFAULT NULL,
     `role_id`     bigint(20) DEFAULT NULL,
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='后台用户和角色关系表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='后台用户和角色关系表';
 
 /*Data for the table `ap_admin_role_relation` */
 
@@ -7539,7 +7539,7 @@ CREATE TABLE `ap_permission`
     `uri`         varchar(200)                                          DEFAULT NULL COMMENT '前端资源路径',
     `sort`        int(11) DEFAULT NULL COMMENT '排序',
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COMMENT='后台用户权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COMMENT='后台用户权限表';
 
 /*Data for the table `ap_permission` */
 
@@ -10823,7 +10823,7 @@ CREATE TABLE `ap_role`
     `admin_count` int(11) DEFAULT NULL COMMENT '后台用户数量',
     `sort`        int(11) DEFAULT '0',
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='后台用户角色表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='后台用户角色表';
 
 /*Data for the table `ap_role` */
 
@@ -10846,7 +10846,7 @@ CREATE TABLE `ap_role_permission_relation`
     `role_id`       bigint(20) DEFAULT NULL,
     `permission_id` bigint(20) DEFAULT NULL,
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='后台用户角色和权限关系表';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='后台用户角色和权限关系表';
 
 /*Data for the table `ap_role_permission_relation` */
 
@@ -11089,7 +11089,7 @@ CREATE TABLE `ap_user`
     `session_key`     varchar(100) NOT NULL                                 DEFAULT '' COMMENT '微信登录会话KEY',
     PRIMARY KEY (`id`),
     UNIQUE KEY `user_name` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
 
 /*Data for the table `ap_user` */
 
