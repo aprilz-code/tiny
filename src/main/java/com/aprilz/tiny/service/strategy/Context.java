@@ -1,8 +1,9 @@
 package com.aprilz.tiny.service.strategy;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.aprilz.tiny.common.utils.SpringContextUtil;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,14 +15,17 @@ import java.util.Map;
 @Component
 public class Context {
 
-    @Autowired
-    Map<String, Strategy> serviceMap = new HashMap<>();
-    // 默认装配至serviceMap中
+    private static Map<String, Strategy> serviceMap = new HashMap<>();
+    //不用static 默认装配至serviceMap中
 
-//    @PostConstruct
-//    public void init(){
-//        serviceMap.get("strategyA").show();
-//    }
+    public static Strategy getStrategy(String serviceName) {
+        return serviceMap.get(serviceName);
+    }
+
+    @PostConstruct
+    public void init() {
+        serviceMap = SpringContextUtil.getBeansOfType(Strategy.class);
+    }
 
 
 }

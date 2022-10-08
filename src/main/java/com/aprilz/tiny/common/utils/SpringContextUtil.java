@@ -5,6 +5,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 /**
  * @author Chopper
  */
@@ -49,6 +51,17 @@ public class SpringContextUtil implements ApplicationContextAware {
      */
     public static <T> T getBean(Class<T> clazz) {
         return getApplicationContext().getBean(clazz);
+    }
+
+    /**
+     * 通过class获取Bean.
+     *
+     * @param clazz bean的类型
+     * @param <T>   bean的类型
+     * @return bean实例
+     */
+    public static <T> Map<String, T> getBeansOfType(Class<T> clazz) {
+        return getApplicationContext().getBeansOfType(clazz);
     }
 
     /**

@@ -5,6 +5,8 @@ import com.aprilz.tiny.common.api.PageVO;
 import com.aprilz.tiny.common.utils.PageUtil;
 import com.aprilz.tiny.mapper.ApUserMapper;
 import com.aprilz.tiny.mbg.entity.ApUser;
+import com.aprilz.tiny.service.strategy.Context;
+import com.aprilz.tiny.service.strategy.Strategy;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.junit.jupiter.api.Test;
@@ -24,7 +26,12 @@ public class TinyApplicationTests {
         wrapper.eq(ApUser::getId, 1);
         Page<ApUser> apAdminEntityPage = apUserMapper.selectPage(PageUtil.initPage(new PageVO()), wrapper);
         System.out.println(apAdminEntityPage);
+    }
 
+    @Test
+    public void testStrategy() {
+        Strategy strategyA = Context.getStrategy("strategyA");
+        strategyA.show();
     }
 
 }
