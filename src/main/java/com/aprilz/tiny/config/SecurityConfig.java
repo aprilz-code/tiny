@@ -9,6 +9,7 @@ import com.aprilz.tiny.mbg.entity.ApAdmin;
 import com.aprilz.tiny.mbg.entity.ApPermission;
 import com.aprilz.tiny.service.IApAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -57,6 +58,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+
+    @Value("${jwt.tokenHeader}")
+    private String tokenHeader;
 
 
     @Override
@@ -107,14 +111,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         CorsConfiguration configuration = new CorsConfiguration();
         // 允许跨域访问的主机
         //    if (environment.acceptsProfiles(Profiles.of("dev"))) {
-        configuration.setAllowedOrigins(Collections.singletonList("http://10.1.129.68"));
+        configuration.setAllowedOriginPatterns(Collections.singletonList("*"));
         //     } else {
         //          configuration.setAllowedOrigins(Collections.singletonList("http://域名"));
         //     }
         configuration.setAllowCredentials(true);
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Collections.singletonList("*"));
-        configuration.addExposedHeader("X-Authenticate");
+        configuration.addExposedHeader(tokenHeader);
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
