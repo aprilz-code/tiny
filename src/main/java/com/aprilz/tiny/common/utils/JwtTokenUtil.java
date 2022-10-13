@@ -4,7 +4,7 @@ import cn.hutool.json.JSONUtil;
 import com.aprilz.tiny.common.cache.Cache;
 import com.aprilz.tiny.common.cache.CachePrefix;
 import com.aprilz.tiny.dto.AdminUserDetails;
-import com.aprilz.tiny.mbg.entity.ApUser;
+import com.aprilz.tiny.mbg.entity.ApAdmin;
 import com.aprilz.tiny.vo.Token;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -109,11 +109,11 @@ public class JwtTokenUtil {
 //        }
 //        return username;
 //    }
-    public ApUser getUserInfoFromToken(String token) {
-        ApUser userInfo;
+    public ApAdmin getUserInfoFromToken(String token) {
+        ApAdmin userInfo;
         try {
             Claims claims = getClaimsFromToken(token);
-            userInfo = JSONUtil.toBean(claims.getSubject(), ApUser.class);
+            userInfo = JSONUtil.toBean(claims.getSubject(), ApAdmin.class);
         } catch (Exception e) {
             userInfo = null;
         }
@@ -127,7 +127,7 @@ public class JwtTokenUtil {
      * @param userDetails 从数据库中查询出来的用户信息
      */
     public boolean validateToken(String token, UserDetails userDetails) {
-        ApUser apUser = getUserInfoFromToken(token);
+        ApAdmin apUser = getUserInfoFromToken(token);
         if (Objects.isNull(apUser)) {
             return false;
         }

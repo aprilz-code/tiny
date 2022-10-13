@@ -3,7 +3,7 @@ package com.aprilz.tiny.component;
 import com.aprilz.tiny.common.cache.Cache;
 import com.aprilz.tiny.common.cache.CachePrefix;
 import com.aprilz.tiny.common.utils.JwtTokenUtil;
-import com.aprilz.tiny.mbg.entity.ApUser;
+import com.aprilz.tiny.mbg.entity.ApAdmin;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -55,7 +55,7 @@ public class JwtAuthenticationTokenFilter extends BasicAuthenticationFilter {
         String authHeader = request.getHeader(this.tokenHeader);
         if (authHeader != null && authHeader.startsWith(this.tokenHead)) {
             String authToken = authHeader.substring(this.tokenHead.length()).trim();// The part after "Bearer "
-            ApUser userInfo = jwtTokenUtil.getUserInfoFromToken(authToken);
+            ApAdmin userInfo = jwtTokenUtil.getUserInfoFromToken(authToken);
 
             //如果redis没有没有token 则return
             if (Objects.isNull(userInfo) && !cache.hasKey(CachePrefix.AUTH_TOKEN + authToken)) {
