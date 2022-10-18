@@ -1,5 +1,7 @@
 package com.aprilz.tiny.common.utils;
 
+import com.alibaba.fastjson.util.TypeUtils;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Arrays;
@@ -35,7 +37,6 @@ public final class CurrencyUtil {
         }
         return result.doubleValue();
     }
-
     /**
      * 提供精确的减法运算。
      *
@@ -58,11 +59,12 @@ public final class CurrencyUtil {
      * @param v2 乘数
      * @return 两个参数的积
      */
-    public static Double mul(double v1, double v2) {
-        BigDecimal b1 = BigDecimal.valueOf(v1);
+    public static Double mul(Object v1, double v2) {
+        BigDecimal b1 = TypeUtils.castToBigDecimal(v1);
         BigDecimal b2 = BigDecimal.valueOf(v2);
         return b1.multiply(b2).setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
+
 
     /**
      * 提供精确的乘法运算。
@@ -121,10 +123,11 @@ public final class CurrencyUtil {
      * @param money 金额
      * @return 转换单位为分
      */
-    public static Integer fen(Double money) {
+    public static Integer fen(Object money) {
         double price = mul(money, 100);
         return (int) price;
     }
+
 
     /**
      * 金额转分
