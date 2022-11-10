@@ -6,6 +6,7 @@ import com.aprilz.tiny.mbg.config.Config;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.*;
+import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.keywords.MySqlKeyWordsHandler;
 import org.springframework.util.StringUtils;
@@ -84,6 +85,7 @@ public class MybatisPlusGenerator {
 
         public DataSourceConfig.Builder dataSourceBuilder() {
             return new DataSourceConfig.Builder(bo.getDbUrl(), bo.getUsername(), bo.getPassword())
+                    .typeConvert(new MySqlTypeConvert())
                     .keyWordsHandler(new MySqlKeyWordsHandler());
         }
 
