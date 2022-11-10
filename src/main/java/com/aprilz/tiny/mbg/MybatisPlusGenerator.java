@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
+import com.baomidou.mybatisplus.generator.keywords.MySqlKeyWordsHandler;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -82,7 +83,8 @@ public class MybatisPlusGenerator {
         }
 
         public DataSourceConfig.Builder dataSourceBuilder() {
-            return new DataSourceConfig.Builder(bo.getDbUrl(), bo.getUsername(), bo.getPassword());
+            return new DataSourceConfig.Builder(bo.getDbUrl(), bo.getUsername(), bo.getPassword())
+                    .keyWordsHandler(new MySqlKeyWordsHandler());
         }
 
         public void globalConfigBuilder(GlobalConfig.Builder builder) {
