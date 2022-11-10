@@ -1,4 +1,4 @@
-package com.aprilz.tiny.service.strategy;
+package com.aprilz.tiny.designMode.strategy;
 
 /**
  * @description: 基接口

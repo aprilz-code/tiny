@@ -3,10 +3,13 @@ package com.aprilz.tiny;
 
 import com.aprilz.tiny.common.api.PageVO;
 import com.aprilz.tiny.common.utils.PageUtil;
+import com.aprilz.tiny.designMode.observer.impl.MySubject;
+import com.aprilz.tiny.designMode.observer.impl.ObserverA;
+import com.aprilz.tiny.designMode.observer.impl.ObserverB;
+import com.aprilz.tiny.designMode.strategy.Context;
+import com.aprilz.tiny.designMode.strategy.Strategy;
 import com.aprilz.tiny.mapper.ApUserMapper;
 import com.aprilz.tiny.mbg.entity.ApUser;
-import com.aprilz.tiny.service.strategy.Context;
-import com.aprilz.tiny.service.strategy.Strategy;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -37,8 +40,14 @@ public class TinyApplicationTests {
     @Autowired
     private TransactionDefinition transactionDefinition;
 
-    @Resource
 
+    /**
+     * @param
+     * @return void
+     * @author aprilz
+     * @description test 分页
+     * @since 2022/11/10
+     **/
     @Test
     public void contextLoads() {
         LambdaQueryWrapper<ApUser> wrapper = new LambdaQueryWrapper<>();
@@ -47,12 +56,41 @@ public class TinyApplicationTests {
         System.out.println(apAdminEntityPage);
     }
 
+    /**
+     * @param
+     * @return void
+     * @author aprilz
+     * @description //test 策略模式
+     * @since 2022/11/10
+     **/
     @Test
     public void testStrategy() {
         Strategy strategyA = Context.getStrategy("strategyA");
         strategyA.show();
     }
 
+    /**
+     * @param
+     * @return void
+     * @author aprilz
+     * @description //test 观察者模式
+     * @since 2022/11/10
+     **/
+    @Test
+    public void testObserver() {
+        MySubject mySubject = new MySubject();
+        mySubject.add(new ObserverA());
+        mySubject.add(new ObserverB());
+        mySubject.operation();
+    }
+
+    /**
+     * @param
+     * @return void
+     * @author aprilz
+     * @description test 编程式事务
+     * @since 2022/11/10
+     **/
     @Test
     public void testTrans() {
         //查询总数据

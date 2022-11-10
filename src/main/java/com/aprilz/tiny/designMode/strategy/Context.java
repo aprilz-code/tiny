@@ -1,4 +1,4 @@
-package com.aprilz.tiny.service.strategy;
+package com.aprilz.tiny.designMode.strategy;
 
 import com.aprilz.tiny.common.utils.SpringContextUtil;
 import org.springframework.stereotype.Component;

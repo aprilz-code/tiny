@@ -1,6 +1,6 @@
-package com.aprilz.tiny.service.strategy.impl;
+package com.aprilz.tiny.designMode.strategy.impl;
 
-import com.aprilz.tiny.service.strategy.Strategy;
+import com.aprilz.tiny.designMode.strategy.Strategy;
 import org.springframework.stereotype.Service;
 
 /**
