@@ -8,8 +8,8 @@ import com.aprilz.tiny.designMode.observer.impl.ObserverA;
 import com.aprilz.tiny.designMode.observer.impl.ObserverB;
 import com.aprilz.tiny.designMode.strategy.Context;
 import com.aprilz.tiny.designMode.strategy.Strategy;
-import com.aprilz.tiny.mapper.ApUserMapper;
 import com.aprilz.tiny.mbg.entity.ApUser;
+import com.aprilz.tiny.service.IApUserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 public class TinyApplicationTests {
 
     @Resource
-    private ApUserMapper apUserMapper;
+    private IApUserService apUserService;
 
     @Autowired
     private DataSourceTransactionManager transactionManager;
@@ -52,7 +52,7 @@ public class TinyApplicationTests {
     public void contextLoads() {
         LambdaQueryWrapper<ApUser> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(ApUser::getId, 1);
-        Page<ApUser> apAdminEntityPage = apUserMapper.selectPage(PageUtil.initPage(new PageVO()), wrapper);
+        Page<ApUser> apAdminEntityPage = apUserService.page(PageUtil.initPage(new PageVO()), wrapper);
         System.out.println(apAdminEntityPage);
     }
 
@@ -94,7 +94,7 @@ public class TinyApplicationTests {
     @Test
     public void testTrans() {
         //查询总数据
-        List<ApUser> allStudents = apUserMapper.selectList(Wrappers.emptyWrapper());
+        List<ApUser> allStudents = apUserService.list(Wrappers.emptyWrapper());
         // 线程数量
         final Integer threadCount = 100;
 
@@ -144,5 +144,17 @@ public class TinyApplicationTests {
         }
     }
 
+
+    /**
+     * @param
+     * @return void
+     * @author aprilz
+     * @description TransactionSynchronizationManager.registerSynchronization
+     * @since 2022/11/16
+     **/
+    @Test
+    public void testTs() {
+        apUserService.testTs();
+    }
 
 }
