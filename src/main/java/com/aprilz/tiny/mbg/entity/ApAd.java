@@ -7,7 +7,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -22,7 +21,6 @@ import java.util.Date;
  */
 @Getter
 @Setter
-@Accessors(chain = true)
 @TableName("ap_ad")
 @ApiModel(value = "ApAd对象", description = "广告表")
 public class ApAd extends BaseEntity<ApAd> {

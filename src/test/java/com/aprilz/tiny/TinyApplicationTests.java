@@ -8,6 +8,7 @@ import com.aprilz.tiny.designMode.observer.impl.ObserverA;
 import com.aprilz.tiny.designMode.observer.impl.ObserverB;
 import com.aprilz.tiny.designMode.strategy.Context;
 import com.aprilz.tiny.designMode.strategy.Strategy;
+import com.aprilz.tiny.mbg.entity.ApAd;
 import com.aprilz.tiny.mbg.entity.ApUser;
 import com.aprilz.tiny.service.IApUserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -155,6 +156,18 @@ public class TinyApplicationTests {
     @Test
     public void testTs() {
         apUserService.testTs();
+    }
+
+    /**
+     * @param
+     * @return void
+     * @author aprilz
+     * @description lombok 1.14版本以上支持全局配置{@see lombok.config}
+     * @since 2022/11/17
+     **/
+    @Test
+    public void testLombokConfig() {
+        new ApAd().setUrl("").setContent("");
     }
 
 }
