@@ -24,14 +24,14 @@ public class MybatisPlusGenerator {
 
     public static void main(String[] args) {
         //DB 配置
-        String dbUrl = "jdbc:mysql://119.91.87.105:3306/tinymall";
+        String dbUrl = "jdbc:mysql://localhost:3306/tinymall";
         String driver = "com.mysql.cj.jdbc.Driver";
-        String username = "tinymall";
-        String password = "tinymall123456";
+        String username = "root";
+        String password = "123456";
 
 
         //逗号分割
-        String tableName = "ap_role_permission_relation";
+        String tableName = "ap_excel_test";
 
         CodeGeneratorBo bo = new CodeGeneratorBo();
         bo.setDbUrl(dbUrl).setDriver(driver).setUsername(username).setPassword(password)

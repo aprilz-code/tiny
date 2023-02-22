@@ -7,14 +7,14 @@ spring:
   application:
     name: tiny
   datasource:
-    url: jdbc:mysql://0.0.0.0:3306/tinymall?useUnicode=true&allowMultiQueries=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai
-    username: tinymall
-    password: tinymall123456
+    url: jdbc:mysql://localhost:3306/tinymall?useUnicode=true&allowMultiQueries=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
   redis:
-    host: 0.0.0.0 # Redis服务器地址
-    database: 0 # Redis数据库索引（默认为0）
-    port: 6380 # Redis服务器连接端口
-    password: peiqi666 # Redis服务器连接密码（默认为空）
+    host: 192.168.1.88 # Redis服务器地址
+    database: 12 # Redis数据库索引（默认为0）
+    port: 6379 # Redis服务器连接端口
+    password: zhgd123 # Redis服务器连接密码（默认为空）
     lettuce:
       pool:
         # 连接池最大连接数（使用负值表示没有限制） 默认 8
@@ -96,6 +96,7 @@ ignored:
     - /favicon.ico
     - /*.html
     - /sso/login
+    - /excel/**
 
 # wx相关配置
 wx:

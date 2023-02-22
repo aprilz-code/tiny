@@ -169,7 +169,7 @@ public class RedisCache implements Cache {
                 cursor.forEachRemaining(consumer);
                 return null;
 
-            } catch (IOException e) {
+            } catch (Exception e) {
                 log.error("scan错误", e);
                 throw new RuntimeException(e);
             }
