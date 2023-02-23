@@ -34,15 +34,15 @@ public class DictConvert implements Converter<Object> {
                                     GlobalConfiguration globalConfiguration) {
         // 使用字典解析
         String type = getType(contentProperty);
-        String label = readCellData.getStringValue();
-        String value = DictUtil.getDictDataByValue(type, label);
-        if (value == null) {
-            log.error("[convertToJavaData][type({}) 解析不掉 label({})]", type, label);
+        String value = readCellData.getStringValue();
+        String key = DictUtil.getDictDataByValue(type, value);
+        if (key == null) {
+            log.error("[convertToJavaData][type({}) 解析不掉 label({})]", type, value);
             return null;
         }
         // 将 String 的 value 转换成对应的属性
         Class<?> fieldClazz = contentProperty.getField().getType();
-        return Convert.convert(fieldClazz, value);
+        return Convert.convert(fieldClazz, key);
     }
 
     @Override

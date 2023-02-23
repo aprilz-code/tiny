@@ -1,4 +1,4 @@
-package cn.aprilz.excel.core;
+package cn.aprilz.excel.core.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

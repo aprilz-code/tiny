@@ -5,9 +5,10 @@ package com.aprilz.tiny.mbg.entity;
 //import cn.aprilz.excel.core.convert.DictConvert;
 
 import cn.aprilz.excel.core.annotations.DictFormat;
-import cn.aprilz.excel.core.convert.DateConverter;
 import cn.aprilz.excel.core.convert.DictConvert;
+import cn.hutool.core.date.DatePattern;
 import com.alibaba.excel.annotation.ExcelProperty;
+import com.alibaba.excel.annotation.format.DateTimeFormat;
 import com.aprilz.tiny.mbg.base.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -58,7 +59,8 @@ public class ApExcelTest extends BaseEntity<ApExcelTest> {
     private String url;
 
     @TableField("test_time")
-    @ExcelProperty(value = "test_time", converter = DateConverter.class)
+    @ExcelProperty(value = "测试时间")
+    @DateTimeFormat(DatePattern.NORM_DATE_PATTERN)
     private Date testTime;
 
 

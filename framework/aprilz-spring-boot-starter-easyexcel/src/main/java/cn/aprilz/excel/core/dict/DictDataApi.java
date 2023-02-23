@@ -31,7 +31,7 @@ public class DictDataApi {
      * @param value    字典数据标签
      * @return 字典数据
      */
-     public DictDataDTO getDictDataByValue(String dictType, String value) {
+    public DictDataDTO getDictDataByValue(String dictType, String value) {
         return null;
     }
 }

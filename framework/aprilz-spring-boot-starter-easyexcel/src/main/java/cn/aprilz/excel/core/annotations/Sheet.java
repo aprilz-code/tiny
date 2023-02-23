@@ -17,26 +17,26 @@ import java.lang.annotation.*;
 @Documented
 public @interface Sheet {
 
-	int sheetNo() default -1;
+    int sheetNo() default -1;
 
-	/**
-	 * sheet name
-	 */
-	String sheetName();
+    /**
+     * sheet name
+     */
+    String sheetName();
 
-	/**
-	 * 包含字段
-	 */
-	String[] includes() default {};
+    /**
+     * 包含字段
+     */
+    String[] includes() default {};
 
-	/**
-	 * 排除字段
-	 */
-	String[] excludes() default {};
+    /**
+     * 排除字段
+     */
+    String[] excludes() default {};
 
-	/**
-	 * 头生成器
-	 */
-	Class<? extends HeadGenerator> headGenerateClass() default HeadGenerator.class;
+    /**
+     * 头生成器
+     */
+    Class<? extends HeadGenerator> headGenerateClass() default HeadGenerator.class;
 
 }

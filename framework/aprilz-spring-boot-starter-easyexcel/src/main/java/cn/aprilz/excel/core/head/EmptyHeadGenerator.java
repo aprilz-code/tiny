@@ -7,9 +7,9 @@ package cn.aprilz.excel.core.head;
  */
 public class EmptyHeadGenerator implements HeadGenerator {
 
-	@Override
-	public HeadMeta head(Class<?> clazz) {
-		return new HeadMeta();
-	}
+    @Override
+    public HeadMeta head(Class<?> clazz) {
+        return new HeadMeta();
+    }
 
 }

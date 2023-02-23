@@ -17,77 +17,89 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ResponseExcel {
 
-	/**
-	 * 文件名称
-	 * @return string
-	 */
-	String name() default "";
+    /**
+     * 文件名称
+     *
+     * @return string
+     */
+    String name() default "";
 
-	/**
-	 * 文件类型 （xlsx xls）
-	 * @return string
-	 */
-	ExcelTypeEnum suffix() default ExcelTypeEnum.XLSX;
+    /**
+     * 文件类型 （xlsx xls）
+     *
+     * @return string
+     */
+    ExcelTypeEnum suffix() default ExcelTypeEnum.XLSX;
 
-	/**
-	 * 文件密码
-	 * @return password
-	 */
-	String password() default "";
+    /**
+     * 文件密码
+     *
+     * @return password
+     */
+    String password() default "";
 
-	/**
-	 * sheet 名称，支持多个
-	 * @return String[]
-	 */
-	Sheet[] sheets() default {};
+    /**
+     * sheet 名称，支持多个
+     *
+     * @return String[]
+     */
+    Sheet[] sheets() default {};
 
-	/**
-	 * 内存操作
-	 * @return
-	 */
-	boolean inMemory() default false;
+    /**
+     * 内存操作
+     *
+     * @return
+     */
+    boolean inMemory() default false;
 
-	/**
-	 * excel 模板
-	 * @return String
-	 */
-	String template() default "";
+    /**
+     * excel 模板
+     *
+     * @return String
+     */
+    String template() default "";
 
-	/**
-	 * + 包含字段
-	 * @return String[]
-	 */
-	String[] include() default {};
+    /**
+     * + 包含字段
+     *
+     * @return String[]
+     */
+    String[] include() default {};
 
-	/**
-	 * 排除字段
-	 * @return String[]
-	 */
-	String[] exclude() default {};
+    /**
+     * 排除字段
+     *
+     * @return String[]
+     */
+    String[] exclude() default {};
 
-	/**
-	 * 拦截器，自定义样式等处理器
-	 * @return WriteHandler[]
-	 */
-	Class<? extends WriteHandler>[] writeHandler() default {};
+    /**
+     * 拦截器，自定义样式等处理器
+     *
+     * @return WriteHandler[]
+     */
+    Class<? extends WriteHandler>[] writeHandler() default {};
 
-	/**
-	 * 转换器
-	 * @return Converter[]
-	 */
-	Class<? extends Converter>[] converter() default {};
+    /**
+     * 转换器
+     *
+     * @return Converter[]
+     */
+    Class<? extends Converter>[] converter() default {};
 
-	/**
-	 * 自定义Excel头生成器
-	 * @return HeadGenerator
-	 */
-	Class<? extends HeadGenerator> headGenerator() default HeadGenerator.class;
+    /**
+     * 自定义Excel头生成器
+     *
+     * @return HeadGenerator
+     */
+    Class<? extends HeadGenerator> headGenerator() default HeadGenerator.class;
 
 
-	/**
-	 * 填充模式
-	 * @return
-	 */
-	boolean fill() default false;
+    /**
+     * 填充模式
+     *
+     * @return
+     */
+    boolean fill() default false;
 
 }

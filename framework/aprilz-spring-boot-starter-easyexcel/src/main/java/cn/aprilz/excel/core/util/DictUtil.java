@@ -1,8 +1,8 @@
 package cn.aprilz.excel.core.util;
 
-import cn.aprilz.excel.core.KeyValue;
 import cn.aprilz.excel.core.dict.DictDataApi;
 import cn.aprilz.excel.core.dto.DictDataDTO;
+import cn.aprilz.excel.core.dto.KeyValue;
 import cn.hutool.core.util.ObjectUtil;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -68,10 +68,11 @@ public class DictUtil {
 
     @SneakyThrows
     public static String getDictDataByValue(String dictType, String value) {
-        if (PARSE_DICT_DATA_CACHE == null || GET_DICT_DATA_CACHE.size() == 0) {
+        DictDataDTO dictDataDTO = PARSE_DICT_DATA_CACHE.get(new KeyValue<>(dictType, value));
+        if (ObjectUtil.isEmpty(dictDataDTO)) {
             return null;
         }
-        return PARSE_DICT_DATA_CACHE.get(new KeyValue<>(dictType, value)).getKey();
+        return dictDataDTO.getKey();
     }
 
 }

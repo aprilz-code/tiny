@@ -15,26 +15,26 @@ import java.lang.reflect.Method;
  */
 public class NameSpelExpressionProcessor implements NameProcessor {
 
-	/**
-	 * 参数发现器
-	 */
-	private static final ParameterNameDiscoverer NAME_DISCOVERER = new DefaultParameterNameDiscoverer();
+    /**
+     * 参数发现器
+     */
+    private static final ParameterNameDiscoverer NAME_DISCOVERER = new DefaultParameterNameDiscoverer();
 
-	/**
-	 * Express语法解析器
-	 */
-	private static final ExpressionParser PARSER = new SpelExpressionParser();
+    /**
+     * Express语法解析器
+     */
+    private static final ExpressionParser PARSER = new SpelExpressionParser();
 
-	@Override
-	public String doDetermineName(Object[] args, Method method, String key) {
+    @Override
+    public String doDetermineName(Object[] args, Method method, String key) {
 
-		if (!key.contains("#")) {
-			return key;
-		}
+        if (!key.contains("#")) {
+            return key;
+        }
 
-		EvaluationContext context = new MethodBasedEvaluationContext(null, method, args, NAME_DISCOVERER);
-		final Object value = PARSER.parseExpression(key).getValue(context);
-		return value == null ? null : value.toString();
-	}
+        EvaluationContext context = new MethodBasedEvaluationContext(null, method, args, NAME_DISCOVERER);
+        final Object value = PARSER.parseExpression(key).getValue(context);
+        return value == null ? null : value.toString();
+    }
 
 }

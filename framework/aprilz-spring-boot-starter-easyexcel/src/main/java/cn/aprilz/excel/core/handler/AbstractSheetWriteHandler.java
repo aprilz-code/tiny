@@ -1,8 +1,10 @@
 package cn.aprilz.excel.core.handler;
 
 import cn.aprilz.excel.core.annotations.ResponseExcel;
+import cn.aprilz.excel.core.aop.DynamicNameAspect;
 import cn.aprilz.excel.core.convert.LocalDateStringConverter;
 import cn.aprilz.excel.core.convert.LocalDateTimeStringConverter;
+import cn.aprilz.excel.core.custom.AutoHeadColumnWidthStyleStrategy;
 import cn.aprilz.excel.core.exception.ExcelException;
 import cn.aprilz.excel.core.head.HeadGenerator;
 import cn.aprilz.excel.core.head.HeadMeta;
@@ -99,6 +101,7 @@ public abstract class AbstractSheetWriteHandler implements SheetWriteHandler, Ap
     @SneakyThrows(IOException.class)
     public ExcelWriter getExcelWriter(HttpServletResponse response, ResponseExcel responseExcel) {
         ExcelWriterBuilder writerBuilder = EasyExcel.write(response.getOutputStream())
+                .registerWriteHandler(BeanUtils.instantiateClass(AutoHeadColumnWidthStyleStrategy.class))
                 .registerConverter(LocalDateStringConverter.INSTANCE)
                 .registerConverter(LocalDateTimeStringConverter.INSTANCE).autoCloseStream(true)
                 .excelType(responseExcel.suffix()).inMemory(responseExcel.inMemory());

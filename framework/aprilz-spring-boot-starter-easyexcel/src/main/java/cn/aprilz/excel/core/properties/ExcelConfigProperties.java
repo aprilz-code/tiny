@@ -11,11 +11,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = ExcelConfigProperties.PREFIX)
 public class ExcelConfigProperties {
 
-	static final String PREFIX = "excel";
+    static final String PREFIX = "excel";
 
-	/**
-	 * 模板路径
-	 */
-	private String templatePath = "excel";
+    /**
+     * 模板路径
+     */
+    private String templatePath = "excel";
 
 }

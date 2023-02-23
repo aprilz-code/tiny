@@ -1,8 +1,9 @@
 package cn.aprilz.excel.config;
 
 
-import cn.aprilz.excel.core.handler.DynamicNameAspect;
-import cn.aprilz.excel.core.handler.ResponseExcelReturnValueHandler;
+import cn.aprilz.excel.core.aop.DynamicNameAspect;
+import cn.aprilz.excel.core.aop.RequestExcelArgumentResolver;
+import cn.aprilz.excel.core.aop.ResponseExcelReturnValueHandler;
 import cn.aprilz.excel.core.head.EmptyHeadGenerator;
 import cn.aprilz.excel.core.processor.NameProcessor;
 import cn.aprilz.excel.core.processor.NameSpelExpressionProcessor;
@@ -13,6 +14,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 
@@ -36,26 +38,28 @@ public class ResponseExcelAutoConfiguration {
 
     private final ResponseExcelReturnValueHandler responseExcelReturnValueHandler;
 
-	/**
-	 * SPEL 解析处理器
-	 * @return NameProcessor excel名称解析器
-	 */
-	@Bean
-	@ConditionalOnMissingBean
-	public NameProcessor nameProcessor() {
-		return new NameSpelExpressionProcessor();
-	}
+    /**
+     * SPEL 解析处理器
+     *
+     * @return NameProcessor excel名称解析器
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    public NameProcessor nameProcessor() {
+        return new NameSpelExpressionProcessor();
+    }
 
-	/**
-	 * Excel名称解析处理切面
-	 * @param nameProcessor SPEL 解析处理器
-	 * @return DynamicNameAspect
-	 */
-	@Bean
-	@ConditionalOnMissingBean
-	public DynamicNameAspect dynamicNameAspect(NameProcessor nameProcessor) {
-		return new DynamicNameAspect(nameProcessor);
-	}
+    /**
+     * Excel名称解析处理切面
+     *
+     * @param nameProcessor SPEL 解析处理器
+     * @return DynamicNameAspect
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    public DynamicNameAspect dynamicNameAspect(NameProcessor nameProcessor) {
+        return new DynamicNameAspect(nameProcessor);
+    }
 
     /**
      * 追加 Excel返回值处理器 到 springmvc 中
@@ -83,16 +87,16 @@ public class ResponseExcelAutoConfiguration {
         return new EmptyHeadGenerator();
     }
 
-//	/**
-//	 * 追加 Excel 请求处理器 到 springmvc 中
-//	 */
-//	@PostConstruct
-//	public void setRequestExcelArgumentResolver() {
-//		List<HandlerMethodArgumentResolver> argumentResolvers = requestMappingHandlerAdapter.getArgumentResolvers();
-//		List<HandlerMethodArgumentResolver> resolverList = new ArrayList<>();
-//		resolverList.add(new RequestExcelArgumentResolver());
-//		resolverList.addAll(argumentResolvers);
-//		requestMappingHandlerAdapter.setArgumentResolvers(resolverList);
-//	}
+    /**
+     * 追加 Excel 请求处理器 到 springmvc 中
+     */
+    @PostConstruct
+    public void setRequestExcelArgumentResolver() {
+        List<HandlerMethodArgumentResolver> argumentResolvers = requestMappingHandlerAdapter.getArgumentResolvers();
+        List<HandlerMethodArgumentResolver> resolverList = new ArrayList<>();
+        resolverList.add(new RequestExcelArgumentResolver());
+        resolverList.addAll(argumentResolvers);
+        requestMappingHandlerAdapter.setArgumentResolvers(resolverList);
+    }
 
 }

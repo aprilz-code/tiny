@@ -1,14 +1,22 @@
 package com.aprilz.tiny.controller;
 
+import cn.aprilz.excel.core.annotations.RequestExcel;
 import cn.aprilz.excel.core.annotations.ResponseExcel;
 import cn.aprilz.excel.core.annotations.Sheet;
+import cn.aprilz.excel.core.exception.ErrorMessage;
+import cn.aprilz.excel.core.handler.DefaultAnalysisEventListener;
 import cn.aprilz.excel.core.util.ExcelUtil;
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.date.DateUtil;
+import com.alibaba.excel.EasyExcel;
 import com.aprilz.tiny.common.api.CommonResult;
 import com.aprilz.tiny.mbg.entity.ApExcelTest;
 import com.aprilz.tiny.service.IApExcelTestService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.aprilz.tiny.vo.request.ApExcelTestParam;
+import org.springframework.beans.BeanUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -46,7 +54,8 @@ public class ApExcelTestController {
 
 
     @GetMapping("/test2")
-    @ResponseExcel(name = "数据", sheets = {@Sheet(sheetName = "testSheet1"), @Sheet(sheetName = "testSheet2")})
+    @ResponseExcel(name = "数据")
+   // @ResponseExcel(name = "数据", sheets = @Sheet(sheetName = "testSheet1"))
     public List<ApExcelTest> test2(HttpServletResponse response) throws IOException {
         List<ApExcelTest> datas = iApExcelTestService.lambdaQuery().last("limit 2000").list();
         return datas;
@@ -61,6 +70,32 @@ public class ApExcelTestController {
         List<ApExcelTest> datas2 = iApExcelTestService.lambdaQuery().last("limit 2001,2000").list();
         lists.add(datas2);
         return lists;
+    }
+
+
+    @PostMapping("/upload")
+    public CommonResult<String> importExcel(@RequestParam("file") MultipartFile file
+                            ) throws Exception {
+//        List<ApExcelTestParam> list = EasyExcel.read(file.getInputStream(), ApExcelTestParam.class, BeanUtils.instantiateClass(DefaultAnalysisEventListener.class)).sheet()
+//                .doReadSync();
+        List<ApExcelTestParam> list = ExcelUtil.read(file, ApExcelTestParam.class);
+        System.out.println(list);
+        //入库
+        return CommonResult.success();
+    }
+
+    @PostMapping("/upload2")
+    public CommonResult<String> upload(@RequestExcel List<ApExcelTestParam> dataList, BindingResult bindingResult) {
+        // JSR 303 校验通用校验获取失败的数据
+        List<ErrorMessage> errorMessageList = (List<ErrorMessage>) bindingResult.getTarget();
+        if(CollUtil.isNotEmpty(errorMessageList)){
+           // System.out.println(errorMessageList.toString());
+            return CommonResult.error(errorMessageList.toString());
+        }
+      //  System.out.println(errorMessageList);
+        System.out.println(dataList);
+        //入库
+        return CommonResult.success();
     }
 
 }
