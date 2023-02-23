@@ -1,7 +1,7 @@
 package com.aprilz.tiny.common.excel;
 
 import cn.aprilz.excel.core.dto.DictDataDTO;
-import cn.aprilz.excel.core.util.DictDataApi;
+import cn.aprilz.excel.core.dict.DictDataApi;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import java.util.List;
  * @description excel字典实现类
  */
 @Service
-public class DictDataSearch implements DictDataApi {
+public class DictDataSearch extends DictDataApi {
 
     private List<DictDataDTO> list = new ArrayList<>();
 

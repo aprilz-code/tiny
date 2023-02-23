@@ -59,7 +59,8 @@ public class DictConvert implements Converter<Object> {
         String value = DictUtil.getDictDataByKey(type, key);
         if (value == null) {
             log.error("[convertToExcelData][type({}) 转换不了 key({})]", type, key);
-            return new WriteCellData<>("");
+            //返回key本身
+            return new WriteCellData<>(key);
         }
         // 生成 Excel 小表格
         return new WriteCellData<>(value);

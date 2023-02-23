@@ -1,13 +1,15 @@
-package cn.aprilz.excel.core.util;
+package cn.aprilz.excel.core.dict;
 
 import cn.aprilz.excel.core.dto.DictDataDTO;
 
+
 /**
  * @author Aprilz
- * @date 2023/2/22-16:47
- * @description 待实现
+ * @date 2023/2/23-11:35
+ * @description 默认DictSearch
  */
-public interface DictDataApi {
+public class DictDataApi {
+
 
     /**
      * 获得指定的字典数据，从缓存中
@@ -17,7 +19,7 @@ public interface DictDataApi {
      * @param key      字典key
      * @return 字典数据
      */
-    default DictDataDTO getDictDataByKey(String dictType, String key) {
+    public DictDataDTO getDictDataByKey(String dictType, String key) {
         return null;
     }
 
@@ -29,7 +31,7 @@ public interface DictDataApi {
      * @param value    字典数据标签
      * @return 字典数据
      */
-    default DictDataDTO getDictDataByValue(String dictType, String value) {
+     public DictDataDTO getDictDataByValue(String dictType, String value) {
         return null;
     }
 }
