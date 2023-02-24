@@ -36,4 +36,11 @@ starter springboot2.7.5及以上使用META-INF-spring下文件，2.7.5以下使�
             <scope>provided</scope>
         </dependency>
 ```
+
+4.批量插入
+1xml <foreach>方式，sql长度有限制，不好排查
+2 ExecutorType.BATCH 。。。。需要在url后面开启rewriteBatchedStatements=true，不然没效果。。（这里排查了半天，晕了 ）
+具体用法参考： ApExcelTest2ServiceImpl 和 MybatisBatchUtils
+
+
 https://github.com/aprilz-code/tiny.git

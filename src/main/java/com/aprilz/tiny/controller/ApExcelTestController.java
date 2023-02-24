@@ -12,6 +12,7 @@ import com.alibaba.excel.EasyExcel;
 import com.aprilz.tiny.common.api.CommonResult;
 import com.aprilz.tiny.mbg.entity.ApExcelTest;
 import com.aprilz.tiny.service.IApExcelTestService;
+import com.aprilz.tiny.service.impl.ApExcelTest2ServiceImpl;
 import com.aprilz.tiny.vo.request.ApExcelTestParam;
 import org.springframework.beans.BeanUtils;
 import org.springframework.validation.BindingResult;
@@ -38,6 +39,9 @@ public class ApExcelTestController {
 
     @Resource
     private IApExcelTestService iApExcelTestService;
+
+    @Resource
+    private ApExcelTest2ServiceImpl test2Service;
 
     @GetMapping("/list")
     public CommonResult<List<ApExcelTest>> getAll() {
@@ -110,4 +114,15 @@ public class ApExcelTestController {
         return CommonResult.success();
     }
 
+
+    /**
+     * 模拟大批量数据导入
+
+     * @return
+     */
+    @PostMapping("/test3")
+    public CommonResult<String> test3() throws IOException {
+        test2Service.writeData(new ArrayList<ApExcelTestParam>(), 0, 2000);
+        return CommonResult.success();
+    }
 }

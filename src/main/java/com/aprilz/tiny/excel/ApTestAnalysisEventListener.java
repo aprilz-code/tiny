@@ -6,6 +6,8 @@ import com.alibaba.excel.event.AnalysisEventListener;
 import com.alibaba.excel.util.ListUtils;
 import com.aprilz.tiny.mapper.ApExcelTestMapper;
 import com.aprilz.tiny.mbg.entity.ApExcelTest;
+import com.aprilz.tiny.service.impl.ApExcelTest2ServiceImpl;
+import com.aprilz.tiny.service.impl.ApExcelTestServiceImpl;
 import com.aprilz.tiny.vo.request.ApExcelTestParam;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.ExecutorType;
@@ -29,8 +31,8 @@ public class ApTestAnalysisEventListener extends AnalysisEventListener<ApExcelTe
 //    //标志位 true代办可以提交事务
 //    private static volatile boolean IS_OK = false;
 
-    //200条分一次插入
-    private static final int BATCH_COUNT = 200;
+    //2000条分一次插入
+    private static final int BATCH_COUNT = 2000;
 
     private List<ApExcelTestParam> list = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
 
@@ -39,11 +41,11 @@ public class ApTestAnalysisEventListener extends AnalysisEventListener<ApExcelTe
     private Integer end = 0;
 
 
-    private SqlSessionFactory sqlSessionFactory;
+    private ApExcelTest2ServiceImpl excelTestService;
 
     //构造器注入
-    public ApTestAnalysisEventListener(SqlSessionFactory sqlSessionFactory) {
-        this.sqlSessionFactory = sqlSessionFactory;
+    public ApTestAnalysisEventListener(ApExcelTest2ServiceImpl excelTestService) {
+        this.excelTestService = excelTestService;
     }
 
     @Override
@@ -72,24 +74,10 @@ public class ApTestAnalysisEventListener extends AnalysisEventListener<ApExcelTe
     }
 
 
-    private void writeData(Integer start, Integer end) {
-        SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH);
-        ApExcelTestMapper mapper = sqlSession.getMapper(ApExcelTestMapper.class);
+    public void writeData(Integer start, Integer end) {
+        String msg = excelTestService.writeData(list,start,end);
+        log.info(msg);
 
-        try {
-            list.forEach(result -> {
-                ApExcelTest apExcelTest = new ApExcelTest();
-                BeanUtil.copyProperties(result, apExcelTest);
-                mapper.insert(apExcelTest);
-            });
-            sqlSession.commit();
-        } catch (Exception e) {
-            sqlSession.rollback();
-            System.out.println(start + "-------" + end);
-            // insertTable()  start,end
-        } finally {
-            sqlSession.close();
-        }
     }
 
     @Override
@@ -98,7 +86,4 @@ public class ApTestAnalysisEventListener extends AnalysisEventListener<ApExcelTe
     }
 
 
-    public static void main(String[] args) {
-        System.out.println(100 / 9);
-    }
 }

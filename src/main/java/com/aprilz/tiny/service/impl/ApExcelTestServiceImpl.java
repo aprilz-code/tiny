@@ -1,5 +1,7 @@
 package com.aprilz.tiny.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import com.alibaba.excel.EasyExcel;
 import com.aprilz.tiny.excel.ApTestAnalysisEventListener;
 import com.aprilz.tiny.mapper.ApExcelTestMapper;
@@ -7,12 +9,16 @@ import com.aprilz.tiny.mbg.entity.ApExcelTest;
 import com.aprilz.tiny.service.IApExcelTestService;
 import com.aprilz.tiny.vo.request.ApExcelTestParam;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * <p>
@@ -30,9 +36,10 @@ public class ApExcelTestServiceImpl extends ServiceImpl<ApExcelTestMapper, ApExc
 
     @Override
     public void upload3(MultipartFile file) throws IOException {
-        ApTestAnalysisEventListener readListener = new ApTestAnalysisEventListener(sqlSessionFactory);
+        ApTestAnalysisEventListener readListener = new ApTestAnalysisEventListener(SpringUtil.getBean(ApExcelTest2ServiceImpl.class));
         EasyExcel.read(file.getInputStream(), ApExcelTestParam.class, readListener).ignoreEmptyRow(false)
                 //首行头文件
                 .sheet().headRowNumber(1).doRead();
     }
+
 }

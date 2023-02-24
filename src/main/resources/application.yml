@@ -7,7 +7,7 @@ spring:
   application:
     name: tiny
   datasource:
-    url: jdbc:mysql://localhost:3306/tinymall?useUnicode=true&allowMultiQueries=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://localhost:3306/tinymall?useUnicode=true&allowMultiQueries=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true
     username: root
     password: 123456
   redis:
