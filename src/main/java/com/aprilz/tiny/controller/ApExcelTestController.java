@@ -98,4 +98,16 @@ public class ApExcelTestController {
         return CommonResult.success();
     }
 
+
+    /**
+     * 模拟大批量数据导入
+
+     * @return
+     */
+    @PostMapping("/upload3")
+    public CommonResult<String> upload3(@RequestParam("file") MultipartFile file) throws IOException {
+        iApExcelTestService.upload3(file);
+        return CommonResult.success();
+    }
+
 }

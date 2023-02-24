@@ -4,6 +4,7 @@ import cn.aprilz.excel.core.Validators;
 import cn.aprilz.excel.core.annotations.ExcelLine;
 import cn.aprilz.excel.core.exception.ErrorMessage;
 import com.alibaba.excel.context.AnalysisContext;
+import com.alibaba.excel.exception.ExcelAnalysisException;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.validation.ConstraintViolation;
@@ -31,6 +32,11 @@ public class DefaultAnalysisEventListener extends ListAnalysisEventListener<Obje
 
     @Override
     public void invoke(Object o, AnalysisContext analysisContext) {
+        Integer totalRowNumber = analysisContext.readSheetHolder().getApproximateTotalRowNumber();
+        if(totalRowNumber > 30000){
+            throw  new ExcelAnalysisException("超出总行数限制(30000)，总行数为：" + totalRowNumber);
+        }
+
         lineNum++;
 
         Set<ConstraintViolation<Object>> violations = Validators.validate(o);
