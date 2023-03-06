@@ -50,3 +50,12 @@ https://github.com/aprilz-code/tiny.git
 util使用：
 TreeUtil 使用示例看代码
 
+
+
+
+designMode 下 设计模式代码整理
+
+    observer 观察者模式
+    strategy 策略模式
+    proxy 代理模式 
+
