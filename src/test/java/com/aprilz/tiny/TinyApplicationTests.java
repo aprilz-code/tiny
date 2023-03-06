@@ -174,7 +174,7 @@ public class TinyApplicationTests {
         new ApAd().setUrl("").setContent("");
     }
 
-
+    //testJDKProxy testCglibProxy 两种动态代理区别如下
     @Test
     void testJDKProxy(){
         Star cxk = new CaiXuHun();
