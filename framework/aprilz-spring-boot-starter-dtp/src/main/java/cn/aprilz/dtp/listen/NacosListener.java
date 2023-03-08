@@ -31,7 +31,7 @@ public class NacosListener implements Listener , InitializingBean {
 //    @NacosInjected
 //    private ConfigService configService;
     
-    //nacos-clinet2.*版本用法
+    //nacos-clinet2.*版本用法 https://github.com/nacos-group/nacos-examples/issues/28
     @Autowired
     private NacosConfigManager nacosConfigManager;
 
