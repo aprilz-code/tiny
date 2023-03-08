@@ -22,6 +22,7 @@
 
 	<modules>
 		<module>aprilz-spring-boot-starter-easyexcel</module>
+		<module>aprilz-spring-boot-starter-dtp</module>
 	</modules>
 
 	<description>framework</description>

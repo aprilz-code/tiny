@@ -1,0 +1,17 @@
+{
+  "groups": [
+    {
+      "name": "dtp",
+      "type": "cn.aprilz.dtp.config.DtpProperties",
+      "sourceType": "cn.aprilz.dtp.config.DtpProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "dtp.executors",
+      "type": "java.util.List<cn.aprilz.dtp.config.DtpProperties$DtpExecutorProperties>",
+      "sourceType": "cn.aprilz.dtp.config.DtpProperties"
+    }
+  ],
+  "hints": []
+}

@@ -9,7 +9,6 @@
     </parent>
     <groupId>cn.aprilz</groupId>
     <artifactId>aprilz-spring-boot-starter-easyexcel</artifactId>
-    <packaging>jar</packaging>
     <name>aprilz-spring-boot-starter-easyexcel</name>
     <description>easyexcel starter</description>
 

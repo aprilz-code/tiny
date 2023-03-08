@@ -3,7 +3,7 @@ package cn.aprilz.excel.config;
 import cn.aprilz.excel.core.dict.DictDataApi;
 import cn.aprilz.excel.core.util.DictUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 
 /**
@@ -12,13 +12,14 @@ import org.springframework.context.annotation.Bean;
  * @description 装配Dic
  */
 @AutoConfiguration
+@ConditionalOnBean(value = DictDataApi.class)
 public class AprilzDictAutoConfiguration {
 
-    @Bean
-    @ConditionalOnMissingBean
-    public DictDataApi DictDataApi() {
-        return new DictDataApi();
-    }
+//    @Bean
+//    @ConditionalOnMissingBean
+//    public DictDataApi DictDataApi() {
+//        return new DictDataApi();
+//    }
 
 
     @Bean
