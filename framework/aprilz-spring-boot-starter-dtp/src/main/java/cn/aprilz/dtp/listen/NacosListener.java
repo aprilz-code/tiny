@@ -5,6 +5,7 @@ import com.alibaba.nacos.api.config.listener.Listener;
 import cn.aprilz.dtp.config.DtpProperties;
 import cn.aprilz.dtp.core.DtpExecutor;
 import cn.aprilz.dtp.util.DtpUtil;
+import com.alibaba.nacos.common.utils.CollectionUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
@@ -55,7 +56,9 @@ public class NacosListener implements Listener , InitializingBean {
 
         //配置的线程数组属性
         List<DtpProperties.DtpExecutorProperties> executors = dtpProperties.getExecutors();
-
+        if(CollectionUtils.isEmpty(executors)){
+            return;
+        }
         for (DtpProperties.DtpExecutorProperties executorProperties : executors) {//Bean对象
             DtpExecutor dtpExecutor = DtpUtil.get(executorProperties.getName());
             dtpExecutor.setCorePoolSize(executorProperties.getCorePoolSize());

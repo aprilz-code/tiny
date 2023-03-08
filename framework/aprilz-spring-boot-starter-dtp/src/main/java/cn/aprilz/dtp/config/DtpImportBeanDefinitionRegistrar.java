@@ -1,6 +1,7 @@
 package cn.aprilz.dtp.config;
 
 import cn.aprilz.dtp.core.DtpExecutor;
+import com.alibaba.nacos.common.utils.CollectionUtils;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -36,6 +37,9 @@ public class DtpImportBeanDefinitionRegistrar implements ImportBeanDefinitionReg
         Bindable<?> target = Bindable.of(type).withExistingValue(dtpProperties);
         binder.bind("dtp",target);
         //动态线程池配置
+        if(CollectionUtils.isEmpty(dtpProperties.getExecutors())){
+            return;
+        }
         for (DtpProperties.DtpExecutorProperties executorProperties : dtpProperties.getExecutors()) {
             AbstractBeanDefinition beanDefinition = BeanDefinitionBuilder.genericBeanDefinition().getRawBeanDefinition();
             beanDefinition.setBeanClass(DtpExecutor.class);
