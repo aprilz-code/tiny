@@ -6,10 +6,12 @@ import cn.aprilz.excel.core.exception.ErrorMessage;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.exception.ExcelAnalysisException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.formula.functions.T;
 
 import javax.validation.ConstraintViolation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -22,16 +24,21 @@ import java.util.stream.Collectors;
  * @date 2021/4/16
  */
 @Slf4j
-public class DefaultAnalysisEventListener extends ListAnalysisEventListener<Object> {
+public class DefaultAnalysisEventListener extends ListAnalysisEventListener<T> {
 
-    private final List<Object> list = new ArrayList<>();
+    //处理返回数据
+    private final List<T> list = new ArrayList<>();
 
+    //处理返回错误信息
     private final List<ErrorMessage> errorMessageList = new ArrayList<>();
+
+    private  Set<T> sets = new HashSet<>();
+    //需要注意的是，T类需要实现equals和hashCode方法，T。如果不重写这两个方法，则默认使用Object类中的equals和hashCode方法，这可能会导致错误的结果。
 
     private Long lineNum = 1L;
 
     @Override
-    public void invoke(Object o, AnalysisContext analysisContext) {
+    public void invoke(T o, AnalysisContext analysisContext) {
         Integer totalRowNumber = analysisContext.readSheetHolder().getApproximateTotalRowNumber();
         if(totalRowNumber > 30000){
             throw  new ExcelAnalysisException("超出总行数限制(30000)，总行数为：" + totalRowNumber);
@@ -63,10 +70,12 @@ public class DefaultAnalysisEventListener extends ListAnalysisEventListener<Obje
     @Override
     public void doAfterAllAnalysed(AnalysisContext analysisContext) {
         log.debug("Excel read analysed");
+        //此处加入数据重复校验
+        //if(sets.contains())
     }
 
     @Override
-    public List<Object> getList() {
+    public List<T> getList() {
         return list;
     }
 
