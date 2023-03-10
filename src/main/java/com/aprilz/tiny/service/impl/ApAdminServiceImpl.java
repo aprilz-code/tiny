@@ -37,6 +37,7 @@ import java.util.List;
 @Slf4j
 @Service
 public class ApAdminServiceImpl extends ServiceImpl<ApAdminMapper, ApAdmin> implements IApAdminService {
+
     @Autowired
     private UserDetailsService userDetailsService;
     @Autowired
@@ -47,15 +48,9 @@ public class ApAdminServiceImpl extends ServiceImpl<ApAdminMapper, ApAdmin> impl
     private String tokenHead;
     @Resource
     private ApAdminMapper adminMapper;
-    @Resource
-    private ApPermissionMapper apPermissionMapper;
 
-    @Override
-    public ApAdmin getAdminByUsernameOrMobile(String username) {
-        LambdaQueryWrapper<ApAdmin> queryWrapper = new LambdaQueryWrapper();
-        queryWrapper.eq(ApAdmin::getUsername, username).or().eq(ApAdmin::getMobile, username).last("limit 1");
-        return adminMapper.selectOne(queryWrapper);
-    }
+    @Resource
+    private ApPermissionMapper permissionMapper;
 
     @Override
     public ApAdmin register(ApAdmin apAdminParam) {
@@ -82,6 +77,9 @@ public class ApAdminServiceImpl extends ServiceImpl<ApAdminMapper, ApAdmin> impl
         String token = null;
         try {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            if (userDetails == null) {
+                throw new BadCredentialsException("用户不存在");
+            }
             if (!passwordEncoder.matches(password, userDetails.getPassword())) {
                 throw new BadCredentialsException("密码不正确");
             }
@@ -95,9 +93,10 @@ public class ApAdminServiceImpl extends ServiceImpl<ApAdminMapper, ApAdmin> impl
         return token;
     }
 
-
     @Override
     public List<ApPermission> getPermissionList(Long adminId) {
-        return apPermissionMapper.getPermissionList(adminId);
+        return permissionMapper.getPermissionList(adminId);
     }
+
+
 }

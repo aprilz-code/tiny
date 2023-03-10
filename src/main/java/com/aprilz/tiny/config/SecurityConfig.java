@@ -1,30 +1,22 @@
 package com.aprilz.tiny.config;
 
-import com.aprilz.tiny.common.cache.Cache;
 import com.aprilz.tiny.common.properties.IgnoredUrlsProperties;
 import com.aprilz.tiny.component.JwtAuthenticationTokenFilter;
 import com.aprilz.tiny.component.RestAuthenticationEntryPoint;
-import com.aprilz.tiny.dto.AdminUserDetails;
-import com.aprilz.tiny.mbg.entity.ApAdmin;
-import com.aprilz.tiny.mbg.entity.ApPermission;
-import com.aprilz.tiny.service.IApAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -32,7 +24,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 
 /**
@@ -40,11 +31,9 @@ import java.util.List;
  * Created by aprilz on 2018/4/26.
  */
 @Configuration
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private IApAdminService adminService;
+@EnableWebSecurity // 添加 security 过滤器
+@EnableGlobalMethodSecurity(prePostEnabled = true) // 启用方法级别的权限认证
+public class SecurityConfig {
 
     /**
      * 忽略验权配置
@@ -52,25 +41,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Resource
     private IgnoredUrlsProperties ignoredUrlsProperties;
 
-
-    @Autowired
-    private Cache<String> cache;
-
     @Autowired
     private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+
+    @Autowired
+    private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
 
     @Value("${jwt.tokenHeader}")
     private String tokenHeader;
 
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-    @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
-        ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = httpSecurity
-                .authorizeRequests();
-        //配置的url 不需要授权
-        for (String url : ignoredUrlsProperties.getUrls()) {
-            registry.antMatchers(url).permitAll();
-        }
+    @Bean
+    SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+//        ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = httpSecurity
+//                .authorizeRequests();
+//        //配置的url 不需要授权
+//        for (String url : ignoredUrlsProperties.getUrls()) {
+//            registry.antMatchers(url).permitAll();
+//        }
 
         httpSecurity
                 //禁止网页iframe
@@ -91,21 +83,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .permitAll()
                 .antMatchers(HttpMethod.OPTIONS)//跨域请求会先进行一次options请求
                 .permitAll()
+                .antMatchers(ignoredUrlsProperties.getUrls().toArray(new String[0])).permitAll()
 //                .antMatchers("/**")//测试时全部运行访问
 //                .permitAll()
+                .and().authorizeRequests()
                 .anyRequest()// 除上面外的所有请求全部需要鉴权认证
                 .authenticated();
         // 禁用缓存
         httpSecurity.headers().cacheControl();
         // 添加JWT filter
-        httpSecurity.addFilter(jwtAuthenticationTokenFilter());
+        httpSecurity.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
         //添加自定义未授权和未登录结果返回
         httpSecurity.exceptionHandling()
                 //全局拦截器影响会失效
                 //    .accessDeniedHandler(restfulAccessDeniedHandler)
                 .authenticationEntryPoint(restAuthenticationEntryPoint);
+        return httpSecurity.build();
     }
 
+    //跨域
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -124,41 +120,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService())
-                .passwordEncoder(passwordEncoder());
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public UserDetailsService userDetailsService() {
-        //获取登录用户信息
-        return username -> {
-            ApAdmin admin = adminService.getAdminByUsernameOrMobile(username);
-            if (admin != null) {
-                List<ApPermission> permissionList = adminService.getPermissionList(admin.getId());
-                return new AdminUserDetails(admin, permissionList);
-            }
-            throw new UsernameNotFoundException("用户名或密码错误");
-        };
-    }
-
-    @Bean
-    public JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter() throws Exception {
-        return new JwtAuthenticationTokenFilter(authenticationManager(), cache);
-    }
-
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
-
 
 }

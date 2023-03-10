@@ -2,6 +2,7 @@ package com.aprilz.tiny.vo.request;
 
 
 import cn.aprilz.excel.core.annotations.DictFormat;
+import cn.aprilz.excel.core.annotations.FieldRepeat;
 import cn.aprilz.excel.core.convert.DictConvert;
 import cn.hutool.core.date.DatePattern;
 import com.alibaba.excel.annotation.ExcelProperty;
@@ -23,6 +24,7 @@ import java.util.Date;
  */
 @Data
 @Accessors(chain = false) // 设置 chain = false，避免用户导入有问题
+@FieldRepeat(fields={"name","sex"},message="名称性别重复，请重新输入！")
 public class ApExcelTestParam {
 
     @ExcelProperty("年龄")

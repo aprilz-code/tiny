@@ -1,6 +1,7 @@
 package com.aprilz.tiny.common.exception;
 
 
+import cn.aprilz.excel.core.exception.ExcelException;
 import com.aprilz.tiny.common.api.CommonResult;
 import com.aprilz.tiny.common.api.ResultCode;
 import lombok.extern.slf4j.Slf4j;
@@ -132,5 +133,13 @@ public class GlobalControllerExceptionHandler {
     public CommonResult<Object> runtimeExceptionHandler(HttpServletRequest request, final Exception e, HttpServletResponse response) {
         log.error("全局异常[RuntimeException]:", e);
         return CommonResult.error(ResultCode.FAILED);
+    }
+
+    @ExceptionHandler(ExcelException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public CommonResult<Object> excelExceptionHandler(HttpServletRequest request, final Exception e, HttpServletResponse response) {
+        ExcelException exception = (ExcelException) e;
+        return CommonResult.error(ResultCode.PARAMS_ERROR.code(), exception.getMessage());
     }
 }

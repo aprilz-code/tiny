@@ -1,5 +1,6 @@
 package com.aprilz.tiny.service;
 
+import com.aprilz.tiny.dto.AdminUserDetails;
 import com.aprilz.tiny.mbg.entity.ApAdmin;
 import com.aprilz.tiny.mbg.entity.ApPermission;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -16,8 +17,6 @@ import java.util.List;
  */
 public interface IApAdminService extends IService<ApAdmin> {
 
-
-    ApAdmin getAdminByUsernameOrMobile(String username);
 
     ApAdmin register(ApAdmin apAdminParam);
 

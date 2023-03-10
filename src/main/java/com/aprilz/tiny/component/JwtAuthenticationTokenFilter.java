@@ -7,13 +7,13 @@ import com.aprilz.tiny.mbg.entity.ApAdmin;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -27,7 +27,8 @@ import java.util.Objects;
  * Created by aprilz on 2018/4/26.
  */
 @Slf4j
-public class JwtAuthenticationTokenFilter extends BasicAuthenticationFilter {
+@Component
+public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     @Autowired
     private UserDetailsService userDetailsService;
     @Autowired
@@ -43,10 +44,6 @@ public class JwtAuthenticationTokenFilter extends BasicAuthenticationFilter {
     @Autowired
     private Cache cache;
 
-    public JwtAuthenticationTokenFilter(AuthenticationManager authenticationManager, Cache<String> cache) {
-        super(authenticationManager);
-        this.cache = cache;
-    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -65,7 +62,7 @@ public class JwtAuthenticationTokenFilter extends BasicAuthenticationFilter {
             String username = userInfo.getUsername();
             //      LOGGER.info("checking username:{}", username);
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                 if (jwtTokenUtil.validateToken(authToken, userDetails)) {
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

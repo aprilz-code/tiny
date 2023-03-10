@@ -3,6 +3,7 @@ package cn.aprilz.excel.core.aop;
 
 import cn.aprilz.excel.core.annotations.ResponseExcel;
 import cn.aprilz.excel.core.handler.SheetWriteHandler;
+import cn.hutool.core.collection.CollUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
@@ -13,6 +14,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 处理@ResponseExcel 返回值

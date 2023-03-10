@@ -48,6 +48,11 @@ public class ApExcelTestController {
         return CommonResult.success(iApExcelTestService.list());
     }
 
+    /**
+     * 普通导出数据
+     * @param response
+     * @throws IOException
+     */
     @GetMapping("/test")
     public void test(HttpServletResponse response) throws IOException {
         List<ApExcelTest> datas = iApExcelTestService.lambdaQuery().last("limit 2000").list();
@@ -57,7 +62,13 @@ public class ApExcelTestController {
     }
 
 
-    @GetMapping("/test2")
+    /**
+     * 注解式导出单sheet数据
+     * @param response
+     * @return
+     * @throws IOException
+     */
+    @GetMapping("/responseExcelTest")
     @ResponseExcel(name = "数据")
    // @ResponseExcel(name = "数据", sheets = @Sheet(sheetName = "testSheet1"))
     public List<ApExcelTest> test2(HttpServletResponse response) throws IOException {
@@ -65,7 +76,13 @@ public class ApExcelTestController {
         return datas;
     }
 
-    @GetMapping("/test3")
+    /**
+     * 注解式导出多页数据
+     * @param response
+     * @return
+     * @throws IOException
+     */
+    @GetMapping("/sheetTest")
     @ResponseExcel(name = "数据", sheets = {@Sheet(sheetName = "testSheet1"), @Sheet(sheetName = "testSheet2")})
     public List<List<ApExcelTest>> test3(HttpServletResponse response) throws IOException {
         List<List<ApExcelTest>> lists = new ArrayList<>();
@@ -76,8 +93,13 @@ public class ApExcelTestController {
         return lists;
     }
 
-
-    @PostMapping("/upload")
+    /**
+     *  普通导入数据
+     * @param file
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/import")
     public CommonResult<String> importExcel(@RequestParam("file") MultipartFile file
                             ) throws Exception {
 //        List<ApExcelTestParam> list = EasyExcel.read(file.getInputStream(), ApExcelTestParam.class, BeanUtils.instantiateClass(DefaultAnalysisEventListener.class)).sheet()
@@ -88,7 +110,13 @@ public class ApExcelTestController {
         return CommonResult.success();
     }
 
-    @PostMapping("/upload2")
+    /**
+     * 注解式导入数据
+     * @param dataList
+     * @param bindingResult
+     * @return
+     */
+    @PostMapping("/requestExcelImport")
     public CommonResult<String> upload(@RequestExcel List<ApExcelTestParam> dataList, BindingResult bindingResult) {
         // JSR 303 校验通用校验获取失败的数据
         List<ErrorMessage> errorMessageList = (List<ErrorMessage>) bindingResult.getTarget();
