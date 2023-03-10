@@ -48,7 +48,7 @@ import java.util.List;
  * excel-test表 前端控制器
  * </p>
  *
- * @author aprilz
+ * @author Aprilz
  * @since 2023-02-22
  */
 @RestController
@@ -88,7 +88,7 @@ public class ApExcelTestController {
      */
     @GetMapping("/responseExcelTest")
     @ResponseExcel(name = "数据")
-   // @ResponseExcel(name = "数据", sheets = @Sheet(sheetName = "testSheet1"))
+    // @ResponseExcel(name = "数据", sheets = @Sheet(sheetName = "testSheet1"))
     public List<ApExcelTest> test2(HttpServletResponse response) throws IOException {
         List<ApExcelTest> datas = iApExcelTestService.lambdaQuery().last("limit 2000").list();
         return datas;
@@ -119,7 +119,7 @@ public class ApExcelTestController {
      */
     @PostMapping("/import")
     public CommonResult<String> importExcel(@RequestParam("file") MultipartFile file
-                            ) throws Exception {
+    ) throws Exception {
 //        List<ApExcelTestParam> list = EasyExcel.read(file.getInputStream(), ApExcelTestParam.class, BeanUtils.instantiateClass(DefaultAnalysisEventListener.class)).sheet()
 //                .doReadSync();
         List<ApExcelTestParam> list = ExcelUtil.read(file, ApExcelTestParam.class);
@@ -139,14 +139,36 @@ public class ApExcelTestController {
         // JSR 303 校验通用校验获取失败的数据
         List<ErrorMessage> errorMessageList = (List<ErrorMessage>) bindingResult.getTarget();
         if(CollUtil.isNotEmpty(errorMessageList)){
-           // System.out.println(errorMessageList.toString());
+            // System.out.println(errorMessageList.toString());
             return CommonResult.error(errorMessageList.toString());
         }
-      //  System.out.println(errorMessageList);
+        //  System.out.println(errorMessageList);
         System.out.println(dataList);
         //入库
         return CommonResult.success();
     }
+
+
+    /**
+     * 注解式导入数据  **支持传入自定义参数去检验 **
+     * @param dataList
+     * @param bindingResult
+     * @return
+     */
+    @PostMapping("/requestExcelImport2")
+    public CommonResult<String> requestExcelImport2(@RequestExcel List<ApExcelTestParam> dataList,String excelCustom, BindingResult bindingResult) {
+        // JSR 303 校验通用校验获取失败的数据
+        List<ErrorMessage> errorMessageList = (List<ErrorMessage>) bindingResult.getTarget();
+        if(CollUtil.isNotEmpty(errorMessageList)){
+            // System.out.println(errorMessageList.toString());
+            return CommonResult.error(errorMessageList.toString());
+        }
+        //  System.out.println(errorMessageList);
+        System.out.println(dataList);
+        //入库
+        return CommonResult.success();
+    }
+
 
 
     /**
@@ -174,6 +196,69 @@ public class ApExcelTestController {
 }
 
 ```
+
+**支持传入自定义参数去检验 **
+    假如商品excel导入入库时，需校验商品必须是同一分类下，则需要传入分类id。（例子可能不恰当，意思自行理解）
+    则传入excelCustom参数，可传入string或者array接收
+
+```java
+package cn.aprilz.excel.core.annotations;
+
+import cn.aprilz.excel.core.handler.DefaultAnalysisEventListener;
+import cn.aprilz.excel.core.handler.ListAnalysisEventListener;
+
+import java.lang.annotation.*;
+
+/**
+ * 导入excel
+ *
+ * @date 2021/4/16
+ */
+@Documented
+@Target({ElementType.PARAMETER})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface RequestExcel {
+
+    /**
+     * 前端上传字段名称 file
+     */
+    String fileName() default "file";
+
+    /**
+     * 自定义扩展字段
+     */
+    String excelCustom() default "excelCustom";
+
+    /**
+     * 读取的监听器类
+     *
+     * @return readListener
+     */
+    Class<? extends ListAnalysisEventListener<?>> readListener() default DefaultAnalysisEventListener.class;
+
+    /**
+     * 是否跳过空行
+     *
+     * @return 默认跳过
+     */
+    boolean ignoreEmptyRow() default false;
+
+    /**
+     * 指定读取的标题行
+     *
+     * @return
+     */
+    int headRowNumber() default 1;
+
+}
+
+```
+![img.png](docs/imgs/img_fox.png)
+
+![img_1.png](docs/imgs/img_1.png)
+
+![img_2.png](docs/imgs/img_2.png)
+
 
 
 **支持字典转换**

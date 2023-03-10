@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 忽略授权设定
  *
- * @author aprilz
+ * @author Aprilz
  */
 @Data
 @Configuration

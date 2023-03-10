@@ -132,6 +132,28 @@ public class ApExcelTestController {
 
 
     /**
+     * 注解式导入数据
+     * @param dataList
+     * @param bindingResult
+     * @return
+     */
+    @PostMapping("/requestExcelImport2")
+    public CommonResult<String> requestExcelImport2(@RequestExcel List<ApExcelTestParam> dataList,String excelCustom, BindingResult bindingResult) {
+        // JSR 303 校验通用校验获取失败的数据
+        List<ErrorMessage> errorMessageList = (List<ErrorMessage>) bindingResult.getTarget();
+        if(CollUtil.isNotEmpty(errorMessageList)){
+            // System.out.println(errorMessageList.toString());
+            return CommonResult.error(errorMessageList.toString());
+        }
+        //  System.out.println(errorMessageList);
+        System.out.println(dataList);
+        //入库
+        return CommonResult.success();
+    }
+
+
+
+    /**
      * 模拟大批量数据导入
 
      * @return

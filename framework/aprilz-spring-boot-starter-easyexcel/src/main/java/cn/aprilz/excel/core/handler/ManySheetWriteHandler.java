@@ -16,9 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author lengleng
- * @author L.cm
- * @author Hccake
  * @date 2020/3/29
  */
 public class ManySheetWriteHandler extends AbstractSheetWriteHandler {

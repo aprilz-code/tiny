@@ -47,9 +47,6 @@ import java.util.Objects;
 import java.util.UUID;
 
 /**
- * @author lengleng
- * @author L.cm
- * @author Hccake
  * @date 2020/3/31
  */
 @RequiredArgsConstructor

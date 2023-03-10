@@ -3,7 +3,6 @@ package cn.aprilz.excel.core.processor;
 import java.lang.reflect.Method;
 
 /**
- * @author lengleng
  * @date 2020/3/29
  */
 public interface NameProcessor {

@@ -20,8 +20,6 @@ import java.util.stream.Collectors;
 /**
  * 默认的 AnalysisEventListener
  *
- * @author lengleng
- * @author L.cm
  * @date 2021/4/16
  */
 @Slf4j
@@ -41,12 +39,16 @@ public class DefaultAnalysisEventListener extends ListAnalysisEventListener<Obje
 
     @Override
     public void invoke(Object o, AnalysisContext analysisContext) {
+
         Integer totalRowNumber = analysisContext.readSheetHolder().getApproximateTotalRowNumber();
         if (totalRowNumber > 30000) {
             throw new ExcelAnalysisException("超出总行数限制(30000)，总行数为：" + totalRowNumber);
         }
 
         lineNum++;
+
+        //自定义参数，自己看是否需要
+        String[] custom = (String[])analysisContext.getCustom();
 
         Set<ConstraintViolation<Object>> violations = Validators.validate(o);
         if (!violations.isEmpty()) {

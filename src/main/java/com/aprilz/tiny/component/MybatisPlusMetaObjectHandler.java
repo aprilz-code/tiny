@@ -13,7 +13,7 @@ import java.util.Objects;
 
 /**
  * @description: mybatisplus拦截器
- * @author: aprilz
+ * @author: Aprilz
  * @since: 2022/7/13
  **/
 @Slf4j

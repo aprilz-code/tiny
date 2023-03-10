@@ -19,7 +19,6 @@ import java.util.Objects;
 /**
  * 处理@ResponseExcel 返回值
  *
- * @author lengleng
  */
 @Slf4j
 @RequiredArgsConstructor

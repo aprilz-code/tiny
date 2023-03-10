@@ -8,8 +8,6 @@ import java.lang.annotation.*;
 /**
  * 导入excel
  *
- * @author lengleng
- * @author L.cm
  * @date 2021/4/16
  */
 @Documented
@@ -21,6 +19,11 @@ public @interface RequestExcel {
      * 前端上传字段名称 file
      */
     String fileName() default "file";
+
+    /**
+     * 自定义扩展字段
+     */
+    String excelCustom() default "excelCustom";
 
     /**
      * 读取的监听器类

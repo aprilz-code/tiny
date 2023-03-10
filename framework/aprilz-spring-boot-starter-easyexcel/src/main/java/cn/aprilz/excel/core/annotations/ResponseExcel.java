@@ -9,8 +9,6 @@ import java.lang.annotation.*;
 
 /**
  * `@ResponseExcel 注解`
- *
- * @author lengleng
  */
 @Documented
 @Target(ElementType.METHOD)
