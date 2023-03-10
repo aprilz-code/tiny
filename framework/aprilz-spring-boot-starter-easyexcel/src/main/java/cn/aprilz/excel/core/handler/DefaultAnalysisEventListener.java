@@ -93,11 +93,12 @@ public class DefaultAnalysisEventListener extends ListAnalysisEventListener<Obje
                 sb.append(ReflectUtil.getFieldValue(o, field) + "-");
             }
             if (sets.contains(sb.toString())) {
-                throw new ExcelException(message);
+                sets.clear();
+                throw new ExcelException(sb + message);
             }
             sets.add(sb.toString());
         });
-
+        sets.clear();
         //如果需要校验和数据库数据是否有重复，可以新建自定义listener，然后进行查询
     }
 
