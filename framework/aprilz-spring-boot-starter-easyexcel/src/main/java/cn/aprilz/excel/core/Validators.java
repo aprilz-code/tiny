@@ -1,5 +1,7 @@
 package cn.aprilz.excel.core;
 
+import cn.hutool.extra.spring.SpringUtil;
+
 import javax.validation.*;
 import java.util.Set;
 
@@ -16,8 +18,11 @@ public final class Validators {
     private static final Validator VALIDATOR;
 
     static {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        VALIDATOR = factory.getValidator();
+
+//        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+//        VALIDATOR = factory.getValidator();
+        //使用自定义validator
+        VALIDATOR= SpringUtil.getBean("validator");
     }
 
     /**
