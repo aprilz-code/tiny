@@ -506,3 +506,8 @@ public final class Validators {
 
 原因分析 ConstraintValidatorFactory 默认实现类ConstraintValidatorFactoryImpl ，使用INSTANCE创建对象，不受spring管理
 ，所以这里改用SpringConstraintValidatorFactory即可
+
+
+
+### 杂记
+ 1. 多端登录走不同验证方式可查看SecurityManyConfig
