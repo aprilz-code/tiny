@@ -510,4 +510,3 @@ public final class Validators {
 
 
 ### 杂记
- 1. 多端登录走不同验证方式可查看SecurityManyConfig
