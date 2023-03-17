@@ -15,24 +15,21 @@ lombok全局配置
 ### 3.1 easyexcel导出，数据过多，查询java.lang.OutOfMemoryError: GC overhead limit exceeded，采取分页然后写入excel
 
 具体用法详见ApExcelTestController 内
+
 ```java
 package com.aprilz.tiny.controller;
 
-import cn.aprilz.excel.core.annotations.RequestExcel;
-import cn.aprilz.excel.core.annotations.ResponseExcel;
-import cn.aprilz.excel.core.annotations.Sheet;
-import cn.aprilz.excel.core.exception.ErrorMessage;
-import cn.aprilz.excel.core.handler.DefaultAnalysisEventListener;
-import cn.aprilz.excel.core.util.ExcelUtil;
+import com.aprilz.excel.core.annotations.RequestExcel;
+import com.aprilz.excel.core.annotations.ResponseExcel;
+import com.aprilz.excel.core.annotations.Sheet;
+import com.aprilz.excel.core.exception.ErrorMessage;
+import com.aprilz.excel.core.util.ExcelUtil;
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.date.DateUtil;
-import com.alibaba.excel.EasyExcel;
 import com.aprilz.tiny.common.api.CommonResult;
 import com.aprilz.tiny.mbg.entity.ApExcelTest;
 import com.aprilz.tiny.service.IApExcelTestService;
 import com.aprilz.tiny.service.impl.ApExcelTest2ServiceImpl;
 import com.aprilz.tiny.vo.request.ApExcelTestParam;
-import org.springframework.beans.BeanUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -138,7 +135,7 @@ public class ApExcelTestController {
     public CommonResult<String> upload(@RequestExcel List<ApExcelTestParam> dataList, BindingResult bindingResult) {
         // JSR 303 校验通用校验获取失败的数据
         List<ErrorMessage> errorMessageList = (List<ErrorMessage>) bindingResult.getTarget();
-        if(CollUtil.isNotEmpty(errorMessageList)){
+        if (CollUtil.isNotEmpty(errorMessageList)) {
             // System.out.println(errorMessageList.toString());
             return CommonResult.error(errorMessageList.toString());
         }
@@ -156,10 +153,10 @@ public class ApExcelTestController {
      * @return
      */
     @PostMapping("/requestExcelImport2")
-    public CommonResult<String> requestExcelImport2(@RequestExcel List<ApExcelTestParam> dataList,String excelCustom, BindingResult bindingResult) {
+    public CommonResult<String> requestExcelImport2(@RequestExcel List<ApExcelTestParam> dataList, String excelCustom, BindingResult bindingResult) {
         // JSR 303 校验通用校验获取失败的数据
         List<ErrorMessage> errorMessageList = (List<ErrorMessage>) bindingResult.getTarget();
-        if(CollUtil.isNotEmpty(errorMessageList)){
+        if (CollUtil.isNotEmpty(errorMessageList)) {
             // System.out.println(errorMessageList.toString());
             return CommonResult.error(errorMessageList.toString());
         }
@@ -170,10 +167,8 @@ public class ApExcelTestController {
     }
 
 
-
     /**
      * 模拟大批量数据导入
-
      * @return
      */
     @PostMapping("/upload3")
@@ -185,7 +180,6 @@ public class ApExcelTestController {
 
     /**
      * 模拟大批量数据导入
-
      * @return
      */
     @PostMapping("/test3")
@@ -204,8 +198,8 @@ public class ApExcelTestController {
 ```java
 package cn.aprilz.excel.core.annotations;
 
-import cn.aprilz.excel.core.handler.DefaultAnalysisEventListener;
-import cn.aprilz.excel.core.handler.ListAnalysisEventListener;
+import com.aprilz.excel.core.handler.DefaultAnalysisEventListener;
+import com.aprilz.excel.core.handler.ListAnalysisEventListener;
 
 import java.lang.annotation.*;
 

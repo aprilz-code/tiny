@@ -1,7 +1,7 @@
 package com.aprilz.tiny.common.exception;
 
 
-import cn.aprilz.excel.core.exception.ExcelException;
+import com.aprilz.excel.core.exception.ExcelException;
 import com.aprilz.tiny.common.api.CommonResult;
 import com.aprilz.tiny.common.api.ResultCode;
 import lombok.extern.slf4j.Slf4j;
