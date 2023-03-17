@@ -1,5 +1,5 @@
 # tiny
-代码地址 ： https://github.com/aprilz-code/tiny.git
+代码地址 ： https://github.com/aprilz-code/tiny.git  
 代码生成器地址：https://github.com/aprilz-code/code-generate.git
 
 Mybatis-Plus基础框架,包括Mybatis-Plus-Generator。 登录/注册,以及完整的RBAC权限管理系统。
