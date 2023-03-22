@@ -2,6 +2,7 @@ package com.aprilz.tiny;
 
 
 import com.aprilz.tiny.common.api.PageVO;
+import com.aprilz.tiny.common.cache.LocalCache;
 import com.aprilz.tiny.common.utils.PageUtil;
 import com.aprilz.tiny.designMode.observer.impl.MySubject;
 import com.aprilz.tiny.designMode.observer.impl.ObserverA;
@@ -27,6 +28,7 @@ import org.springframework.transaction.TransactionStatus;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -198,6 +200,22 @@ public class TinyApplicationTests {
         //获取到代理对象
         Star star = (Star) obj;
         star.sing();
+    }
+
+    @Test
+    void localCache() {
+        // 创建一个用户缓存
+        LocalCache<ApUser> userCache = new LocalCache<ApUser>().setParameters(100, 10, TimeUnit.MINUTES).build();
+        for (Integer i = 10; i < 13; i++) {
+            Integer finalI = i;
+            if(i == 11){
+                finalI = 10;
+            }
+            Integer finalI1 = finalI;
+            Optional<ApUser> userOptional = userCache.query(i.toString(), user -> Optional.ofNullable(apUserService.getById(finalI1)));
+            Long aNull = userOptional.map(ApUser::getId).orElse(99999L);
+            System.out.println(aNull);
+        }
     }
 
 }
