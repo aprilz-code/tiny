@@ -212,6 +212,10 @@ public class TinyApplicationTests {
         userOptional = userCache.query("10", user -> Optional.ofNullable(apUserService.getById(10)));
         Long aNull = userOptional.map(ApUser::getId).orElse(99999L);
         System.out.println(aNull);
+        userCache.invalidateAll();
+        userCache.query("10", user -> Optional.ofNullable(apUserService.getById(10)));
+         aNull = userOptional.map(ApUser::getId).orElse(99999L);
+        System.out.println(aNull);
     }
 
     @Test

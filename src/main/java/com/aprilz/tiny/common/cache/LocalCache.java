@@ -79,6 +79,11 @@ public class LocalCache<T> {
     }
 
 
+    public void invalidateAll(){
+        cacheHolder.invalidateAll();
+    }
+
+
     /**
      * 通用接口, 利用模板方法设计模式, 将业务方法抽取出来. 不同的业务 传递不同的查询逻辑.
      * @param <T>
