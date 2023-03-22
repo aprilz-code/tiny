@@ -206,16 +206,29 @@ public class TinyApplicationTests {
     void localCache() {
         // 创建一个用户缓存
         LocalCache<ApUser> userCache = new LocalCache<ApUser>().setParameters(100, 10, TimeUnit.MINUTES).build();
+
+        Optional<ApUser> userOptional = userCache.query("10", user -> Optional.ofNullable(apUserService.getById(10)));
+        userOptional = userCache.query("10", user -> Optional.ofNullable(apUserService.getById(10)));
+        userOptional = userCache.query("10", user -> Optional.ofNullable(apUserService.getById(10)));
+        Long aNull = userOptional.map(ApUser::getId).orElse(99999L);
+        System.out.println(aNull);
+    }
+
+    @Test
+    void localCache2() {
+        // 创建一个用户缓存
+        LocalCache<ApUser> userCache = new LocalCache<ApUser>().setParameters(100, 10, TimeUnit.MINUTES).build();
         for (Integer i = 10; i < 13; i++) {
             Integer finalI = i;
             if(i == 11){
                 finalI = 10;
             }
             Integer finalI1 = finalI;
-            Optional<ApUser> userOptional = userCache.query(i.toString(), user -> Optional.ofNullable(apUserService.getById(finalI1)));
+            Optional<ApUser> userOptional = userCache.query(finalI1.toString(), user -> Optional.ofNullable(apUserService.getById(finalI1)));
             Long aNull = userOptional.map(ApUser::getId).orElse(99999L);
             System.out.println(aNull);
         }
     }
+
 
 }
