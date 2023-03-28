@@ -27,6 +27,10 @@ public class ErrorMessage {
      */
     private Set<String> errors = new HashSet<>();
 
+    public ErrorMessage(Long lineNum) {
+        this.lineNum = lineNum;
+    }
+
     public ErrorMessage(Set<String> errors) {
         this.errors = errors;
     }
