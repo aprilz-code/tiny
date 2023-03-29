@@ -13,7 +13,7 @@ import java.lang.annotation.*;
 public @interface DictFormat {
 
     /**
-     * 例如说，SysDictTypeConstants、InfDictTypeConstants
+     * 例如说，DictTypeConstants
      *
      * @return 字典类型
      */

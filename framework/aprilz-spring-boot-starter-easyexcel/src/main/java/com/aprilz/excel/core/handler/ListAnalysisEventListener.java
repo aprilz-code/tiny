@@ -1,14 +1,12 @@
 package com.aprilz.excel.core.handler;
 
-import com.aprilz.excel.core.exception.ErrorMessage;
 import com.alibaba.excel.event.AnalysisEventListener;
+import com.aprilz.excel.core.exception.ErrorMessage;
 
 import java.util.List;
 
 /**
  * list analysis EventListener
- *
- * @author L.cm
  */
 public abstract class ListAnalysisEventListener<T> extends AnalysisEventListener<T> {
 

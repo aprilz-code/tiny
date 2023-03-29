@@ -10,6 +10,7 @@ import java.util.Set;
 /**
  * 校验错误信息
  *
+ * @author Aprilz
  * @date 2021/8/4
  */
 @Data
@@ -27,10 +28,6 @@ public class ErrorMessage {
      */
     private Set<String> errors = new HashSet<>();
 
-    public ErrorMessage(Long lineNum) {
-        this.lineNum = lineNum;
-    }
-
     public ErrorMessage(Set<String> errors) {
         this.errors = errors;
     }
@@ -41,4 +38,7 @@ public class ErrorMessage {
         this.errors = objects;
     }
 
+    public ErrorMessage(Long lineNum) {
+        this.lineNum = lineNum;
+    }
 }

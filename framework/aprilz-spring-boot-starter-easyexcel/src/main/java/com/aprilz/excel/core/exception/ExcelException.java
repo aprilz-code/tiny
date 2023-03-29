@@ -1,6 +1,7 @@
 package com.aprilz.excel.core.exception;
 
 /**
+ * @author Aprilz
  * @date 2020/3/31
  */
 public class ExcelException extends RuntimeException {

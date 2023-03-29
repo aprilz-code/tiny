@@ -1,11 +1,11 @@
 package com.aprilz.tiny.controller;
 
+import cn.hutool.core.collection.CollUtil;
 import com.aprilz.excel.core.annotations.RequestExcel;
 import com.aprilz.excel.core.annotations.ResponseExcel;
 import com.aprilz.excel.core.annotations.Sheet;
 import com.aprilz.excel.core.exception.ErrorMessage;
-import com.aprilz.excel.core.util.ExcelUtil;
-import cn.hutool.core.collection.CollUtil;
+import com.aprilz.excel.core.util.ExcelUtils;
 import com.aprilz.tiny.common.api.CommonResult;
 import com.aprilz.tiny.mbg.entity.ApExcelTest;
 import com.aprilz.tiny.service.IApExcelTestService;
@@ -46,6 +46,7 @@ public class ApExcelTestController {
 
     /**
      * 普通导出数据
+     *
      * @param response
      * @throws IOException
      */
@@ -53,20 +54,21 @@ public class ApExcelTestController {
     public void test(HttpServletResponse response) throws IOException {
         List<ApExcelTest> datas = iApExcelTestService.lambdaQuery().last("limit 2000").list();
         // 输出
-        ExcelUtil.write(response, "test", "数据", ApExcelTest.class, datas);
+        ExcelUtils.write(response, "test", "数据", ApExcelTest.class, datas);
 
     }
 
 
     /**
      * 注解式导出单sheet数据
+     *
      * @param response
      * @return
      * @throws IOException
      */
     @GetMapping("/responseExcelTest")
     @ResponseExcel(name = "数据")
-   // @ResponseExcel(name = "数据", sheets = @Sheet(sheetName = "testSheet1"))
+    // @ResponseExcel(name = "数据", sheets = @Sheet(sheetName = "testSheet1"))
     public List<ApExcelTest> test2(HttpServletResponse response) throws IOException {
         List<ApExcelTest> datas = iApExcelTestService.lambdaQuery().last("limit 2000").list();
         return datas;
@@ -74,6 +76,7 @@ public class ApExcelTestController {
 
     /**
      * 注解式导出多页数据
+     *
      * @param response
      * @return
      * @throws IOException
@@ -90,17 +93,18 @@ public class ApExcelTestController {
     }
 
     /**
-     *  普通导入数据
+     * 普通导入数据
+     *
      * @param file
      * @return
      * @throws Exception
      */
     @PostMapping("/import")
     public CommonResult<String> importExcel(@RequestParam("file") MultipartFile file
-                            ) throws Exception {
+    ) throws Exception {
 //        List<ApExcelTestParam> list = EasyExcel.read(file.getInputStream(), ApExcelTestParam.class, BeanUtils.instantiateClass(DefaultAnalysisEventListener.class)).sheet()
 //                .doReadSync();
-        List<ApExcelTestParam> list = ExcelUtil.read(file, ApExcelTestParam.class);
+        List<ApExcelTestParam> list = ExcelUtils.read(file, ApExcelTestParam.class);
         System.out.println(list);
         //入库
         return CommonResult.success();
@@ -108,6 +112,7 @@ public class ApExcelTestController {
 
     /**
      * 注解式导入数据
+     *
      * @param dataList
      * @param bindingResult
      * @return
@@ -116,28 +121,7 @@ public class ApExcelTestController {
     public CommonResult<String> upload(@RequestExcel List<ApExcelTestParam> dataList, BindingResult bindingResult) {
         // JSR 303 校验通用校验获取失败的数据
         List<ErrorMessage> errorMessageList = (List<ErrorMessage>) bindingResult.getTarget();
-        if(CollUtil.isNotEmpty(errorMessageList)){
-           // System.out.println(errorMessageList.toString());
-            return CommonResult.error(errorMessageList.toString());
-        }
-      //  System.out.println(errorMessageList);
-        System.out.println(dataList);
-        //入库
-        return CommonResult.success();
-    }
-
-
-    /**
-     * 注解式导入数据
-     * @param dataList
-     * @param bindingResult
-     * @return
-     */
-    @PostMapping("/requestExcelImport2")
-    public CommonResult<String> requestExcelImport2(@RequestExcel List<ApExcelTestParam> dataList,String excelCustom, BindingResult bindingResult) {
-        // JSR 303 校验通用校验获取失败的数据
-        List<ErrorMessage> errorMessageList = (List<ErrorMessage>) bindingResult.getTarget();
-        if(CollUtil.isNotEmpty(errorMessageList)){
+        if (CollUtil.isNotEmpty(errorMessageList)) {
             // System.out.println(errorMessageList.toString());
             return CommonResult.error(errorMessageList.toString());
         }
@@ -148,10 +132,31 @@ public class ApExcelTestController {
     }
 
 
+    /**
+     * 注解式导入数据
+     *
+     * @param dataList
+     * @param bindingResult
+     * @return
+     */
+    @PostMapping("/requestExcelImport2")
+    public CommonResult<String> requestExcelImport2(@RequestExcel List<ApExcelTestParam> dataList, String excelCustom, BindingResult bindingResult) {
+        // JSR 303 校验通用校验获取失败的数据
+        List<ErrorMessage> errorMessageList = (List<ErrorMessage>) bindingResult.getTarget();
+        if (CollUtil.isNotEmpty(errorMessageList)) {
+            // System.out.println(errorMessageList.toString());
+            return CommonResult.error(errorMessageList.toString());
+        }
+        //  System.out.println(errorMessageList);
+        System.out.println(dataList);
+        //入库
+        return CommonResult.success();
+    }
+
 
     /**
      * 模拟大批量数据导入
-
+     *
      * @return
      */
     @PostMapping("/upload3")
@@ -163,7 +168,7 @@ public class ApExcelTestController {
 
     /**
      * 模拟大批量数据导入
-
+     *
      * @return
      */
     @PostMapping("/test3")

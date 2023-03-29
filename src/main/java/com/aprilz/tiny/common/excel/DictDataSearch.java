@@ -1,11 +1,12 @@
 package com.aprilz.tiny.common.excel;
 
-import com.aprilz.excel.core.dto.DictDataDTO;
 import com.aprilz.excel.core.dict.DictDataApi;
+import com.aprilz.excel.core.dto.DictDataDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Aprilz
@@ -52,5 +53,10 @@ public class DictDataSearch extends DictDataApi {
             }
         }
         return new DictDataDTO();
+    }
+
+    @Override
+    public String[] getSource(String param) {
+        return list.stream().map(DictDataDTO::getValue).collect(Collectors.toList()).toArray(new String[0]);
     }
 }

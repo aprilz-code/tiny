@@ -1,16 +1,5 @@
 package com.aprilz.excel.core.handler;
 
-import com.aprilz.excel.core.annotations.ResponseExcel;
-import com.aprilz.excel.core.aop.DynamicNameAspect;
-import com.aprilz.excel.core.convert.LocalDateStringConverter;
-import com.aprilz.excel.core.convert.LocalDateTimeStringConverter;
-import com.aprilz.excel.core.custom.AutoHeadColumnWidthStyleStrategy;
-import com.aprilz.excel.core.exception.ExcelException;
-import com.aprilz.excel.core.head.HeadGenerator;
-import com.aprilz.excel.core.head.HeadMeta;
-import com.aprilz.excel.core.properties.ExcelConfigProperties;
-import com.aprilz.excel.core.properties.SheetBuildProperties;
-import com.aprilz.excel.enhance.WriterBuilderEnhancer;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.converters.Converter;
@@ -18,6 +7,19 @@ import com.alibaba.excel.write.builder.ExcelWriterBuilder;
 import com.alibaba.excel.write.builder.ExcelWriterSheetBuilder;
 import com.alibaba.excel.write.handler.WriteHandler;
 import com.alibaba.excel.write.metadata.WriteSheet;
+import com.aprilz.excel.core.annotations.ResponseExcel;
+import com.aprilz.excel.core.aop.DynamicNameAspect;
+import com.aprilz.excel.core.convert.LocalDateStringConverter;
+import com.aprilz.excel.core.convert.LocalDateTimeStringConverter;
+import com.aprilz.excel.core.custom.AutoHeadColumnWidthStyleStrategy;
+import com.aprilz.excel.core.drop.handle.ChainDropDownWriteHandler;
+import com.aprilz.excel.core.drop.handle.DropDownWriteHandler;
+import com.aprilz.excel.core.exception.ExcelException;
+import com.aprilz.excel.core.head.HeadGenerator;
+import com.aprilz.excel.core.head.HeadMeta;
+import com.aprilz.excel.core.properties.ExcelConfigProperties;
+import com.aprilz.excel.core.properties.SheetBuildProperties;
+import com.aprilz.excel.enhance.WriterBuilderEnhancer;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.BeanUtils;
@@ -25,6 +27,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.core.MethodParameter;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -47,10 +50,11 @@ import java.util.Objects;
 import java.util.UUID;
 
 /**
+ * @author Aprilz
  * @date 2020/3/31
  */
 @RequiredArgsConstructor
-public abstract class AbstractSheetWriteHandler implements SheetWriteHandler, ApplicationContextAware {
+public abstract class AbstractSheetWrite implements SheetWrite, ApplicationContextAware {
 
     private final ExcelConfigProperties configProperties;
 
@@ -70,7 +74,7 @@ public abstract class AbstractSheetWriteHandler implements SheetWriteHandler, Ap
 
     @Override
     @SneakyThrows(UnsupportedEncodingException.class)
-    public void export(Object o, HttpServletResponse response, ResponseExcel responseExcel) {
+    public void export(Object o, MethodParameter parameter,HttpServletResponse response, ResponseExcel responseExcel) {
         check(responseExcel);
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         String name = (String) Objects.requireNonNull(requestAttributes).getAttribute(DynamicNameAspect.EXCEL_NAME_KEY,
@@ -85,7 +89,7 @@ public abstract class AbstractSheetWriteHandler implements SheetWriteHandler, Ap
         response.setContentType(contentType);
         response.setCharacterEncoding("utf-8");
         response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename*=utf-8''" + fileName);
-        write(o, response, responseExcel);
+        write(o, parameter,response, responseExcel);
     }
 
     /**
@@ -93,15 +97,25 @@ public abstract class AbstractSheetWriteHandler implements SheetWriteHandler, Ap
      *
      * @param response      HttpServletResponse
      * @param responseExcel ResponseExcel注解
+     * @param dropDownWriteHandler 固定值下拉处理器
+     * @param chainDropDownWriteHandler 自定义动态处理器
      * @return ExcelWriter
      */
     @SneakyThrows(IOException.class)
-    public ExcelWriter getExcelWriter(HttpServletResponse response, ResponseExcel responseExcel) {
+    public ExcelWriter getExcelWriter(HttpServletResponse response, ResponseExcel responseExcel, DropDownWriteHandler dropDownWriteHandler, ChainDropDownWriteHandler chainDropDownWriteHandler) {
         ExcelWriterBuilder writerBuilder = EasyExcel.write(response.getOutputStream())
                 .registerWriteHandler(BeanUtils.instantiateClass(AutoHeadColumnWidthStyleStrategy.class))
                 .registerConverter(LocalDateStringConverter.INSTANCE)
                 .registerConverter(LocalDateTimeStringConverter.INSTANCE).autoCloseStream(true)
                 .excelType(responseExcel.suffix()).inMemory(responseExcel.inMemory());
+
+        if(Objects.nonNull(dropDownWriteHandler)){
+            writerBuilder.registerWriteHandler(dropDownWriteHandler);
+        }
+
+        if(Objects.nonNull(chainDropDownWriteHandler)){
+            writerBuilder.registerWriteHandler(chainDropDownWriteHandler);
+        }
 
         if (StringUtils.hasText(responseExcel.password())) {
             writerBuilder.password(responseExcel.password());

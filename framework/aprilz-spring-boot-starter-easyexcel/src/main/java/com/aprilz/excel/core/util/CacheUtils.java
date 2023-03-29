@@ -9,8 +9,6 @@ import java.util.concurrent.Executors;
 
 /**
  * Cache 工具类
- *
- * @author Aprilz
  */
 public class CacheUtils {
 

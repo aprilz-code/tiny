@@ -1,10 +1,10 @@
 package com.aprilz.excel.core.aop;
 
+import com.alibaba.excel.EasyExcel;
 import com.aprilz.excel.core.annotations.RequestExcel;
 import com.aprilz.excel.core.convert.LocalDateStringConverter;
 import com.aprilz.excel.core.convert.LocalDateTimeStringConverter;
 import com.aprilz.excel.core.handler.ListAnalysisEventListener;
-import com.alibaba.excel.EasyExcel;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -53,9 +53,7 @@ public class RequestExcelArgumentResolver implements HandlerMethodArgumentResolv
         assert requestExcel != null;
         Class<? extends ListAnalysisEventListener<?>> readListenerClass = requestExcel.readListener();
         ListAnalysisEventListener<?> readListener = BeanUtils.instantiateClass(readListenerClass);
-        //自定义参数，校验可能需要
         String[] customValue = webRequest.getParameterValues(requestExcel.excelCustom());
-
         // 获取请求文件流
         HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
         assert request != null;

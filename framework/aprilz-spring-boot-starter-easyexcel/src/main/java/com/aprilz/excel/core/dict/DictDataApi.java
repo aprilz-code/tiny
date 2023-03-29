@@ -1,5 +1,6 @@
 package com.aprilz.excel.core.dict;
 
+import com.aprilz.excel.core.drop.services.IDropDownService;
 import com.aprilz.excel.core.dto.DictDataDTO;
 
 
@@ -8,7 +9,7 @@ import com.aprilz.excel.core.dto.DictDataDTO;
  * @date 2023/2/23-11:35
  * @description 默认DictSearch
  */
-public class DictDataApi {
+public class DictDataApi implements IDropDownService {
 
 
     /**
@@ -34,4 +35,6 @@ public class DictDataApi {
     public DictDataDTO getDictDataByValue(String dictType, String value) {
         return null;
     }
+
+
 }

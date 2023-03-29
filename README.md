@@ -266,7 +266,7 @@ public @interface RequestExcel {
 ```
 
 
-新增注解 @FieldRepeat，处理excel导入数据时的重复校验字段
+**新增注解 @FieldRepeat，处理excel导入数据时的重复校验字段**
 ```java
 package cn.aprilz.excel.core.annotations;
 
@@ -297,7 +297,11 @@ public @interface FieldRepeat {
 
 ```
 
-ExcelLine给导入时Long类型字段写入行号，其他类型不可用
+**新增@DropDownFields 注解，处理自定义数据下拉框**
+使用如ApExcelTest，支持固定值，动态值下拉框，实现IDropDownService接口，重写
+getSource接口，可参考 DictDataSearch类
+
+**ExcelLine给导入时Long类型字段写入行号，其他类型不可用**
 ```java
 package cn.aprilz.excel.core.annotations;
 
@@ -318,6 +322,10 @@ public @interface ExcelLine {
 ![img.png](docs/imgs/img.png)
 
 //后续看看要不要考虑，在注解上加分页条数，然后根据条数，动态sheet分页吧
+
+
+
+
 
 
 

@@ -1,11 +1,11 @@
 package com.aprilz.excel.core.util;
 
-import com.aprilz.excel.core.dict.DictDataApi;
-import com.aprilz.excel.core.dto.DictDataDTO;
-import com.aprilz.excel.core.dto.KeyValue;
 import cn.hutool.core.util.ObjectUtil;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import com.aprilz.excel.core.dict.DictDataApi;
+import com.aprilz.excel.core.dto.DictDataDTO;
+import com.aprilz.excel.core.dto.KeyValue;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
@@ -54,7 +54,7 @@ public class DictUtil {
 
     public static void init(DictDataApi dictDataApi) {
         DictUtil.dictDataApi = dictDataApi;
-        log.info("[init][初始化 DictUtil 成功]");
+        log.info("[init][初始化 字典 成功]");
     }
 
     @SneakyThrows

@@ -1,27 +1,28 @@
 package com.aprilz.excel.core.handler;
 
+import com.alibaba.excel.ExcelWriter;
+import com.alibaba.excel.converters.Converter;
+import com.alibaba.excel.write.metadata.WriteSheet;
 import com.aprilz.excel.core.annotations.ResponseExcel;
 import com.aprilz.excel.core.annotations.Sheet;
 import com.aprilz.excel.core.exception.ExcelException;
 import com.aprilz.excel.core.properties.ExcelConfigProperties;
 import com.aprilz.excel.core.properties.SheetBuildProperties;
 import com.aprilz.excel.enhance.WriterBuilderEnhancer;
-import com.alibaba.excel.ExcelWriter;
-import com.alibaba.excel.converters.Converter;
-import com.alibaba.excel.write.metadata.WriteSheet;
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.core.MethodParameter;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @date 2020/3/29
+ * @author Aprilz
  */
-public class ManySheetWriteHandler extends AbstractSheetWriteHandler {
+public class ManySheetWrite extends AbstractSheetWrite {
 
-    public ManySheetWriteHandler(ExcelConfigProperties configProperties,
-                                 ObjectProvider<List<Converter<?>>> converterProvider, WriterBuilderEnhancer excelWriterBuilderEnhance) {
+    public ManySheetWrite(ExcelConfigProperties configProperties,
+                          ObjectProvider<List<Converter<?>>> converterProvider, WriterBuilderEnhancer excelWriterBuilderEnhance) {
         super(configProperties, converterProvider, excelWriterBuilderEnhance);
     }
 
@@ -42,13 +43,13 @@ public class ManySheetWriteHandler extends AbstractSheetWriteHandler {
     }
 
     @Override
-    public void write(Object obj, HttpServletResponse response, ResponseExcel responseExcel) {
+    public void write(Object obj, MethodParameter parameter, HttpServletResponse response, ResponseExcel responseExcel) {
         List<?> objList = (List<?>) obj;
         int objListSize = objList.size();
 
         String template = responseExcel.template();
 
-        ExcelWriter excelWriter = getExcelWriter(response, responseExcel);
+        ExcelWriter excelWriter = getExcelWriter(response, responseExcel, null, null);
         List<SheetBuildProperties> sheetBuildPropertiesList = getSheetBuildProperties(responseExcel, objListSize);
 
         for (int i = 0; i < sheetBuildPropertiesList.size(); i++) {

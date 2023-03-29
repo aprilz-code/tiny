@@ -2,13 +2,13 @@ package com.aprilz.excel.core;
 
 import cn.hutool.extra.spring.SpringUtil;
 
-import javax.validation.*;
+import javax.validation.ConstraintViolation;
+import javax.validation.ValidationException;
+import javax.validation.Validator;
 import java.util.Set;
 
 /**
  * 校验工具
- *
- * @author L.cm
  */
 public final class Validators {
 
@@ -18,11 +18,9 @@ public final class Validators {
     private static final Validator VALIDATOR;
 
     static {
-
 //        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 //        VALIDATOR = factory.getValidator();
-        //使用自定义validator
-        VALIDATOR= SpringUtil.getBean("validator");
+        VALIDATOR = SpringUtil.getBean("validator");
     }
 
     /**

@@ -2,7 +2,7 @@ package com.aprilz.excel.core.aop;
 
 
 import com.aprilz.excel.core.annotations.ResponseExcel;
-import com.aprilz.excel.core.handler.SheetWriteHandler;
+import com.aprilz.excel.core.handler.SheetWrite;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
@@ -17,12 +17,13 @@ import java.util.List;
 /**
  * 处理@ResponseExcel 返回值
  *
+ * @author Aprilz
  */
 @Slf4j
 @RequiredArgsConstructor
 public class ResponseExcelReturnValueHandler implements HandlerMethodReturnValueHandler {
 
-    private final List<SheetWriteHandler> sheetWriteHandlerList;
+    private final List<SheetWrite> sheetWriteList;
 
     /**
      * 只处理@ResponseExcel 声明的方法
@@ -53,8 +54,8 @@ public class ResponseExcelReturnValueHandler implements HandlerMethodReturnValue
         Assert.state(responseExcel != null, "No @ResponseExcel");
         mavContainer.setRequestHandled(true);
 
-        sheetWriteHandlerList.stream().filter(handler -> handler.support(o)).findFirst()
-                .ifPresent(handler -> handler.export(o, response, responseExcel));
+        sheetWriteList.stream().filter(handler -> handler.support(o)).findFirst()
+                .ifPresent(handler -> handler.export(o,parameter, response, responseExcel));
     }
 
 }

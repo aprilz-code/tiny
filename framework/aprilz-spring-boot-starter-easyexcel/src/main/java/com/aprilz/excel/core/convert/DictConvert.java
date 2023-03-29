@@ -1,7 +1,5 @@
 package com.aprilz.excel.core.convert;
 
-import com.aprilz.excel.core.annotations.DictFormat;
-import com.aprilz.excel.core.util.DictUtil;
 import cn.hutool.core.convert.Convert;
 import com.alibaba.excel.converters.Converter;
 import com.alibaba.excel.enums.CellDataTypeEnum;
@@ -9,12 +7,12 @@ import com.alibaba.excel.metadata.GlobalConfiguration;
 import com.alibaba.excel.metadata.data.ReadCellData;
 import com.alibaba.excel.metadata.data.WriteCellData;
 import com.alibaba.excel.metadata.property.ExcelContentProperty;
+import com.aprilz.excel.core.annotations.DictFormat;
+import com.aprilz.excel.core.util.DictUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**
  * Excel 数据字典转换器
- *
- * @author Aprilz
  */
 @Slf4j
 public class DictConvert implements Converter<Object> {

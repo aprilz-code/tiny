@@ -1,13 +1,13 @@
 package com.aprilz.excel.config;
 
+import com.alibaba.excel.converters.Converter;
 import com.aprilz.excel.core.aop.ResponseExcelReturnValueHandler;
-import com.aprilz.excel.core.handler.ManySheetWriteHandler;
-import com.aprilz.excel.core.handler.SheetWriteHandler;
-import com.aprilz.excel.core.handler.SingleSheetWriteHandler;
+import com.aprilz.excel.core.handler.ManySheetWrite;
+import com.aprilz.excel.core.handler.SheetWrite;
+import com.aprilz.excel.core.handler.SingleSheetWrite;
 import com.aprilz.excel.core.properties.ExcelConfigProperties;
 import com.aprilz.excel.enhance.DefaultWriterBuilderEnhancer;
 import com.aprilz.excel.enhance.WriterBuilderEnhancer;
-import com.alibaba.excel.converters.Converter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -42,8 +42,8 @@ public class ExcelHandlerConfiguration {
      */
     @Bean
     @ConditionalOnMissingBean
-    public SingleSheetWriteHandler singleSheetWriteHandler() {
-        return new SingleSheetWriteHandler(configProperties, converterProvider, writerBuilderEnhancer());
+    public SingleSheetWrite singleSheetWriteHandler() {
+        return new SingleSheetWrite(configProperties, converterProvider, writerBuilderEnhancer());
     }
 
     /**
@@ -51,21 +51,21 @@ public class ExcelHandlerConfiguration {
      */
     @Bean
     @ConditionalOnMissingBean
-    public ManySheetWriteHandler manySheetWriteHandler() {
-        return new ManySheetWriteHandler(configProperties, converterProvider, writerBuilderEnhancer());
+    public ManySheetWrite manySheetWriteHandler() {
+        return new ManySheetWrite(configProperties, converterProvider, writerBuilderEnhancer());
     }
 
     /**
      * 返回Excel文件的 response 处理器
      *
-     * @param sheetWriteHandlerList 页签写入处理器集合
+     * @param sheetWriteList 页签写入处理器集合
      * @return ResponseExcelReturnValueHandler
      */
     @Bean
     @ConditionalOnMissingBean
     public ResponseExcelReturnValueHandler responseExcelReturnValueHandler(
-            List<SheetWriteHandler> sheetWriteHandlerList) {
-        return new ResponseExcelReturnValueHandler(sheetWriteHandlerList);
+            List<SheetWrite> sheetWriteList) {
+        return new ResponseExcelReturnValueHandler(sheetWriteList);
     }
 
 
