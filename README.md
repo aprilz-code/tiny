@@ -9,10 +9,10 @@ Mybatis-Plus基础框架,包括Mybatis-Plus-Generator。 登录/注册,以及完
 ## 1. TransactionSynchronizationManager.registerSynchronization
     编程式事务
 
-## 2. lombok 1.14版本以上支持全局配置{@see lombok.config}
+## 2. lombok 1.14版本以上`支持全局配置{@see lombok.config}
 lombok全局配置
 
-## 3. starter包相关 
+## 3. starter包相关 `
  
 ### 3.1 easyexcel导出，数据过多，查询java.lang.OutOfMemoryError: GC overhead limit exceeded，采取分页然后写入excel
 
@@ -321,7 +321,6 @@ public @interface ExcelLine {
 导入Excel时发现，属性值一直为null。。。。结果发现lombok和easyexcel冲突，解决方案如下
 ![img.png](docs/imgs/img.png)
 
-//后续看看要不要考虑，在注解上加分页条数，然后根据条数，动态sheet分页吧
 
 
 
