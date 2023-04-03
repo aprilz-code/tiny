@@ -3,7 +3,6 @@ package com.aprilz.excel.core.annotations;
 import com.alibaba.excel.converters.Converter;
 import com.alibaba.excel.support.ExcelTypeEnum;
 import com.alibaba.excel.write.handler.WriteHandler;
-import com.aprilz.excel.core.custom.AutoHeadColumnWidthStyleStrategy;
 import com.aprilz.excel.core.head.HeadGenerator;
 
 import java.lang.annotation.*;

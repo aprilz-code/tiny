@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 public class DtpExecutor extends ThreadPoolExecutor {
 
     /**
-     * @param corePoolSize  核心线程数
+     * @param corePoolSize    核心线程数
      * @param maximumPoolSize 最大线程数
      */
     public DtpExecutor(int corePoolSize, int maximumPoolSize) {

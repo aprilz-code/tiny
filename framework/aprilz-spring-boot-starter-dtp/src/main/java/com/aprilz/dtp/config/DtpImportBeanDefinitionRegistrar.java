@@ -1,7 +1,7 @@
 package com.aprilz.dtp.config;
 
-import com.aprilz.dtp.core.DtpExecutor;
 import com.alibaba.nacos.common.utils.CollectionUtils;
+import com.aprilz.dtp.core.DtpExecutor;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -35,9 +35,9 @@ public class DtpImportBeanDefinitionRegistrar implements ImportBeanDefinitionReg
         Binder binder = Binder.get(environment);
         ResolvableType type = ResolvableType.forClass(DtpProperties.class);
         Bindable<?> target = Bindable.of(type).withExistingValue(dtpProperties);
-        binder.bind("dtp",target);
+        binder.bind("dtp", target);
         //动态线程池配置
-        if(CollectionUtils.isEmpty(dtpProperties.getExecutors())){
+        if (CollectionUtils.isEmpty(dtpProperties.getExecutors())) {
             return;
         }
         for (DtpProperties.DtpExecutorProperties executorProperties : dtpProperties.getExecutors()) {
@@ -45,7 +45,7 @@ public class DtpImportBeanDefinitionRegistrar implements ImportBeanDefinitionReg
             beanDefinition.setBeanClass(DtpExecutor.class);
             beanDefinition.getConstructorArgumentValues().addGenericArgumentValue(executorProperties.getCorePoolSize());
             beanDefinition.getConstructorArgumentValues().addGenericArgumentValue(executorProperties.getMaximumPoolSize());
-            registry.registerBeanDefinition(executorProperties.getName(),beanDefinition);
+            registry.registerBeanDefinition(executorProperties.getName(), beanDefinition);
         }
     }
 

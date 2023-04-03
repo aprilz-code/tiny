@@ -1,4 +1,5 @@
 # tiny
+
 代码地址 ： https://github.com/aprilz-code/tiny.git  
 代码生成器地址：https://github.com/aprilz-code/code-generate.git
 
@@ -7,13 +8,15 @@ Mybatis-Plus基础框架,包括Mybatis-Plus-Generator。 登录/注册,以及完
 各种设计模式各案例以及编程式事务，以及工具类整理。 待补充。。。
 
 ## 1. TransactionSynchronizationManager.registerSynchronization
+
     编程式事务
 
 ## 2. lombok 1.14版本以上`支持全局配置{@see lombok.config}
+
 lombok全局配置
 
 ## 3. starter包相关 `
- 
+
 ### 3.1 easyexcel导出，数据过多，查询java.lang.OutOfMemoryError: GC overhead limit exceeded，采取分页然后写入excel
 
 具体用法详见ApExcelTestController 内
@@ -194,8 +197,7 @@ public class ApExcelTestController {
 ```
 
 **支持传入自定义参数去检验 **
-    假如商品excel导入入库时，需校验商品必须是同一分类下，则需要传入分类id。（例子可能不恰当，意思自行理解）
-    则传入excelCustom参数，可传入string或者array接收
+假如商品excel导入入库时，需校验商品必须是同一分类下，则需要传入分类id。（例子可能不恰当，意思自行理解） 则传入excelCustom参数，可传入string或者array接收
 
 ```java
 package cn.aprilz.excel.core.annotations;
@@ -249,24 +251,24 @@ public @interface RequestExcel {
 }
 
 ```
+
 ![img.png](docs/imgs/img_fox.png)
 
 ![img_1.png](docs/imgs/img_1.png)
 
 ![img_2.png](docs/imgs/img_2.png)
 
-
-
 **支持字典转换**
 写 ： 继承DictDataApi(项目中-DictDataSearch),然后使用例如
+
 ```java
     @ExcelProperty(value = "性别", converter = DictConvert.class)
-    @DictFormat("dic_sex")
-    private Integer sex;
+@DictFormat("dic_sex")
+private Integer sex;
 ```
 
-
 **新增注解 @FieldRepeat，处理excel导入数据时的重复校验字段**
+
 ```java
 package cn.aprilz.excel.core.annotations;
 
@@ -289,7 +291,7 @@ public @interface FieldRepeat {
      * 需要校验的字段
      * @return
      */
-    String [] fields() default {};
+    String[] fields() default {};
 
     String message() default "存在重复数据";
 
@@ -298,10 +300,10 @@ public @interface FieldRepeat {
 ```
 
 **新增@DropDownFields 注解，处理自定义数据下拉框**
-使用如ApExcelTest，支持固定值，动态值下拉框，实现IDropDownService接口，重写
-getSource接口，可参考 DictDataSearch类
+使用如ApExcelTest，支持固定值，动态值下拉框，实现IDropDownService接口，重写 getSource接口，可参考 DictDataSearch类
 
 **ExcelLine给导入时Long类型字段写入行号，其他类型不可用**
+
 ```java
 package cn.aprilz.excel.core.annotations;
 
@@ -316,33 +318,22 @@ public @interface ExcelLine {
 
 ```
 
-
-小tips：
-导入Excel时发现，属性值一直为null。。。。结果发现lombok和easyexcel冲突，解决方案如下
+小tips： 导入Excel时发现，属性值一直为null。。。。结果发现lombok和easyexcel冲突，解决方案如下
 ![img.png](docs/imgs/img.png)
-
-
-
-
-
-
-
-
 
 ### 3.2 dtp 意为动态线程池。基于nacos动态@refresh原理实现
 
+用法如下 nacos新建dataId为dtp.yml，group为DEFAULT_GROUP，修改的需要搜索dtp，然后同步修改nacosListener等位置
 
-用法如下
-nacos新建dataId为dtp.yml，group为DEFAULT_GROUP，修改的需要搜索dtp，然后同步修改nacosListener等位置
 ```yaml
 dtp:
 executors:
-- name: t1
-  core-pool-size: 25
-  maximum-pool-Size: 100
-- name: t2
-  core-pool-size: 20
-  maximum-pool-Size: 110
+  - name: t1
+    core-pool-size: 25
+    maximum-pool-Size: 100
+  - name: t2
+    core-pool-size: 20
+    maximum-pool-Size: 110
 ```
 
 ```java
@@ -350,7 +341,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class A {
-    
+
     @GetMapping("/test")
     public CommonResult<String> test() {
         DtpExecutor t1 = DtpUtil.get("t1");
@@ -376,29 +367,25 @@ starter springboot2.7.5及以上使用META-INF-spring下文件，2.7.5以下使�
 
 ```xml
    <!-- mica-auto -->
-        <dependency>
-            <groupId>net.dreamlu</groupId>
-            <artifactId>mica-auto</artifactId>
-            <version>${mica.version}</version>
-            <scope>provided</scope>
-        </dependency>
+<dependency>
+    <groupId>net.dreamlu</groupId>
+    <artifactId>mica-auto</artifactId>
+    <version>${mica.version}</version>
+    <scope>provided</scope>
+</dependency>
 ```
 
 ## 4.批量插入
-### 1. xml <foreach>方式，sql长度有限制，不好排查
-### 2. ExecutorType.BATCH 。。。。需要在url后面开启rewriteBatchedStatements=true，不然没效果。。（这里排查了半天，晕了 ）
-具体用法参考： ApExcelTest2ServiceImpl 和 MybatisBatchUtils
 
+### 1. xml <foreach>方式，sql长度有限制，不好排查
+
+### 2. ExecutorType.BATCH 。。。。需要在url后面开启rewriteBatchedStatements=true，不然没效果。。（这里排查了半天，晕了 ）
+
+具体用法参考： ApExcelTest2ServiceImpl 和 MybatisBatchUtils
 
 https://github.com/aprilz-code/tiny.git
 
-
-
-util使用：
-TreeUtil 使用示例看代码
-
-
-
+util使用： TreeUtil 使用示例看代码
 
 designMode 下 设计模式代码整理
 
@@ -406,12 +393,11 @@ designMode 下 设计模式代码整理
     strategy 策略模式
     proxy 代理模式 
 
-
-springboot集成hibernate-validator实现校验,自定义校验中无法注入spring bean
-使用validator时，发现加了@compent，但是service无法注入
+springboot集成hibernate-validator实现校验,自定义校验中无法注入spring bean 使用validator时，发现加了@compent，但是service无法注入
 ![img.png](docs/imgs/valid_1.png)
 
 解决办法如下：
+
 ```java
 package com.aprilz.tiny.config;
 
@@ -446,7 +432,7 @@ public class ValidatorConfig {
         ValidatorFactory validatorFactory = Validation.byProvider(HibernateValidator.class)
                 .configure()
                 .constraintValidatorFactory(new SpringConstraintValidatorFactory(beanFactory))// 使用spring代理，
-             //   .failFast(true) //不需要快速失败,需要则打开
+                //   .failFast(true) //不需要快速失败,需要则打开
                 .buildValidatorFactory();
         return validatorFactory.getValidator();
     }
@@ -455,8 +441,8 @@ public class ValidatorConfig {
 
 ```
 
-
 excel中同上，Validators类中使用自定义validators
+
 ```java
 package cn.aprilz.excel.core;
 
@@ -478,11 +464,11 @@ public final class Validators {
     private static final Validator VALIDATOR;
 
     static {
-        
+
 //        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 //        VALIDATOR = factory.getValidator();
         //使用自定义validator
-        VALIDATOR= SpringUtil.getBean("validator");
+        VALIDATOR = SpringUtil.getBean("validator");
     }
 
     /**
@@ -509,7 +495,5 @@ public final class Validators {
 
 原因分析 ConstraintValidatorFactory 默认实现类ConstraintValidatorFactoryImpl ，使用INSTANCE创建对象，不受spring管理
 ，所以这里改用SpringConstraintValidatorFactory即可
-
-
 
 ### 杂记

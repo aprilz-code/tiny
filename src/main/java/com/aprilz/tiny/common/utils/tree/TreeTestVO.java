@@ -5,7 +5,7 @@ package com.aprilz.tiny.common.utils.tree;
  * @date 2023/3/6-10:42
  * @description TreeTestVO
  */
-public class TreeTestVO extends BaseTree{
+public class TreeTestVO extends BaseTree {
 
     private String name;
 }

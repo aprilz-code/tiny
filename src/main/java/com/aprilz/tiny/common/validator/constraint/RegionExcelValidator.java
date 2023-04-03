@@ -1,7 +1,5 @@
 package com.aprilz.tiny.common.validator.constraint;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.StrUtil;
 import com.aprilz.tiny.common.utils.Regionutil;
 import com.aprilz.tiny.common.validator.annotations.RegionExcelValid;
 import org.springframework.stereotype.Component;
@@ -9,8 +7,6 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Aprilz

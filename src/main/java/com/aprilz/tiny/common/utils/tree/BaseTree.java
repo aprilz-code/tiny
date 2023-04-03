@@ -22,6 +22,6 @@ public class BaseTree {
 
     private LocalDateTime updateTime;
 
-    private List<? extends  BaseTree> childList;
+    private List<? extends BaseTree> childList;
 
 }

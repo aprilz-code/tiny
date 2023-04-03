@@ -55,7 +55,7 @@ public class ResponseExcelReturnValueHandler implements HandlerMethodReturnValue
         mavContainer.setRequestHandled(true);
 
         sheetWriteList.stream().filter(handler -> handler.support(o)).findFirst()
-                .ifPresent(handler -> handler.export(o,parameter, response, responseExcel));
+                .ifPresent(handler -> handler.export(o, parameter, response, responseExcel));
     }
 
 }

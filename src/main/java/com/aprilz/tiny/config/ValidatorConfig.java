@@ -31,7 +31,7 @@ public class ValidatorConfig {
         ValidatorFactory validatorFactory = Validation.byProvider(HibernateValidator.class)
                 .configure()
                 .constraintValidatorFactory(new SpringConstraintValidatorFactory(beanFactory))// 使用spring代理，
-             //   .failFast(true) //不需要快速失败,需要则打开
+                //   .failFast(true) //不需要快速失败,需要则打开
                 .buildValidatorFactory();
         return validatorFactory.getValidator();
     }

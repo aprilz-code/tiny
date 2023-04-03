@@ -17,14 +17,14 @@ import java.util.Map;
 @Accessors(chain = true)
 @NoArgsConstructor
 public class ChainDropDown {
-        /**
+    /**
      * 名称
      */
     private String value;
     /**
      * 是否有子类
      */
-    private boolean hasChild=true;
+    private boolean hasChild = true;
     /**
      * 子类的集合
      */
@@ -35,7 +35,7 @@ public class ChainDropDown {
     /**
      * 是否是根目录
      */
-    private boolean rootFlag=true;
+    private boolean rootFlag = true;
 
     private String typeName;
 
@@ -44,9 +44,9 @@ public class ChainDropDown {
     /**
      * 行下标
      */
-    private Integer rowIndex=0;
+    private Integer rowIndex = 0;
 
-    private Map<String, List<String>> dataMap=new HashMap<>();
+    private Map<String, List<String>> dataMap = new HashMap<>();
 
 
 }

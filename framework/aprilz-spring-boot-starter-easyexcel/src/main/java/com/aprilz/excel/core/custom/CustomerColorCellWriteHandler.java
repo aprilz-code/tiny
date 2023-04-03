@@ -34,7 +34,7 @@ public class CustomerColorCellWriteHandler implements CellWriteHandler {
                         cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
                         cell.setCellStyle(cellStyle);
                     }
-                }else{
+                } else {
                     cellStyle.setFillForegroundColor(IndexedColors.WHITE.getIndex());
                     // 这里需要指定 FillPatternType 为FillPatternType.SOLID_FOREGROUND
                     cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);

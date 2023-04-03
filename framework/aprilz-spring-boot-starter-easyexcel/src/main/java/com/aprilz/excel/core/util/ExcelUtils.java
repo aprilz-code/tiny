@@ -53,8 +53,8 @@ public class ExcelUtils {
         // 获取改类声明的所有字段
         Field[] fields = templateClass.getDeclaredFields();
         //移除serialVersionUID
-        if(fields.length >0){
-            fields = Arrays.stream(fields).filter(field-> !field.getName().equals("serialVersionUID")).collect(Collectors.toList()).toArray(new Field[0]);
+        if (fields.length > 0) {
+            fields = Arrays.stream(fields).filter(field -> !field.getName().equals("serialVersionUID")).collect(Collectors.toList()).toArray(new Field[0]);
         }
         // 响应字段对应的下拉集合
         Map<Integer, String[]> map = processDropDown(fields);

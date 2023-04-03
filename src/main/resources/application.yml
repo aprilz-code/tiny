@@ -113,7 +113,6 @@ wx:
 
 
 ap:
-
   #通知相关配置
   notify:
     mail:

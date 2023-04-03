@@ -37,6 +37,7 @@ public final class CurrencyUtil {
         }
         return result.doubleValue();
     }
+
     /**
      * 提供精确的减法运算。
      *
