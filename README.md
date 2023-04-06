@@ -512,5 +512,6 @@ public final class Validators {
 ，所以这里改用SpringConstraintValidatorFactory即可
 
 
+### 3.2 elasticsearch springboot2.7.5对应ES版本 7.17.6
 
 ### 杂记
