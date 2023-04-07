@@ -1,11 +1,7 @@
 package com.aprilz.es.config;
 
-import com.aprilz.dtp.DtpMonitor;
-import com.aprilz.dtp.listen.NacosListener;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Bean;
+
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 
 /**
  * @author Aprilz
@@ -13,17 +9,7 @@ import org.springframework.context.annotation.Import;
  * @description 装配线程池
  */
 @Configuration
-@EnableConfigurationProperties(DtpProperties.class)
-@Import({DtpImportBeanDefinitionRegistrar.class,DtpBeanPostProcessor.class})
 public class AprilzDtpAutoConfiguration {
 
-    @Bean
-    public NacosListener nacosListener(){
-        return new NacosListener();
-    }
 
-    @Bean
-    public DtpMonitor dtpMonitor(){
-        return new DtpMonitor();
-    }
 }
