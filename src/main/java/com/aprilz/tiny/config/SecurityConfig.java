@@ -57,12 +57,6 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-//        ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = httpSecurity
-//                .authorizeRequests();
-//        //配置的url 不需要授权
-//        for (String url : ignoredUrlsProperties.getUrls()) {
-//            registry.antMatchers(url).permitAll();
-//        }
 
         httpSecurity
                 //禁止网页iframe
@@ -83,6 +77,7 @@ public class SecurityConfig {
 //                .permitAll()
                 .antMatchers(HttpMethod.OPTIONS)//跨域请求会先进行一次options请求
                 .permitAll()
+                //配置的url 不需要授权
                 .antMatchers(ignoredUrlsProperties.getUrls().toArray(new String[0])).permitAll()
 //                .antMatchers("/**")//测试时全部运行访问
 //                .permitAll()

@@ -98,7 +98,7 @@ ignored:
     - /**/*.ico
     - /favicon.ico
     - /*.html
-    - /sso/login
+    - /sso/*
     - /excel/**
 
 # wx相关配置
