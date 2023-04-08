@@ -1,18 +1,13 @@
 package com.aprilz.tiny.mbg.entity;
 
 import com.alibaba.excel.annotation.ExcelIgnore;
-import com.aprilz.tiny.mbg.base.BaseEntity;
+import com.aprilz.tiny.mbg.base.BaseDO;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
-
-import java.io.Serializable;
 
 /**
  * <p>
@@ -25,7 +20,7 @@ import java.io.Serializable;
 @Data
 @TableName("ap_admin_permission_relation")
 @ApiModel(value = "ApAdminPermissionRelation对象", description = "后台用户和权限关系表(除角色中定义的权限以外的加减权限)")
-public class ApAdminPermissionRelation extends BaseEntity {
+public class ApAdminPermissionRelation extends BaseDO {
 
 
     @TableId(value = "id")
@@ -43,8 +38,6 @@ public class ApAdminPermissionRelation extends BaseEntity {
 
     @TableField("type")
     private Integer type;
-
-
 
 
 }

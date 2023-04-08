@@ -23,7 +23,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -56,7 +55,6 @@ public class ApAdminServiceImpl extends ServiceImpl<ApAdminMapper, ApAdmin> impl
     public ApAdmin register(ApAdmin apAdminParam) {
         ApAdmin apAdmin = new ApAdmin();
         BeanUtils.copyProperties(apAdminParam, apAdmin);
-        apAdmin.setCreateTime(new Date());
         apAdmin.setStatus(true);
         //查询是否有相同用户名的用户
         LambdaQueryWrapper<ApAdmin> queryWrapper = new LambdaQueryWrapper();

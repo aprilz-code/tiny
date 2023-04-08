@@ -1,18 +1,11 @@
 package com.aprilz.tiny.excel;
 
-import cn.hutool.core.bean.BeanUtil;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
 import com.alibaba.excel.util.ListUtils;
-import com.aprilz.tiny.mapper.ApExcelTestMapper;
-import com.aprilz.tiny.mbg.entity.ApExcelTest;
 import com.aprilz.tiny.service.impl.ApExcelTest2ServiceImpl;
-import com.aprilz.tiny.service.impl.ApExcelTestServiceImpl;
 import com.aprilz.tiny.vo.request.ApExcelTestParam;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.session.ExecutorType;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
 
 import java.util.List;
 
@@ -75,7 +68,7 @@ public class ApTestAnalysisEventListener extends AnalysisEventListener<ApExcelTe
 
 
     public void writeData(Integer start, Integer end) {
-        String msg = excelTestService.writeData(list,start,end);
+        String msg = excelTestService.writeData(list, start, end);
         log.info(msg);
 
     }

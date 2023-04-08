@@ -2,10 +2,10 @@ package com.aprilz.dtp.listen;
 
 import com.alibaba.cloud.nacos.NacosConfigManager;
 import com.alibaba.nacos.api.config.listener.Listener;
+import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.aprilz.dtp.config.DtpProperties;
 import com.aprilz.dtp.core.DtpExecutor;
 import com.aprilz.dtp.util.DtpUtil;
-import com.alibaba.nacos.common.utils.CollectionUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
@@ -26,12 +26,12 @@ import java.util.concurrent.Executors;
  * nacos监听器
  * InitializingBean spring 的初始化Bean
  */
-public class NacosListener implements Listener , InitializingBean {
+public class NacosListener implements Listener, InitializingBean {
 
     // nacos-clinet1.*版本@NacosInjected注入可以触发nacosConfigPublishedEvent回调，也就是配置注册到nacos的时候产生的回调，其余方式不会触发 **
 //    @NacosInjected
 //    private ConfigService configService;
-    
+
     //nacos-clinet2.*版本用法 https://github.com/nacos-group/nacos-examples/issues/28
     @Autowired
     private NacosConfigManager nacosConfigManager;
@@ -49,14 +49,14 @@ public class NacosListener implements Listener , InitializingBean {
 
         DtpProperties dtpProperties = new DtpProperties();
         ConfigurationPropertySource sources = new MapConfigurationPropertySource(properties);
-        Binder binder =  new Binder(sources);
+        Binder binder = new Binder(sources);
         ResolvableType type = ResolvableType.forClass(DtpProperties.class);
         Bindable<?> target = Bindable.of(type).withExistingValue(dtpProperties);
-        binder.bind("dtp",target);
+        binder.bind("dtp", target);
 
         //配置的线程数组属性
         List<DtpProperties.DtpExecutorProperties> executors = dtpProperties.getExecutors();
-        if(CollectionUtils.isEmpty(executors)){
+        if (CollectionUtils.isEmpty(executors)) {
             return;
         }
         for (DtpProperties.DtpExecutorProperties executorProperties : executors) {//Bean对象
@@ -70,6 +70,6 @@ public class NacosListener implements Listener , InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         //configService.addListener("dtp.yml","train-school-dev",this);
-        nacosConfigManager.getConfigService().addListener("dtp.yml","DEFAULT_GROUP",this);
+        nacosConfigManager.getConfigService().addListener("dtp.yml", "DEFAULT_GROUP", this);
     }
 }

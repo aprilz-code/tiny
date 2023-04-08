@@ -1,18 +1,13 @@
 package com.aprilz.tiny.mbg.entity;
 
 import com.alibaba.excel.annotation.ExcelIgnore;
-import com.aprilz.tiny.mbg.base.BaseEntity;
+import com.aprilz.tiny.mbg.base.BaseDO;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
-
-import java.io.Serializable;
 
 /**
  * <p>
@@ -25,7 +20,7 @@ import java.io.Serializable;
 @Data
 @TableName("ap_role")
 @ApiModel(value = "ApRole对象", description = "后台用户角色表")
-public class ApRole extends BaseEntity {
+public class ApRole extends BaseDO {
 
     @TableId(value = "id")
     @ApiModelProperty(value = "唯一标识")
@@ -46,8 +41,6 @@ public class ApRole extends BaseEntity {
 
     @TableField("sort")
     private Integer sort;
-
-
 
 
 }

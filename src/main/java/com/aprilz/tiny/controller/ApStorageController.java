@@ -53,8 +53,8 @@ public class ApStorageController {
     @PostMapping("/upload")
     public CommonResult upload(@RequestParam("file") MultipartFile file) throws IOException {
         String originalFilename = file.getOriginalFilename();
-        ApStorage litemallStorage = storageService.store(file.getInputStream(), file.getSize(), file.getContentType(), originalFilename);
-        return CommonResult.success(litemallStorage);
+        ApStorage mallStorage = storageService.store(file.getInputStream(), file.getSize(), file.getContentType(), originalFilename);
+        return CommonResult.success(mallStorage);
     }
 
 
@@ -91,7 +91,7 @@ public class ApStorageController {
      */
     @GetMapping("/download/{key:.+}")
     public ResponseEntity<Resource> download(@PathVariable String key) {
-        ApStorage litemallStorage = apStorageService.findByKey(key);
+        ApStorage mallStorage = apStorageService.findByKey(key);
         if (key == null) {
             return ResponseEntity.notFound().build();
         }
@@ -99,7 +99,7 @@ public class ApStorageController {
             return ResponseEntity.badRequest().build();
         }
 
-        String type = litemallStorage.getType();
+        String type = mallStorage.getType();
         MediaType mediaType = MediaType.parseMediaType(type);
 
         Resource file = storageService.loadAsResource(key);

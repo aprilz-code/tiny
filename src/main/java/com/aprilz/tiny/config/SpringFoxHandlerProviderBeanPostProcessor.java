@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 /**
  * 解决 SpringFox 与 SpringBoot 2.6.x 不兼容的问题
  * 该问题对应的 issue 为 https://github.com/springfox/springfox/issues/3462
- *
  */
 public class SpringFoxHandlerProviderBeanPostProcessor implements BeanPostProcessor {
 
@@ -27,7 +26,7 @@ public class SpringFoxHandlerProviderBeanPostProcessor implements BeanPostProces
 
     private <T extends RequestMappingInfoHandlerMapping> void customizeSpringfoxHandlerMappings(List<T> mappings) {
         // 移除，只保留 patternParser
-        List<T> copy = mappings.stream().filter(mapping-> mapping.getPatternParser() == null).collect(Collectors.toList());
+        List<T> copy = mappings.stream().filter(mapping -> mapping.getPatternParser() == null).collect(Collectors.toList());
         // 添加到 mappings 中
         mappings.clear();
         mappings.addAll(copy);

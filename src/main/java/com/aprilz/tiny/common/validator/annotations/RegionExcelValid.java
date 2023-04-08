@@ -1,7 +1,6 @@
 package com.aprilz.tiny.common.validator.annotations;
 
 
-
 import com.aprilz.tiny.common.validator.constraint.RegionExcelValidator;
 
 import javax.validation.Constraint;
@@ -18,7 +17,7 @@ import java.lang.annotation.Target;
  * @description excel地区导入格式校验
  */
 
-@Target({ ElementType.FIELD})
+@Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = RegionExcelValidator.class)
 public @interface RegionExcelValid {

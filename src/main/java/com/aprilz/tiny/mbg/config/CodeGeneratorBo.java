@@ -1,7 +1,6 @@
 package com.aprilz.tiny.mbg.config;
 
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 /**
  * @description: 基础配置类

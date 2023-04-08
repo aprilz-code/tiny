@@ -81,7 +81,7 @@ public class SingleSheetWrite extends AbstractSheetWrite {
         Map<Integer, ChainDropDown> integerChainDropDownMap = ExcelUtils.processChainDropDown(fields);
         int headRowNumber = responseExcel.headRowNumber();
 
-        DropDownWriteHandler dropDownWriteHandler = new DropDownWriteHandler(map,headRowNumber);
+        DropDownWriteHandler dropDownWriteHandler = new DropDownWriteHandler(map, headRowNumber);
         ChainDropDownWriteHandler chainDropDownWriteHandler = new ChainDropDownWriteHandler(integerChainDropDownMap);
         ExcelWriter excelWriter = getExcelWriter(response, responseExcel, dropDownWriteHandler, chainDropDownWriteHandler);
 

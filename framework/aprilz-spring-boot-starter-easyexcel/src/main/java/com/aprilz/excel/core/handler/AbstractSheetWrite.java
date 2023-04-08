@@ -74,7 +74,7 @@ public abstract class AbstractSheetWrite implements SheetWrite, ApplicationConte
 
     @Override
     @SneakyThrows(UnsupportedEncodingException.class)
-    public void export(Object o, MethodParameter parameter,HttpServletResponse response, ResponseExcel responseExcel) {
+    public void export(Object o, MethodParameter parameter, HttpServletResponse response, ResponseExcel responseExcel) {
         check(responseExcel);
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         String name = (String) Objects.requireNonNull(requestAttributes).getAttribute(DynamicNameAspect.EXCEL_NAME_KEY,
@@ -89,15 +89,15 @@ public abstract class AbstractSheetWrite implements SheetWrite, ApplicationConte
         response.setContentType(contentType);
         response.setCharacterEncoding("utf-8");
         response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename*=utf-8''" + fileName);
-        write(o, parameter,response, responseExcel);
+        write(o, parameter, response, responseExcel);
     }
 
     /**
      * 通用的获取ExcelWriter方法
      *
-     * @param response      HttpServletResponse
-     * @param responseExcel ResponseExcel注解
-     * @param dropDownWriteHandler 固定值下拉处理器
+     * @param response                  HttpServletResponse
+     * @param responseExcel             ResponseExcel注解
+     * @param dropDownWriteHandler      固定值下拉处理器
      * @param chainDropDownWriteHandler 自定义动态处理器
      * @return ExcelWriter
      */
@@ -109,11 +109,11 @@ public abstract class AbstractSheetWrite implements SheetWrite, ApplicationConte
                 .registerConverter(LocalDateTimeStringConverter.INSTANCE).autoCloseStream(true)
                 .excelType(responseExcel.suffix()).inMemory(responseExcel.inMemory());
 
-        if(Objects.nonNull(dropDownWriteHandler)){
+        if (Objects.nonNull(dropDownWriteHandler)) {
             writerBuilder.registerWriteHandler(dropDownWriteHandler);
         }
 
-        if(Objects.nonNull(chainDropDownWriteHandler)){
+        if (Objects.nonNull(chainDropDownWriteHandler)) {
             writerBuilder.registerWriteHandler(chainDropDownWriteHandler);
         }
 

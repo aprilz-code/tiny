@@ -19,13 +19,13 @@ public class ChainDropDownWriteHandler implements SheetWriteHandler {
 
     private final Map<Integer, ChainDropDown> map;
 
-    private  int headRowNumber  = 1;
+    private int headRowNumber = 1;
 
     public ChainDropDownWriteHandler(Map<Integer, ChainDropDown> map) {
         this.map = map;
     }
 
-    public ChainDropDownWriteHandler(Map<Integer, ChainDropDown> map,int headRowNumber) {
+    public ChainDropDownWriteHandler(Map<Integer, ChainDropDown> map, int headRowNumber) {
         this.map = map;
         this.headRowNumber = headRowNumber;
     }
@@ -41,16 +41,16 @@ public class ChainDropDownWriteHandler implements SheetWriteHandler {
         Sheet sheet = writeSheetHolder.getSheet();
         DataValidationHelper helper = sheet.getDataValidationHelper();
         Workbook workbook = writeWorkbookHolder.getWorkbook();
-        for(Map.Entry<Integer, ChainDropDown> e:map.entrySet()){
+        for (Map.Entry<Integer, ChainDropDown> e : map.entrySet()) {
             // k 为存在下拉数据集的单元格下表 v为下拉数据集
             Integer k = e.getKey();
             ChainDropDown v = e.getValue();
             CellRangeAddressList rangeList = new CellRangeAddressList(headRowNumber, 65536, k, k);
             Sheet hideSheet = getSheet(workbook, v.getTypeName());
-            if(v.isRootFlag()){
+            if (v.isRootFlag()) {
                 Row firstRow = hideSheet.createRow(v.getRowIndex());
                 List<String> values = v.getDataMap().get(ChainDropDown.ROOT_KEY);
-                for(int i = 0; i < values.size(); i ++){
+                for (int i = 0; i < values.size(); i++) {
                     Cell rowCell = firstRow.createCell(i);
                     rowCell.setCellValue(values.get(i));
                 }
@@ -66,16 +66,16 @@ public class ChainDropDownWriteHandler implements SheetWriteHandler {
                 validation.createErrorBox("提示", "此值与单元格定义格式不一致");
                 sheet.addValidationData(validation);
 
-            }else {
+            } else {
                 Integer rowIndex = v.getRowIndex();
                 Map<String, List<String>> dataMap = v.getDataMap();
 
-                for(Map.Entry<String, List<String>> entry:dataMap.entrySet()){
+                for (Map.Entry<String, List<String>> entry : dataMap.entrySet()) {
                     String parentValue = entry.getKey();
                     List<String> childValues = entry.getValue();
                     Row row = hideSheet.createRow(rowIndex++);
                     row.createCell(0).setCellValue(parentValue);
-                    for(int j = 0; j < childValues.size(); j ++){
+                    for (int j = 0; j < childValues.size(); j++) {
                         Cell cell = row.createCell(j + 1);
                         cell.setCellValue(childValues.get(j));
                     }
@@ -84,7 +84,7 @@ public class ChainDropDownWriteHandler implements SheetWriteHandler {
                     Name name = workbook.createName();
                     //key不可重复
                     name.setNameName(parentValue);
-                    String formula = v.getTypeName()+"!" + range;
+                    String formula = v.getTypeName() + "!" + range;
                     name.setRefersToFormula(formula);
                 }
 
@@ -92,10 +92,10 @@ public class ChainDropDownWriteHandler implements SheetWriteHandler {
             // 从第二行开始，第一行是标题
             int beginRow = 2;
             // 设置级联有效性
-            String listFormula = "INDIRECT($" +  ExcelUtils.getColNum(k-1) + beginRow + ")";
+            String listFormula = "INDIRECT($" + ExcelUtils.getColNum(k - 1) + beginRow + ")";
             DataValidationConstraint formulaListConstraint = helper.createFormulaListConstraint(listFormula);
             // 设置下拉约束
-            DataValidation validation =   helper.createValidation(formulaListConstraint, rangeList);
+            DataValidation validation = helper.createValidation(formulaListConstraint, rangeList);
             validation.setEmptyCellAllowed(false);
             validation.setSuppressDropDownArrow(true);
             validation.setShowErrorBox(true);
@@ -105,29 +105,28 @@ public class ChainDropDownWriteHandler implements SheetWriteHandler {
         }
     }
 
-    public Sheet getSheet(Workbook workbook,String sheetName){
+    public Sheet getSheet(Workbook workbook, String sheetName) {
         Sheet sheet = workbook.getSheet(sheetName);
-        if(!ObjectUtils.isEmpty(sheet)) {
+        if (!ObjectUtils.isEmpty(sheet)) {
             return sheet;
         }
         return workbook.createSheet(sheetName);
     }
 
     /**
-     *  计算formula
-     * @param offset 偏移量，如果给0，表示从A列开始，1，就是从B列
-     * @param rowNum 第几行
+     * 计算formula
+     *
+     * @param offset   偏移量，如果给0，表示从A列开始，1，就是从B列
+     * @param rowNum   第几行
      * @param colCount 一共多少列
      * @return 如果给入参 1,1,10. 表示从B1-K1。最终返回 $B$1:$K$1
-     *
      */
     public static String getRange(int offset, int rowNum, int colCount) {
         String start = ExcelUtils.getColNum(offset);
         String end = ExcelUtils.getColNum(colCount);
-        String format= "$%s$%s:$%s$%s";
-        return String.format(format, start,rowNum,end,rowNum);
+        String format = "$%s$%s:$%s$%s";
+        return String.format(format, start, rowNum, end, rowNum);
     }
-
 
 
 }

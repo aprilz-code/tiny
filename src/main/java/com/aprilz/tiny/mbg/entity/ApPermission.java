@@ -1,18 +1,13 @@
 package com.aprilz.tiny.mbg.entity;
 
 import com.alibaba.excel.annotation.ExcelIgnore;
-import com.aprilz.tiny.mbg.base.BaseEntity;
+import com.aprilz.tiny.mbg.base.BaseDO;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
-
-import java.io.Serializable;
 
 /**
  * <p>
@@ -25,7 +20,7 @@ import java.io.Serializable;
 @Data
 @TableName("ap_permission")
 @ApiModel(value = "ApPermission对象", description = "后台用户权限表")
-public class ApPermission extends BaseEntity {
+public class ApPermission extends BaseDO {
 
     @TableId(value = "id")
     @ApiModelProperty(value = "唯一标识")
@@ -59,8 +54,6 @@ public class ApPermission extends BaseEntity {
     @ApiModelProperty("排序")
     @TableField("sort")
     private Integer sort;
-
-
 
 
 }

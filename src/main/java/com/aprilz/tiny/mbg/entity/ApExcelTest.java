@@ -4,27 +4,21 @@ package com.aprilz.tiny.mbg.entity;
 //import com.aprilz.excel.core.convert.DateConverter;
 //import com.aprilz.excel.core.convert.DictConvert;
 
-import com.alibaba.excel.annotation.ExcelIgnore;
-import com.aprilz.excel.core.annotations.DictFormat;
-import com.aprilz.excel.core.convert.DictConvert;
 import cn.hutool.core.date.DatePattern;
+import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.format.DateTimeFormat;
+import com.aprilz.excel.core.annotations.DictFormat;
+import com.aprilz.excel.core.convert.DictConvert;
 import com.aprilz.excel.core.drop.annotations.DropDownFields;
-import com.aprilz.excel.core.drop.enums.DropDownType;
-import com.aprilz.tiny.common.excel.DictDataSearch;
-import com.aprilz.tiny.mbg.base.BaseEntity;
+import com.aprilz.tiny.mbg.base.BaseDO;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -38,7 +32,7 @@ import java.util.Date;
 @Data
 @TableName("ap_excel_test")
 @ApiModel(value = "ApExcelTest对象", description = "excel-test表")
-public class ApExcelTest extends BaseEntity {
+public class ApExcelTest extends BaseDO {
 
     @TableId(value = "id")
     @ApiModelProperty(value = "唯一标识")
@@ -71,8 +65,6 @@ public class ApExcelTest extends BaseEntity {
     @ExcelProperty(value = "测试时间")
     @DateTimeFormat(DatePattern.NORM_DATE_PATTERN)
     private Date testTime;
-
-
 
 
 }

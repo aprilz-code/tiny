@@ -46,7 +46,7 @@ public class TreeUtil {
 
     public static void main(String[] args) {
         List<TreeTestVO> respVOs = new ArrayList<>();
-        getTree(respVOs,null);
+        getTree(respVOs, null);
     }
 
 }

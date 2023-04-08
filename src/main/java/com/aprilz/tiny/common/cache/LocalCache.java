@@ -25,6 +25,7 @@ public class LocalCache<T> {
 
     /**
      * 配置缓存参数
+     *
      * @param size
      * @param duration
      * @return
@@ -39,6 +40,7 @@ public class LocalCache<T> {
 
     /**
      * 构建一个缓存
+     *
      * @return
      */
     public LocalCache<T> build() {
@@ -49,20 +51,21 @@ public class LocalCache<T> {
     /**
      * 查询
      * 如果缓存中没有数据, 则执行业务方法进行查询
+     *
      * @param key
      * @param service
      * @return
      */
     public Optional<T> query(String key, ICache<T> service) {
-        try{
-            if(StringUtils.isBlank(key)) {
+        try {
+            if (StringUtils.isBlank(key)) {
                 return Optional.empty();
             }
             Optional<T> value = cacheHolder.get(key, () -> service.query(key));
             // 设置进入缓存
             put(key, value);
             return value;
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return Optional.empty();
@@ -71,6 +74,7 @@ public class LocalCache<T> {
 
     /**
      * 把值推到缓存中
+     *
      * @param key
      * @param optional
      */
@@ -79,18 +83,20 @@ public class LocalCache<T> {
     }
 
 
-    public void invalidateAll(){
+    public void invalidateAll() {
         cacheHolder.invalidateAll();
     }
 
 
     /**
      * 通用接口, 利用模板方法设计模式, 将业务方法抽取出来. 不同的业务 传递不同的查询逻辑.
+     *
      * @param <T>
      */
     public interface ICache<T> {
         /**
          * 通用接口
+         *
          * @param key
          * @return
          */

@@ -18,7 +18,7 @@ public class DropDownWriteHandler implements SheetWriteHandler {
 
     private final Map<Integer, String[]> map;
 
-    private  int headRowNumber  = 1;
+    private int headRowNumber = 1;
 
     /**
      * 设置阈值，避免生成的导入模板下拉值获取不到
@@ -28,7 +28,8 @@ public class DropDownWriteHandler implements SheetWriteHandler {
     public DropDownWriteHandler(Map<Integer, String[]> map) {
         this.map = map;
     }
-    public DropDownWriteHandler(Map<Integer, String[]> map,int headRowNumber) {
+
+    public DropDownWriteHandler(Map<Integer, String[]> map, int headRowNumber) {
         this.map = map;
         this.headRowNumber = headRowNumber;
     }
