@@ -1,4 +1,4 @@
-package com.aprilz.tiny.excel;
+package com.aprilz.tiny.component.excel;
 
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;

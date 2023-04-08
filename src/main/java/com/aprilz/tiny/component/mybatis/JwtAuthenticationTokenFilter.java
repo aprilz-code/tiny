@@ -1,4 +1,4 @@
-package com.aprilz.tiny.component;
+package com.aprilz.tiny.component.mybatis;
 
 import com.aprilz.tiny.common.cache.Cache;
 import com.aprilz.tiny.common.cache.CachePrefix;

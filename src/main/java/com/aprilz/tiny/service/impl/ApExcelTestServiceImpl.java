@@ -2,7 +2,7 @@ package com.aprilz.tiny.service.impl;
 
 import cn.hutool.extra.spring.SpringUtil;
 import com.alibaba.excel.EasyExcel;
-import com.aprilz.tiny.excel.ApTestAnalysisEventListener;
+import com.aprilz.tiny.component.excel.ApTestAnalysisEventListener;
 import com.aprilz.tiny.mapper.ApExcelTestMapper;
 import com.aprilz.tiny.mbg.entity.ApExcelTest;
 import com.aprilz.tiny.service.IApExcelTestService;
