@@ -1,10 +1,13 @@
 package com.aprilz.tiny.mbg.entity;
 
+import com.alibaba.excel.annotation.ExcelIgnore;
 import com.aprilz.tiny.mbg.base.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -19,14 +22,15 @@ import java.io.Serializable;
  * @author aprilz
  * @since 2022-08-11
  */
-@Getter
-@Setter
-@Accessors(chain = true)
+@Data
 @TableName("ap_role")
 @ApiModel(value = "ApRole对象", description = "后台用户角色表")
-public class ApRole extends BaseEntity<ApRole> {
+public class ApRole extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;
+    @TableId(value = "id")
+    @ApiModelProperty(value = "唯一标识")
+    @ExcelIgnore
+    private Long id;
 
     @ApiModelProperty("名称")
     @TableField("name")
@@ -44,9 +48,6 @@ public class ApRole extends BaseEntity<ApRole> {
     private Integer sort;
 
 
-    @Override
-    public Serializable pkVal() {
-        return null;
-    }
+
 
 }

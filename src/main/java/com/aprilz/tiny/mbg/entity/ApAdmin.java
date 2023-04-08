@@ -1,11 +1,14 @@
 package com.aprilz.tiny.mbg.entity;
 
+import com.alibaba.excel.annotation.ExcelIgnore;
 import com.aprilz.tiny.mbg.base.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -21,14 +24,17 @@ import java.util.Date;
  * @author aprilz
  * @since 2022-08-11
  */
-@Getter
-@Setter
-@Accessors(chain = true)
+@Data
 @TableName("ap_admin")
 @ApiModel(value = "ApAdmin对象", description = "后台用户表")
-public class ApAdmin extends BaseEntity<ApAdmin> {
+public class ApAdmin extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
+
+    @TableId(value = "id")
+    @ApiModelProperty(value = "唯一标识")
+    @ExcelIgnore
+    private Long id;
 
     @ApiModelProperty("帐号启用状态：0->禁用；1->启用")
     @TableField("status")
@@ -70,9 +76,6 @@ public class ApAdmin extends BaseEntity<ApAdmin> {
     private String description;
 
 
-    @Override
-    public Serializable pkVal() {
-        return null;
-    }
+
 
 }

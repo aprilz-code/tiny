@@ -18,6 +18,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.util.Date;
 
 
@@ -29,19 +30,9 @@ import java.util.Date;
  * @since 2020/8/20 14:34
  */
 @Data
-@Accessors(chain = true)
-@AllArgsConstructor
-@NoArgsConstructor
-public abstract class BaseEntity<A extends BaseEntity> extends Model {
+public abstract class BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    /*当Mybatis-Plus实体类没有显示设置主键策略时，将默认使用雪花算法生成，也就是IdType.ID_WORKER或者IdType.ID_WORKER_STR，具体是long类型的19位还是字符串的19位，应该是根据字段定义类型来判断。*/
-    @TableId(value = "id", type = IdType.AUTO)
-    @ApiModelProperty(value = "唯一标识", hidden = true)
-    @ExcelIgnore
-    private Long id;
-
 
     @CreatedBy
     @TableField(value = "create_by", fill = FieldFill.INSERT)

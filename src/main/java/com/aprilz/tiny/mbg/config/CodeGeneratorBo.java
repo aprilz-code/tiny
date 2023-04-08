@@ -9,7 +9,6 @@ import lombok.experimental.Accessors;
  * @since: 2022/7/7
  **/
 @Data
-@Accessors(chain = true)
 public class CodeGeneratorBo {
 
     // 包名

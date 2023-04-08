@@ -13,7 +13,6 @@ import com.aprilz.tiny.designMode.proxy.proxy.CglibProxy;
 import com.aprilz.tiny.designMode.proxy.proxy.StarProxy;
 import com.aprilz.tiny.designMode.strategy.Context;
 import com.aprilz.tiny.designMode.strategy.Strategy;
-import com.aprilz.tiny.mbg.entity.ApAd;
 import com.aprilz.tiny.mbg.entity.ApUser;
 import com.aprilz.tiny.service.IApUserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -173,7 +172,7 @@ public class TinyApplicationTests {
      **/
     @Test
     public void testLombokConfig() {
-        new ApAd().setUrl("").setContent("");
+        //new ApAdmin().setUrl("").setContent("");
     }
 
     //testJDKProxy testCglibProxy 两种动态代理区别如下
