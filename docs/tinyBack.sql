@@ -100,7 +100,6 @@ insert into `ap_admin_role_relation`(`id`, `create_by`, `create_time`, `update_b
 values (1, NULL, NULL, NULL, NULL, NULL, 1, 1);
 
 
-
 /*Table structure for table `ap_permission` */
 
 DROP TABLE IF EXISTS `ap_permission`;
@@ -129,7 +128,6 @@ insert into `ap_permission`(`id`, `create_by`, `create_time`, `update_by`, `upda
                             `value`, `icon`, `type`, `uri`, `sort`)
 values (1, NULL, '2018-09-29 16:15:14.000000', NULL, NULL, '\0', 0, '查看权限', 'sso:permission:rea', NULL, 0, NULL, 0),
        (2, NULL, '2018-09-29 16:51:57.000000', NULL, NULL, '\0', 0, '首页', NULL, NULL, 0, NULL, 0);
-
 
 
 /*Table structure for table `ap_role` */
@@ -182,7 +180,6 @@ values (1, NULL, NULL, NULL, NULL, NULL, 1, 1),
        (2, NULL, NULL, NULL, NULL, NULL, 1, 2),
        (3, NULL, NULL, NULL, NULL, NULL, 1, 3),
        (4, NULL, NULL, NULL, NULL, NULL, 1, 4);
-
 
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

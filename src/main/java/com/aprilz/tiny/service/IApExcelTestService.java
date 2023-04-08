@@ -1,12 +1,10 @@
 package com.aprilz.tiny.service;
 
 import com.aprilz.tiny.mbg.entity.ApExcelTest;
-import com.aprilz.tiny.vo.request.ApExcelTestParam;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * <p>

@@ -14,16 +14,16 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @EnableConfigurationProperties(DtpProperties.class)
-@Import({DtpImportBeanDefinitionRegistrar.class,DtpBeanPostProcessor.class})
+@Import({DtpImportBeanDefinitionRegistrar.class, DtpBeanPostProcessor.class})
 public class AprilzDtpAutoConfiguration {
 
     @Bean
-    public NacosListener nacosListener(){
+    public NacosListener nacosListener() {
         return new NacosListener();
     }
 
     @Bean
-    public DtpMonitor dtpMonitor(){
+    public DtpMonitor dtpMonitor() {
         return new DtpMonitor();
     }
 }

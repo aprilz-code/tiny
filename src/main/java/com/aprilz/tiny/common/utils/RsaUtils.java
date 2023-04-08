@@ -21,6 +21,7 @@ public class RsaUtils {
 
     /**
      * 解码PublicKey
+     *
      * @param key
      * @return
      */
@@ -39,10 +40,11 @@ public class RsaUtils {
 
     /**
      * 解码PrivateKey
+     *
      * @param key
      * @return
      */
-    public static PrivateKey  getPrivateKey(String key) {
+    public static PrivateKey getPrivateKey(String key) {
         try {
             byte[] byteKey = Base64.getDecoder().decode(key);
             PKCS8EncodedKeySpec x509EncodedKeySpec = new PKCS8EncodedKeySpec(byteKey);
@@ -57,6 +59,7 @@ public class RsaUtils {
 
     /**
      * 公钥加密
+     *
      * @param content
      * @param publicKey
      * @return
@@ -70,6 +73,7 @@ public class RsaUtils {
 
     /**
      * 私钥解密
+     *
      * @param content
      * @param privateKey
      * @return
@@ -84,6 +88,7 @@ public class RsaUtils {
 
     /**
      * 生成密钥对
+     *
      * @return
      * @throws Exception
      */

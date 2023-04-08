@@ -1,15 +1,13 @@
 package com.aprilz.tiny.mbg.entity;
 
-import com.aprilz.tiny.mbg.base.BaseEntity;
+import com.alibaba.excel.annotation.ExcelIgnore;
+import com.aprilz.tiny.mbg.base.BaseDO;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
-
-import java.io.Serializable;
+import lombok.Data;
 
 /**
  * <p>
@@ -19,14 +17,15 @@ import java.io.Serializable;
  * @author aprilz
  * @since 2022-07-20
  */
-@Getter
-@Setter
-@Accessors(chain = true)
+@Data
 @TableName("ap_storage")
 @ApiModel(value = "ApStorage对象", description = "文件存储表")
-public class ApStorage extends BaseEntity<ApStorage> {
+public class ApStorage extends BaseDO {
 
-    private static final long serialVersionUID = 1L;
+    @TableId(value = "id")
+    @ApiModelProperty(value = "唯一标识")
+    @ExcelIgnore
+    private Long id;
 
     @ApiModelProperty("文件的唯一索引")
     @TableField("key")
@@ -48,10 +47,5 @@ public class ApStorage extends BaseEntity<ApStorage> {
     @TableField("url")
     private String url;
 
-
-    @Override
-    public Serializable pkVal() {
-        return null;
-    }
 
 }

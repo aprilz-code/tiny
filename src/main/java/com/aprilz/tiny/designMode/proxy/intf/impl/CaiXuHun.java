@@ -2,7 +2,7 @@ package com.aprilz.tiny.designMode.proxy.intf.impl;
 
 import com.aprilz.tiny.designMode.proxy.intf.Star;
 
-public class CaiXuHun implements Star{
+public class CaiXuHun implements Star {
 
     @Override
     public String sing() {

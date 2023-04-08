@@ -1,4 +1,4 @@
-package com.aprilz.tiny.mall.utils;
+package com.aprilz.tiny.common.utils;
 
 import java.util.Random;
 

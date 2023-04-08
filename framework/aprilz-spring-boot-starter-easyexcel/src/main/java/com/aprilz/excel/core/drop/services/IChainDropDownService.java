@@ -13,11 +13,11 @@ import java.util.Map;
 public interface IChainDropDownService {
     default ChainDropDown getSource(boolean isRoot, String... params) {
         Map<String, List<String>> dataMap = new HashMap<>();
-        if(isRoot){
+        if (isRoot) {
             // 第一层，没有父级
             List<String> root = getRoot(params);
-            dataMap.put(ChainDropDown.ROOT_KEY,root);
-        }else{
+            dataMap.put(ChainDropDown.ROOT_KEY, root);
+        } else {
             // 有父级，key=父级，value=子集
             Map<String, List<String>> parentBindSubMap = getParentBindSubMap(params);
             dataMap.putAll(parentBindSubMap);
@@ -35,7 +35,7 @@ public interface IChainDropDownService {
      * 返回上一级与当前级别的map
      * 返回这个结构是为了添加 excel名称管理器
      */
-    Map<String,List<String>> getParentBindSubMap(String... params);
+    Map<String, List<String>> getParentBindSubMap(String... params);
 
 }
 

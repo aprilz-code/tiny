@@ -5,8 +5,6 @@ import com.aprilz.tiny.common.utils.MybatisBatchUtils;
 import com.aprilz.tiny.mapper.ApExcelTestMapper;
 import com.aprilz.tiny.mbg.entity.ApExcelTest;
 import com.aprilz.tiny.vo.request.ApExcelTestParam;
-import org.apache.ibatis.session.ExecutorType;
-import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

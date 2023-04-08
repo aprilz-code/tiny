@@ -1,15 +1,13 @@
 package com.aprilz.tiny.mbg.entity;
 
-import com.aprilz.tiny.mbg.base.BaseEntity;
+import com.alibaba.excel.annotation.ExcelIgnore;
+import com.aprilz.tiny.mbg.base.BaseDO;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
-
-import java.io.Serializable;
+import lombok.Data;
 
 /**
  * <p>
@@ -19,14 +17,15 @@ import java.io.Serializable;
  * @author aprilz
  * @since 2022-07-19
  */
-@Getter
-@Setter
-@Accessors(chain = true)
+@Data
 @TableName("ap_system")
 @ApiModel(value = "ApSystem对象", description = "系统配置表")
-public class ApSystem extends BaseEntity<ApSystem> {
+public class ApSystem extends BaseDO {
 
-    private static final long serialVersionUID = 1L;
+    @TableId(value = "id")
+    @ApiModelProperty(value = "唯一标识")
+    @ExcelIgnore
+    private Long id;
 
     @ApiModelProperty("系统配置名")
     @TableField("key_name")
@@ -39,10 +38,5 @@ public class ApSystem extends BaseEntity<ApSystem> {
     @TableField("description")
     private String description;
 
-
-    @Override
-    public Serializable pkVal() {
-        return null;
-    }
 
 }

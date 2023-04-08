@@ -13,7 +13,6 @@ import com.aprilz.tiny.designMode.proxy.proxy.CglibProxy;
 import com.aprilz.tiny.designMode.proxy.proxy.StarProxy;
 import com.aprilz.tiny.designMode.strategy.Context;
 import com.aprilz.tiny.designMode.strategy.Strategy;
-import com.aprilz.tiny.mbg.entity.ApAd;
 import com.aprilz.tiny.mbg.entity.ApUser;
 import com.aprilz.tiny.service.IApUserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -173,18 +172,18 @@ public class TinyApplicationTests {
      **/
     @Test
     public void testLombokConfig() {
-        new ApAd().setUrl("").setContent("");
+        //new ApAdmin().setUrl("").setContent("");
     }
 
     //testJDKProxy testCglibProxy 两种动态代理区别如下
     @Test
-    void testJDKProxy(){
+    void testJDKProxy() {
         Star cxk = new CaiXuHun();
         StarProxy proxy = new StarProxy();
         proxy.setTarget(cxk);
         Object obj = proxy.CreatProxyObj();
         //获取到代理对象
-        Star star = (Star)obj;
+        Star star = (Star) obj;
         star.sing();
     }
 
@@ -214,7 +213,7 @@ public class TinyApplicationTests {
         System.out.println(aNull);
         userCache.invalidateAll();
         userCache.query("10", user -> Optional.ofNullable(apUserService.getById(10)));
-         aNull = userOptional.map(ApUser::getId).orElse(99999L);
+        aNull = userOptional.map(ApUser::getId).orElse(99999L);
         System.out.println(aNull);
     }
 
@@ -224,7 +223,7 @@ public class TinyApplicationTests {
         LocalCache<ApUser> userCache = new LocalCache<ApUser>().setParameters(100, 10, TimeUnit.MINUTES).build();
         for (Integer i = 10; i < 13; i++) {
             Integer finalI = i;
-            if(i == 11){
+            if (i == 11) {
                 finalI = 10;
             }
             Integer finalI1 = finalI;
