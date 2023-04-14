@@ -1,7 +1,6 @@
 package com.aprilz.tiny.mbg.config;
 
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 /**
  * @description: 基础配置类
@@ -9,7 +8,6 @@ import lombok.experimental.Accessors;
  * @since: 2022/7/7
  **/
 @Data
-@Accessors(chain = true)
 public class CodeGeneratorBo {
 
     // 包名

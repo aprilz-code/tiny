@@ -1,15 +1,13 @@
 package com.aprilz.tiny.mbg.entity;
 
-import com.aprilz.tiny.mbg.base.BaseEntity;
+import com.alibaba.excel.annotation.ExcelIgnore;
+import com.aprilz.tiny.mbg.base.BaseDO;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
-
-import java.io.Serializable;
+import lombok.Data;
 
 /**
  * <p>
@@ -19,14 +17,15 @@ import java.io.Serializable;
  * @author aprilz
  * @since 2022-07-20
  */
-@Getter
-@Setter
-@Accessors(chain = true)
+@Data
 @TableName("ap_region")
 @ApiModel(value = "ApRegion对象", description = "行政区域表")
-public class ApRegion extends BaseEntity<ApRegion> {
+public class ApRegion extends BaseDO {
 
-    private static final long serialVersionUID = 1L;
+    @TableId(value = "id")
+    @ApiModelProperty(value = "唯一标识")
+    @ExcelIgnore
+    private Long id;
 
     @ApiModelProperty("行政区域父ID，例如区县的pid指向市，市的pid指向省，省的pid则是0")
     @TableField("pid")
@@ -44,10 +43,5 @@ public class ApRegion extends BaseEntity<ApRegion> {
     @TableField("code")
     private Integer code;
 
-
-    @Override
-    public Serializable pkVal() {
-        return null;
-    }
 
 }

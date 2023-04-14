@@ -18,6 +18,8 @@ public class DropDownWriteHandler implements SheetWriteHandler {
 
     private final Map<Integer, String[]> map;
 
+    private int headRowNumber = 1;
+
     /**
      * 设置阈值，避免生成的导入模板下拉值获取不到
      */
@@ -25,6 +27,11 @@ public class DropDownWriteHandler implements SheetWriteHandler {
 
     public DropDownWriteHandler(Map<Integer, String[]> map) {
         this.map = map;
+    }
+
+    public DropDownWriteHandler(Map<Integer, String[]> map, int headRowNumber) {
+        this.map = map;
+        this.headRowNumber = headRowNumber;
     }
 
     @Override
@@ -42,7 +49,7 @@ public class DropDownWriteHandler implements SheetWriteHandler {
         // k 为存在下拉数据集的单元格下标 v为下拉数据集
         map.forEach((k, v) -> {
             // 设置下拉单元格的首行 末行 首列 末列
-            CellRangeAddressList rangeList = new CellRangeAddressList(1, 65536, k, k);
+            CellRangeAddressList rangeList = new CellRangeAddressList(headRowNumber, 65536, k, k);
             // 如果下拉值总数大于100，则使用一个新sheet存储，避免生成的导入模板下拉值获取不到
             if (v.length > LIMIT_NUMBER) {
                 //定义sheet的名称

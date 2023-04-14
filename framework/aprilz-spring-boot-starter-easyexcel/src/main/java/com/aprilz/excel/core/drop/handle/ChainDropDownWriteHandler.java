@@ -19,8 +19,15 @@ public class ChainDropDownWriteHandler implements SheetWriteHandler {
 
     private final Map<Integer, ChainDropDown> map;
 
+    private int headRowNumber = 1;
+
     public ChainDropDownWriteHandler(Map<Integer, ChainDropDown> map) {
         this.map = map;
+    }
+
+    public ChainDropDownWriteHandler(Map<Integer, ChainDropDown> map, int headRowNumber) {
+        this.map = map;
+        this.headRowNumber = headRowNumber;
     }
 
     @Override
@@ -38,7 +45,7 @@ public class ChainDropDownWriteHandler implements SheetWriteHandler {
             // k 为存在下拉数据集的单元格下表 v为下拉数据集
             Integer k = e.getKey();
             ChainDropDown v = e.getValue();
-            CellRangeAddressList rangeList = new CellRangeAddressList(1, 65536, k, k);
+            CellRangeAddressList rangeList = new CellRangeAddressList(headRowNumber, 65536, k, k);
             Sheet hideSheet = getSheet(workbook, v.getTypeName());
             if (v.isRootFlag()) {
                 Row firstRow = hideSheet.createRow(v.getRowIndex());

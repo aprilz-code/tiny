@@ -1,14 +1,13 @@
 package com.aprilz.tiny.mbg.entity;
 
-import com.aprilz.tiny.mbg.base.BaseEntity;
+import com.alibaba.excel.annotation.ExcelIgnore;
+import com.aprilz.tiny.mbg.base.BaseDO;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
-
-import java.io.Serializable;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 /**
  * <p>
@@ -18,12 +17,16 @@ import java.io.Serializable;
  * @author aprilz
  * @since 2022-08-11
  */
-@Getter
-@Setter
-@Accessors(chain = true)
+@Data
 @TableName("ap_admin_permission_relation")
 @ApiModel(value = "ApAdminPermissionRelation对象", description = "后台用户和权限关系表(除角色中定义的权限以外的加减权限)")
-public class ApAdminPermissionRelation extends BaseEntity<ApAdminPermissionRelation> {
+public class ApAdminPermissionRelation extends BaseDO {
+
+
+    @TableId(value = "id")
+    @ApiModelProperty(value = "唯一标识")
+    @ExcelIgnore
+    private Long id;
 
     private static final long serialVersionUID = 1L;
 
@@ -36,10 +39,5 @@ public class ApAdminPermissionRelation extends BaseEntity<ApAdminPermissionRelat
     @TableField("type")
     private Integer type;
 
-
-    @Override
-    public Serializable pkVal() {
-        return null;
-    }
 
 }

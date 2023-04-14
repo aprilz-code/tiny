@@ -102,4 +102,11 @@ public @interface ResponseExcel {
      */
     boolean fill() default false;
 
+    /**
+     * 标题行,涉及到下拉框生成选择开始
+     *
+     * @return
+     */
+    int headRowNumber() default 1;
+
 }
