@@ -1,9 +1,13 @@
 package com.aprilz.tiny.common.utils;
 
+import cn.hutool.http.HttpRequest;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.net.UnknownHostException;
 
 /**
@@ -61,7 +65,12 @@ public class IpUtils {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         System.out.println(IpUtils.getLocalIp());
+//
+        Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("127.0.0.1", 7890));
+        String result1 = HttpRequest.get("https://www.google.com").setProxy(proxy).execute().body();
+        System.out.println(result1);
+
     }
 }
