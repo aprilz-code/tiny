@@ -197,7 +197,8 @@ public class ApExcelTestController {
 ```
 
 **支持传入自定义参数去检验 **
-假如商品excel导入入库时，需校验商品必须是同一分类下，则需要传入分类id。（例子可能不恰当，意思自行理解） 则传入excelCustom参数，可传入string或者array接收
+假如商品excel导入入库时，需校验商品必须是同一分类下，则需要传入分类id。（例子可能不恰当，意思自行理解）
+则传入excelCustom参数，可传入string或者array接收
 
 ```java
 package cn.aprilz.excel.core.annotations;

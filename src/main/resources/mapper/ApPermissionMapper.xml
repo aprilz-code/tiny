@@ -10,13 +10,11 @@
                  LEFT JOIN ap_permission p ON rp.permission_id = p.id
         WHERE ar.admin_id = #{adminId}
           AND p.id IS NOT NULL
-          AND p.id NOT IN (
-            SELECT p.id
-            FROM ap_admin_permission_relation pr
-                     LEFT JOIN ap_permission p ON pr.permission_id = p.id
-            WHERE pr.type = - 1
-              AND pr.admin_id = #{adminId}
-        )
+          AND p.id NOT IN (SELECT p.id
+                           FROM ap_admin_permission_relation pr
+                                    LEFT JOIN ap_permission p ON pr.permission_id = p.id
+                           WHERE pr.type = - 1
+                             AND pr.admin_id = #{adminId})
         UNION
         SELECT p.*
         FROM ap_admin_permission_relation pr
