@@ -614,3 +614,30 @@ public class ApAdmin extends BaseDO {
   ]
 }
 ```
+
+
+### 使用CompletableFuture和自定义线程池加速接口响应。（空间换时间）
+```java
+ private static ThreadPoolExecutor executor = new ThreadPoolExecutor(10, 10, 1000, TimeUnit.MILLISECONDS, WORK_QUEUE, HANDLER);
+
+public PageResult<RespVO>  test(String[] args) {
+        Page<PageReqVO> pages = MyBatisUtils.buildPage(pageVO);
+        IPage<RespVO> mpPage = baseMapper.selectPage();
+        if (mpPage.getTotal() == 0) {
+        return pageResult;
+        }
+        PageResult<RespVO> pageResult = new PageResult(mpPage.getRecords(), mpPage.getTotal());
+        List<CompletableFuture<Void>> completableFutures = new ArrayList<>();
+        pageResult.getRows().forEach(res -> {
+        // 假设查看page分页下的内容,走并行
+        CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+        List<RespVO.DetailRespVO> details = childMapper.selectByCId(res.getId());
+        res.setExLists(details);
+        }, executor);
+        completableFutures.add(future);
+        });
+        //等待所有结果返回
+        CompletableFuture.allOf(completableFutures.toArray(new CompletableFuture[0])).get(2, TimeUnit.MINUTES);
+        return   pageResult;
+        }
+```
