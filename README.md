@@ -620,9 +620,9 @@ public class ApAdmin extends BaseDO {
 ```java
  private static ThreadPoolExecutor executor = new ThreadPoolExecutor(10, 10, 1000, TimeUnit.MILLISECONDS, WORK_QUEUE, HANDLER);
 
-public PageResult<RespVO>  test(String[] args) {
+public PageResult<RespVO>  test(PageReqVO pageVO) {
         Page<PageReqVO> pages = MyBatisUtils.buildPage(pageVO);
-        IPage<RespVO> mpPage = baseMapper.selectPage();
+        IPage<RespVO> mpPage = baseMapper.selectPage(pages, pageVO);
         if (mpPage.getTotal() == 0) {
         return pageResult;
         }
