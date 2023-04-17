@@ -319,8 +319,137 @@ public @interface ExcelLine {
 
 ```
 
+**新增@ChainDropDownFields 注解，处理级联自定义数据下拉框**
+
+用法如下,实体类中：  
+示例1 ：  
+
+```java
+@Data
+// 内容行高度
+@ContentRowHeight(20)
+// 头部行高度
+@HeadRowHeight(25)
+// 列宽，可在类或属性中使用
+@ColumnWidth(25)
+@Data
+// 内容行高度
+@ContentRowHeight(20)
+// 头部行高度
+@HeadRowHeight(25)
+// 列宽，可在类或属性中使用
+@ColumnWidth(25)
+public class ChainTestTemplate {
+
+    @ExcelProperty("用户名称")
+    private String name;
+
+    @ExcelProperty("年龄")
+    private Integer age;
+
+    @ExcelProperty("国家")
+    @ChainDropDownFields(isRoot = true,sourceClass = TestChainDropDownService.class,type = ChainDropDownType.TEST)
+    private String country;
+
+    @ExcelProperty("省份")
+    @ChainDropDownFields(sourceClass = TestChainDropDownService.class,type = ChainDropDownType.TEST,params = {"2"})
+    private String province;
+
+    @ExcelProperty("城市")
+    @ChainDropDownFields(sourceClass = TestChainDropDownService.class,type = ChainDropDownType.TEST,params = {"3"})
+    private String city;
+
+    @ExcelProperty("区域")
+    @ChainDropDownFields(sourceClass = TestChainDropDownService.class,type = ChainDropDownType.TEST,params = {"4"})
+    private String zone;
+}
+```
+然后重写IChainDropDownService接口，公司对项目表设计 （1对多）
+```java
+/**
+ * 区域级联下拉 实现类
+ */
+public class TestChainDropDownService implements IChainDropDownService{
+
+    /**
+     * 第一层，key=root,value=可选数组
+     */
+    @Override
+    public List<String> getRoot(String... params){
+        return Arrays.asList(new String[]{"中国", "美国"});
+    }
+
+    /**
+     * 获取子类的Map
+     */
+    @Override
+    public Map<String,List<String>> getParentBindSubMap(String... params){
+        int level = Integer.parseInt(params[0]);
+        // key 是父级，value 是父级的子类
+        Map<String,List<String>> dataMap = new HashMap<>();
+        if(level==2){
+            dataMap.put("中国",Arrays.asList(new String[]{"北京2", "广东2"}));
+            dataMap.put("美国",Arrays.asList(new String[]{"阿拉斯加州", "阿拉巴马州"}));
+        }else if(level == 3){
+            dataMap.put("北京2",Arrays.asList(new String[]{"北京市2"}));
+            dataMap.put("广东2",Arrays.asList(new String[]{"广州2","深圳2"}));
+            dataMap.put("阿拉斯加州",Arrays.asList(new String[]{"阿拉斯加","雅库塔特"}));
+            dataMap.put("阿拉巴马州",Arrays.asList(new String[]{"马伦戈县"}));
+        }else if(level == 4){
+            dataMap.put("北京市2",Arrays.asList(new String[]{"朝阳区2","密云区2"}));
+            dataMap.put("广州2",Arrays.asList(new String[]{"天河区2","白云区2"}));
+            dataMap.put("深圳2",Arrays.asList(new String[]{"福田区2","南山区2"}));
+            dataMap.put("阿拉斯加",Arrays.asList(new String[]{"瞎编区","编不下去了"}));
+            dataMap.put("雅库塔特",Arrays.asList(new String[]{"瞎编区","编不下去了"}));
+            dataMap.put("马伦戈县",Arrays.asList(new String[]{"马勒戈壁"}));
+        }
+        return dataMap;
+    }
+}
+
+```
+
+示例2 ： 
+```java
+    @NotBlank(message = "单位名称不能为空")
+    @ChainDropDownFields(isRoot = true, sourceClass = CPChainDropDownService.class, type = ChainDropDownType.COMPANY_PROJECT)
+    private String CompanyName;
+
+
+    @NotBlank(message = "项目名称不能为空")
+    @ChainDropDownFields(sourceClass = CPChainDropDownService.class, type = ChainDropDownType.COMPANY_PROJECT, params = {"2"})
+    private String projectName;
+```
+重写接口   
+```java
+public class CPChainDropDownService implements IChainDropDownService {
+
+    @Override
+    public List<String> getRoot(String... params) {
+        return SpringUtil.getBean(CompanyMapper.class).hasProjects();
+    }
+
+    @Override
+    public Map<String, List<String>> getParentBindSubMap(String... params) {
+        int level = Integer.parseInt(params[0]);
+        HashMap<String, List<String>> map = new HashMap<>();
+        if (level == 2) {
+            List<String> companys = SpringUtil.getBean(CompanyMapper.class).hasProjects();
+            for (String name : companys) {
+                map.put(name, SpringUtil.getBean(CompanyProjectMapper.class).getProjectNamesByCName(name));
+            }
+        }
+        return map;
+
+    }
+}
+
+```
+参考： https://rstyro.github.io/blog/2021/05/28/Easyexcel%E5%B8%B8%E7%94%A8%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81/
+
 小tips： 导入Excel时发现，属性值一直为null。。。。结果发现lombok和easyexcel冲突，解决方案如下
 ![img.png](docs/imgs/img.png)
+
 
 //后续看看要不要考虑，在注解上加分页条数，然后根据条数，动态sheet分页吧
 
@@ -614,4 +743,31 @@ public class ApAdmin extends BaseDO {
     }
   ]
 }
+```
+
+
+### 使用CompletableFuture和自定义线程池加速接口响应。（空间换时间）
+```java
+ private static ThreadPoolExecutor executor = new ThreadPoolExecutor(10, 10, 1000, TimeUnit.MILLISECONDS, WORK_QUEUE, HANDLER);
+
+public PageResult<RespVO>  test(PageReqVO pageVO) {
+        Page<PageReqVO> pages = MyBatisUtils.buildPage(pageVO);
+        IPage<RespVO> mpPage = baseMapper.selectPage(pages, pageVO);
+        if (mpPage.getTotal() == 0) {
+            return pageResult;
+        }
+        PageResult<RespVO> pageResult = new PageResult(mpPage.getRecords(), mpPage.getTotal());
+        List<CompletableFuture<Void>> completableFutures = new ArrayList<>();
+        pageResult.getRows().forEach(res -> {
+        // 假设查看page分页下的内容,走并行
+        CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+            List<RespVO.DetailRespVO> details = childMapper.selectByCId(res.getId());
+            res.setExLists(details);
+        }, executor);
+        completableFutures.add(future);
+        });
+        //等待所有结果返回
+        CompletableFuture.allOf(completableFutures.toArray(new CompletableFuture[0])).get(2, TimeUnit.MINUTES);
+        return   pageResult;
+        }
 ```
