@@ -320,7 +320,9 @@ public @interface ExcelLine {
 
 **新增@ChainDropDownFields 注解，处理级联自定义数据下拉框**
 
-用法如下,实体类中：
+用法如下,实体类中：  
+示例1 ：  
+
 ```java
 @Data
 // 内容行高度
@@ -417,7 +419,7 @@ public class TestChainDropDownService implements IChainDropDownService{
     @ChainDropDownFields(sourceClass = CPChainDropDownService.class, type = ChainDropDownType.COMPANY_PROJECT, params = {"2"})
     private String projectName;
 ```
-
+重写接口   
 ```java
 public class CPChainDropDownService implements IChainDropDownService {
 
