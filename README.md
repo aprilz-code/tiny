@@ -501,3 +501,116 @@ public final class Validators {
 ### 3.2 elasticsearch springboot2.7.5对应ES版本 7.17.6
 
 ### 杂记
+
+全局脱敏 aprilz-spring-boot-starter-desensitize 这个后期应该要移到一个core包中，不需要用starter
+基于jackson 实现了全局注解式脱敏
+
+使用案例
+```java
+package com.aprilz.tiny.mbg.entity;
+
+import cn.aprilz.desensitize.core.annotations.Desensitize;
+import cn.aprilz.desensitize.core.enums.DesensitizeRuleEnums;
+import com.alibaba.excel.annotation.ExcelIgnore;
+import com.aprilz.tiny.mbg.base.BaseDO;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
+import java.util.Date;
+
+/**
+ * <p>
+ * 后台用户表
+ * </p>
+ *
+ * @author aprilz
+ * @since 2022-08-11
+ */
+@Data
+@TableName("ap_admin")
+@ApiModel(value = "ApAdmin对象", description = "后台用户表")
+public class ApAdmin extends BaseDO {
+
+    private static final long serialVersionUID = 1L;
+
+    @TableId(value = "id")
+    @ApiModelProperty(value = "唯一标识")
+    @ExcelIgnore
+    private Long id;
+
+    @ApiModelProperty("帐号启用状态：0->禁用；1->启用")
+    @TableField("status")
+    private Boolean status;
+
+    @TableField("username")
+    private String username;
+
+    @TableField("password")
+    @Desensitize(rule = DesensitizeRuleEnums.PASSWORD)
+    private String password;
+
+    @ApiModelProperty("手机")
+    @TableField("mobile")
+    @Desensitize(rule = DesensitizeRuleEnums.MOBILE_PHONE)
+    private String mobile;
+
+    @ApiModelProperty("性别：0->女；1->男 2-未知")
+    @TableField("sex")
+    private Integer sex;
+
+    @ApiModelProperty("头像")
+    @TableField("avatar")
+    private String avatar;
+
+    @ApiModelProperty("邮箱")
+    @TableField("email")
+    @Desensitize(rule = DesensitizeRuleEnums.EMAIL)
+    private String email;
+
+    @ApiModelProperty("昵称")
+    @TableField("nick_name")
+    private String nickName;
+
+    @ApiModelProperty("最后登录时间")
+    @TableField("login_time")
+    private Date loginTime;
+
+    @ApiModelProperty("备注")
+    @TableField("description")
+    private String description;
+
+}
+
+```
+
+调用http://localhost:8084//sso/user后,可看到字段已脱敏
+```json
+{
+  "code": "200",
+  "message": "操作成功",
+  "data": [
+    {
+      "createBy": "ADMIN",
+      "createTime": "2022-08-11 15:04:32",
+      "updateBy": "ADMIN",
+      "updateTime": "2022-08-11 15:04:39",
+      "deleteFlag": false,
+      "id": "1",
+      "status": true,
+      "username": "admin",
+      "password": "************************************************************",
+      "mobile": "176****0000",
+      "sex": 2,
+      "avatar": "https://thirdwx.qlogo.cn/mmopen/vi_32/2KOBFlndeR5aIzSMFAzfQewiawkmT6LnZpiaf5DAKWAcTn0qaXCmI6wzP71qXHL55xAwqZLVvvs9j7wUYNlmmpiaw/132",
+      "email": "l************@163.com",
+      "nickName": "aprilz",
+      "loginTime": null,
+      "description": null
+    }
+  ]
+}
+```

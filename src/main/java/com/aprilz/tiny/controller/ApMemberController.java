@@ -11,7 +11,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +22,7 @@ import java.util.Map;
  * 会员登录注册管理Controller
  * Created by aprilz on 2018/8/3.
  */
-@Controller
+@RestController
 @Api(tags = "会员登录注册管理")
 @RequestMapping("/sso")
 public class ApMemberController {
@@ -35,7 +34,6 @@ public class ApMemberController {
 
     @ApiOperation(value = "用户注册")
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    @ResponseBody
     public CommonResult<ApAdmin> register(@RequestBody ApAdmin ApAdminParam, BindingResult result) {
         ApAdmin ApAdmin = adminService.register(ApAdminParam);
         if (ApAdmin == null) {
@@ -46,7 +44,6 @@ public class ApMemberController {
 
     @ApiOperation(value = "登录以后返回token")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    @ResponseBody
     public CommonResult login(@RequestBody ApAdminLoginParam ApAdminLoginParam, BindingResult result) {
         String token = adminService.login(ApAdminLoginParam.getUsername(), ApAdminLoginParam.getPassword());
         if (token == null) {
@@ -60,11 +57,22 @@ public class ApMemberController {
 
     @ApiOperation("获取用户所有权限（包括+-权限）")
     @RequestMapping(value = "/permission/{adminId}", method = RequestMethod.GET)
-    @ResponseBody
     @PreAuthorize("hasAuthority('sso:permission:read')")
     public CommonResult<List<ApPermission>> getPermissionList(@PathVariable Long adminId) {
         List<ApPermission> permissionList = adminService.getPermissionList(adminId);
         return CommonResult.success(permissionList);
+    }
+
+    @ApiOperation("id获取用户")
+    @RequestMapping(value = "/user/{adminId}", method = RequestMethod.GET)
+    public CommonResult<ApAdmin> getUserById(@PathVariable Long adminId) {
+        return CommonResult.success(adminService.getById(adminId));
+    }
+
+    @ApiOperation("获取所有用户")
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    public CommonResult<List<ApAdmin>> getUsers() {
+        return CommonResult.success(adminService.list());
     }
 
 }

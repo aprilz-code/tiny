@@ -19,7 +19,7 @@ public class ElasticSearchClientConfig {
     @Bean
     public ElasticsearchClient elasticsearchClient() {
         RestClient restClient = RestClient.builder(
-                        new HttpHost("localhost", 9200, "http")
+                        new HttpHost("49.235.99.56", 9200, "http")
                 )
                 //设置登录验证
                 .setHttpClientConfigCallback(httpAsyncClientBuilder -> {

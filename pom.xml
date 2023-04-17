@@ -257,20 +257,17 @@
         </dependency>
 
 
-        <!-- https://mvnrepository.com/artifact/com.pig4cloud.excel/excel-spring-boot-starter -->
-        <!--        <dependency>-->
-        <!--            <groupId>com.pig4cloud.excel</groupId>-->
-        <!--            <artifactId>excel-spring-boot-starter</artifactId>-->
-        <!--            <version>1.2.7</version>-->
-        <!--        </dependency>-->
-
-
         <dependency>
             <groupId>cn.aprilz</groupId>
             <artifactId>aprilz-spring-boot-starter-easyexcel</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
+        <dependency>
+            <groupId>cn.aprilz</groupId>
+            <artifactId>aprilz-spring-boot-starter-desensitize</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
 
     </dependencies>
 

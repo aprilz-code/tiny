@@ -3,7 +3,6 @@ package com.aprilz.tiny;
 import cn.hutool.http.ContentType;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONObject;
-import com.aprilz.tiny.dto.QyDocument;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -30,7 +29,7 @@ public class ChatGPTTest {
 
         String result = HttpUtil.createPost("https://open.aprilz.ml/v1/chat/completions")
                 .contentType(ContentType.JSON.getValue()).body(body.toString())
-                .header("Authorization", "Bearer sk-fZeximHi0eGupzkE5P7GT3BlbkFJGhdXIVJGON35O9ze")
+                .header("Authorization", "Bearer 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")
                 .execute().body();
         System.out.println(result);
     }
