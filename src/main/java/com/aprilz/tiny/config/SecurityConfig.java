@@ -1,8 +1,8 @@
 package com.aprilz.tiny.config;
 
 import com.aprilz.tiny.common.properties.IgnoredUrlsProperties;
-import com.aprilz.tiny.component.JwtAuthenticationTokenFilter;
-import com.aprilz.tiny.component.RestAuthenticationEntryPoint;
+import com.aprilz.tiny.component.mybatis.JwtAuthenticationTokenFilter;
+import com.aprilz.tiny.component.mybatis.RestAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

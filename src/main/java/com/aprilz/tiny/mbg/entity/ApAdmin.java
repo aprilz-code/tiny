@@ -1,5 +1,7 @@
 package com.aprilz.tiny.mbg.entity;
 
+import cn.aprilz.desensitize.core.annotations.Desensitize;
+import cn.aprilz.desensitize.core.enums.DesensitizeRuleEnums;
 import com.alibaba.excel.annotation.ExcelIgnore;
 import com.aprilz.tiny.mbg.base.BaseDO;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -39,10 +41,12 @@ public class ApAdmin extends BaseDO {
     private String username;
 
     @TableField("password")
+    @Desensitize(rule = DesensitizeRuleEnums.PASSWORD)
     private String password;
 
     @ApiModelProperty("手机")
     @TableField("mobile")
+    @Desensitize(rule = DesensitizeRuleEnums.MOBILE_PHONE)
     private String mobile;
 
     @ApiModelProperty("性别：0->女；1->男 2-未知")
@@ -55,6 +59,7 @@ public class ApAdmin extends BaseDO {
 
     @ApiModelProperty("邮箱")
     @TableField("email")
+    @Desensitize(rule = DesensitizeRuleEnums.EMAIL)
     private String email;
 
     @ApiModelProperty("昵称")

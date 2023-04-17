@@ -1,4 +1,4 @@
-package com.aprilz.tiny.component;
+package com.aprilz.tiny.component.mybatis;
 
 import cn.hutool.json.JSONUtil;
 import com.aprilz.tiny.common.api.CommonResult;
