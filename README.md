@@ -624,15 +624,15 @@ public PageResult<RespVO>  test(PageReqVO pageVO) {
         Page<PageReqVO> pages = MyBatisUtils.buildPage(pageVO);
         IPage<RespVO> mpPage = baseMapper.selectPage(pages, pageVO);
         if (mpPage.getTotal() == 0) {
-        return pageResult;
+            return pageResult;
         }
         PageResult<RespVO> pageResult = new PageResult(mpPage.getRecords(), mpPage.getTotal());
         List<CompletableFuture<Void>> completableFutures = new ArrayList<>();
         pageResult.getRows().forEach(res -> {
         // 假设查看page分页下的内容,走并行
         CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
-        List<RespVO.DetailRespVO> details = childMapper.selectByCId(res.getId());
-        res.setExLists(details);
+            List<RespVO.DetailRespVO> details = childMapper.selectByCId(res.getId());
+            res.setExLists(details);
         }, executor);
         completableFutures.add(future);
         });
