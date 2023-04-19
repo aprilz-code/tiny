@@ -17,7 +17,7 @@ public enum DesensitizeRuleEnums {
     /**
      * 用户id脱敏 //系统主键id为雪花id，Long类型，故这个用不了
      */
-   // USER_ID(s -> String.valueOf(DesensitizedUtil.userId())),
+    // USER_ID(s -> String.valueOf(DesensitizedUtil.userId())),
 
     /**
      * 中文姓名脱敏

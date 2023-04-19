@@ -10,7 +10,6 @@ import co.elastic.clients.elasticsearch.indices.ExistsRequest;
 import co.elastic.clients.elasticsearch.indices.*;
 import co.elastic.clients.transport.endpoints.BooleanResponse;
 import com.aprilz.tiny.component.es.anno.Id;
-
 import com.aprilz.tiny.component.es.dto.SearchInput;
 import com.aprilz.tiny.component.es.dto.TypeMappingBuilder;
 import com.aprilz.tiny.component.es.service.ElasticsearchService;

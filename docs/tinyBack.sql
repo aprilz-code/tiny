@@ -5,20 +5,19 @@ MySQL - 5.7.38-log : Database - tinymall
 */
 
 
-/*!40101 SET NAMES utf8mb4  */;
+/*!40101 SET NAMES utf8mb4 */;
 
-/*!40101 SET SQL_MODE=''*/;
+/*!40101 SET SQL_MODE = ''*/;
 
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+/*!40014 SET @OLD_UNIQUE_CHECKS = @@UNIQUE_CHECKS, UNIQUE_CHECKS = 0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS = 0 */;
+/*!40101 SET @OLD_SQL_MODE = @@SQL_MODE, SQL_MODE = 'NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES = @@SQL_NOTES, SQL_NOTES = 0 */;
 CREATE
-DATABASE /*!32312 IF NOT EXISTS*/`tinymall` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */;
+    DATABASE /*!32312 IF NOT EXISTS */`tinymall` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */;
 
 USE
-`tinymall`;
-
+    `tinymall`;
 
 
 /*Table structure for table `ap_admin` */
@@ -29,22 +28,24 @@ CREATE TABLE `ap_admin`
 (
     `id`          bigint(20) NOT NULL AUTO_INCREMENT,
     `create_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin  DEFAULT NULL,
-    `create_time` datetime(6) DEFAULT NULL,
+    `create_time` datetime(6)                                            DEFAULT NULL,
     `update_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin  DEFAULT NULL,
-    `update_time` datetime(6) DEFAULT NULL,
+    `update_time` datetime(6)                                            DEFAULT NULL,
     `delete_flag` bit(1)                                                 DEFAULT b'0' COMMENT '0正常 1已删除',
     `status`      bit(1)                                                 DEFAULT b'1' COMMENT '帐号启用状态：0->禁用；1->启用',
     `username`    varchar(64)                                            DEFAULT NULL,
     `password`    varchar(64)                                            DEFAULT NULL,
     `mobile`      varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '手机',
-    `sex`         tinyint(4) DEFAULT '2' COMMENT '性别：0->女；1->男 2-未知',
+    `sex`         tinyint(4)                                             DEFAULT '2' COMMENT '性别：0->女；1->男 2-未知',
     `avatar`      varchar(500)                                           DEFAULT NULL COMMENT '头像',
     `email`       varchar(100)                                           DEFAULT NULL COMMENT '邮箱',
     `nick_name`   varchar(200)                                           DEFAULT NULL COMMENT '昵称',
     `login_time`  datetime                                               DEFAULT NULL COMMENT '最后登录时间',
     `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '备注',
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='后台用户表';
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 2
+  DEFAULT CHARSET = utf8mb4 COMMENT ='后台用户表';
 
 /*Data for the table `ap_admin` */
 
@@ -64,15 +65,16 @@ CREATE TABLE `ap_admin_permission_relation`
 (
     `id`            bigint(20) NOT NULL AUTO_INCREMENT,
     `create_by`     varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time`   datetime(6) DEFAULT NULL,
+    `create_time`   datetime(6)                                           DEFAULT NULL,
     `update_by`     varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time`   datetime(6) DEFAULT NULL,
+    `update_time`   datetime(6)                                           DEFAULT NULL,
     `delete_flag`   bit(1)                                                DEFAULT b'0' COMMENT '0正常 1已删除',
-    `admin_id`      bigint(20) DEFAULT NULL,
-    `permission_id` bigint(20) DEFAULT NULL,
-    `type`          int(1) DEFAULT NULL,
+    `admin_id`      bigint(20)                                            DEFAULT NULL,
+    `permission_id` bigint(20)                                            DEFAULT NULL,
+    `type`          int(1)                                                DEFAULT NULL,
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='后台用户和权限关系表(除角色中定义的权限以外的加减权限)';
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4 COMMENT ='后台用户和权限关系表(除角色中定义的权限以外的加减权限)';
 
 /*Data for the table `ap_admin_permission_relation` */
 
@@ -84,14 +86,16 @@ CREATE TABLE `ap_admin_role_relation`
 (
     `id`          bigint(20) NOT NULL AUTO_INCREMENT,
     `create_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time` datetime(6) DEFAULT NULL,
+    `create_time` datetime(6)                                           DEFAULT NULL,
     `update_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time` datetime(6) DEFAULT NULL,
+    `update_time` datetime(6)                                           DEFAULT NULL,
     `status`      bit(1)                                                DEFAULT NULL COMMENT '状态：0->无效；1->有效',
-    `admin_id`    bigint(20) DEFAULT NULL,
-    `role_id`     bigint(20) DEFAULT NULL,
+    `admin_id`    bigint(20)                                            DEFAULT NULL,
+    `role_id`     bigint(20)                                            DEFAULT NULL,
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='后台用户和角色关系表';
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 3
+  DEFAULT CHARSET = utf8mb4 COMMENT ='后台用户和角色关系表';
 
 /*Data for the table `ap_admin_role_relation` */
 
@@ -108,19 +112,21 @@ CREATE TABLE `ap_permission`
 (
     `id`          bigint(20) NOT NULL AUTO_INCREMENT,
     `create_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time` datetime(6) DEFAULT NULL,
+    `create_time` datetime(6)                                           DEFAULT NULL,
     `update_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time` datetime(6) DEFAULT NULL,
+    `update_time` datetime(6)                                           DEFAULT NULL,
     `delete_flag` bit(1)                                                DEFAULT b'0' COMMENT '0正常 1已删除',
-    `pid`         bigint(20) DEFAULT NULL COMMENT '父级权限id',
+    `pid`         bigint(20)                                            DEFAULT NULL COMMENT '父级权限id',
     `name`        varchar(100)                                          DEFAULT NULL COMMENT '名称',
     `value`       varchar(200)                                          DEFAULT NULL COMMENT '权限值',
     `icon`        varchar(500)                                          DEFAULT NULL COMMENT '图标',
-    `type`        int(1) DEFAULT NULL COMMENT '权限类型：0->目录；1->菜单；2->按钮（接口绑定权限）',
+    `type`        int(1)                                                DEFAULT NULL COMMENT '权限类型：0->目录；1->菜单；2->按钮（接口绑定权限）',
     `uri`         varchar(200)                                          DEFAULT NULL COMMENT '前端资源路径',
-    `sort`        int(11) DEFAULT NULL COMMENT '排序',
+    `sort`        int(11)                                               DEFAULT NULL COMMENT '排序',
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COMMENT='后台用户权限表';
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 19
+  DEFAULT CHARSET = utf8mb4 COMMENT ='后台用户权限表';
 
 /*Data for the table `ap_permission` */
 
@@ -138,16 +144,18 @@ CREATE TABLE `ap_role`
 (
     `id`          bigint(20) NOT NULL AUTO_INCREMENT,
     `create_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time` datetime(6) DEFAULT NULL,
+    `create_time` datetime(6)                                           DEFAULT NULL,
     `update_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time` datetime(6) DEFAULT NULL,
+    `update_time` datetime(6)                                           DEFAULT NULL,
     `delete_flag` bit(1)                                                DEFAULT b'0' COMMENT '0正常 1已删除',
     `name`        varchar(100)                                          DEFAULT NULL COMMENT '名称',
     `description` varchar(500)                                          DEFAULT NULL COMMENT '描述',
-    `admin_count` int(11) DEFAULT NULL COMMENT '后台用户数量',
-    `sort`        int(11) DEFAULT '0',
+    `admin_count` int(11)                                               DEFAULT NULL COMMENT '后台用户数量',
+    `sort`        int(11)                                               DEFAULT '0',
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='后台用户角色表';
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 2
+  DEFAULT CHARSET = utf8mb4 COMMENT ='后台用户角色表';
 
 /*Data for the table `ap_role` */
 
@@ -163,14 +171,16 @@ CREATE TABLE `ap_role_permission_relation`
 (
     `id`            bigint(20) NOT NULL AUTO_INCREMENT,
     `create_by`     varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time`   datetime(6) DEFAULT NULL,
+    `create_time`   datetime(6)                                           DEFAULT NULL,
     `update_by`     varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time`   datetime(6) DEFAULT NULL,
+    `update_time`   datetime(6)                                           DEFAULT NULL,
     `delete_flag`   bit(1)                                                DEFAULT b'0' COMMENT '0正常 1已删除',
-    `role_id`       bigint(20) DEFAULT NULL,
-    `permission_id` bigint(20) DEFAULT NULL,
+    `role_id`       bigint(20)                                            DEFAULT NULL,
+    `permission_id` bigint(20)                                            DEFAULT NULL,
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='后台用户角色和权限关系表';
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 5
+  DEFAULT CHARSET = utf8mb4 COMMENT ='后台用户角色和权限关系表';
 
 /*Data for the table `ap_role_permission_relation` */
 
@@ -182,7 +192,7 @@ values (1, NULL, NULL, NULL, NULL, NULL, 1, 1),
        (4, NULL, NULL, NULL, NULL, NULL, 1, 4);
 
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+/*!40101 SET SQL_MODE = @OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS = @OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES = @OLD_SQL_NOTES */;
