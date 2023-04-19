@@ -201,7 +201,7 @@ public class ApExcelTestController {
 则传入excelCustom参数，可传入string或者array接收
 
 ```java
-package cn.aprilz.excel.core.annotations;
+package com.aprilz.excel.core.annotations;
 
 import com.aprilz.excel.core.handler.DefaultAnalysisEventListener;
 import com.aprilz.excel.core.handler.ListAnalysisEventListener;
@@ -271,7 +271,7 @@ private Integer sex;
 **新增注解 @FieldRepeat，处理excel导入数据时的重复校验字段**
 
 ```java
-package cn.aprilz.excel.core.annotations;
+package com.aprilz.excel.core.annotations;
 
 import javax.validation.Payload;
 import java.lang.annotation.ElementType;
@@ -306,7 +306,7 @@ public @interface FieldRepeat {
 **ExcelLine给导入时Long类型字段写入行号，其他类型不可用**
 
 ```java
-package cn.aprilz.excel.core.annotations;
+package com.aprilz.excel.core.annotations;
 
 import java.lang.annotation.*;
 
@@ -576,7 +576,7 @@ public class ValidatorConfig {
 excel中同上，Validators类中使用自定义validators
 
 ```java
-package cn.aprilz.excel.core;
+package com.aprilz.excel.core;
 
 import cn.hutool.extra.spring.SpringUtil;
 

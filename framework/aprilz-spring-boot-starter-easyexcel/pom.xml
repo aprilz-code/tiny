@@ -3,11 +3,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>cn.aprilz</groupId>
+        <groupId>com.aprilz</groupId>
         <artifactId>framework</artifactId>
         <version>${revision}</version>
     </parent>
-    <groupId>cn.aprilz</groupId>
+
+    <packaging>jar</packaging>
     <artifactId>aprilz-spring-boot-starter-easyexcel</artifactId>
     <name>aprilz-spring-boot-starter-easyexcel</name>
     <description>easyexcel starter</description>
@@ -47,12 +48,6 @@
             <version>3.1.1</version>
         </dependency>
 
-        <!-- 工具类相关 -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
@@ -76,6 +71,7 @@
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>
         </dependency>
+
     </dependencies>
 
 

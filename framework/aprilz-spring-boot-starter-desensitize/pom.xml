@@ -3,11 +3,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>cn.aprilz</groupId>
+        <groupId>com.aprilz</groupId>
         <artifactId>framework</artifactId>
         <version>${revision}</version>
     </parent>
-    <groupId>cn.aprilz</groupId>
+
+    <packaging>jar</packaging>
     <artifactId>aprilz-spring-boot-starter-desensitize</artifactId>
     <name>aprilz-spring-boot-starter-desensitize</name>
     <description>全局脱敏工具包</description>
@@ -39,19 +40,8 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
+
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>

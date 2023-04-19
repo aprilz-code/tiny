@@ -3,11 +3,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>cn.aprilz</groupId>
+        <groupId>com.aprilz</groupId>
         <artifactId>framework</artifactId>
         <version>${revision}</version>
     </parent>
-    <groupId>cn.aprilz</groupId>
+
     <artifactId>aprilz-spring-boot-starter-dtp</artifactId>
     <name>aprilz-spring-boot-starter-dtp</name>
     <description>dtp starter</description>
@@ -33,12 +33,7 @@
             <version>2021.0.4.0</version>
         </dependency>
 
-        <!-- 工具类相关 -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <scope>provided</scope>
-        </dependency>
+
 
     </dependencies>
 
