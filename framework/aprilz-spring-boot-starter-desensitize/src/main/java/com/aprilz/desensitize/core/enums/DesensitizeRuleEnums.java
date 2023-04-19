@@ -1,4 +1,4 @@
-package cn.aprilz.desensitize.core.enums;
+package com.aprilz.desensitize.core.enums;
 
 import cn.hutool.core.util.DesensitizedUtil;
 import lombok.AllArgsConstructor;

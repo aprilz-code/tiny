@@ -1,7 +1,7 @@
 package com.aprilz.tiny.mbg.entity;
 
-import cn.aprilz.desensitize.core.annotations.Desensitize;
-import cn.aprilz.desensitize.core.enums.DesensitizeRuleEnums;
+import com.aprilz.desensitize.core.annotations.Desensitize;
+import com.aprilz.desensitize.core.enums.DesensitizeRuleEnums;
 import com.alibaba.excel.annotation.ExcelIgnore;
 import com.aprilz.tiny.mbg.base.BaseDO;
 import com.baomidou.mybatisplus.annotation.TableField;

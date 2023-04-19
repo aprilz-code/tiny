@@ -1,7 +1,7 @@
-package cn.aprilz.desensitize.core.annotations;
+package com.aprilz.desensitize.core.annotations;
 
-import cn.aprilz.desensitize.core.enums.DesensitizeRuleEnums;
-import cn.aprilz.desensitize.core.handle.SensitiveJsonSerializer;
+import com.aprilz.desensitize.core.enums.DesensitizeRuleEnums;
+import com.aprilz.desensitize.core.handle.SensitiveJsonSerializer;
 import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 

@@ -1,4 +1,4 @@
-package cn.aprilz.desensitize;
+package com.aprilz.desensitize;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

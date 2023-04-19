@@ -1,7 +1,7 @@
-package cn.aprilz.desensitize.core.handle;
+package com.aprilz.desensitize.core.handle;
 
-import cn.aprilz.desensitize.core.annotations.Desensitize;
-import cn.aprilz.desensitize.core.enums.DesensitizeRuleEnums;
+import com.aprilz.desensitize.core.annotations.Desensitize;
+import com.aprilz.desensitize.core.enums.DesensitizeRuleEnums;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.JsonMappingException;
