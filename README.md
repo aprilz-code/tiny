@@ -292,7 +292,7 @@ public @interface FieldRepeat {
      * 需要校验的字段
      * @return
      */
-    String [] fields() default {};
+    String[] fields() default {};
 
     String message() default "存在重复数据";
 
@@ -322,7 +322,7 @@ public @interface ExcelLine {
 **新增@ChainDropDownFields 注解，处理级联自定义数据下拉框**
 
 用法如下,实体类中：  
-示例1 ：  
+示例1 ：
 
 ```java
 @Data
@@ -364,7 +364,9 @@ public class ChainTestTemplate {
     private String zone;
 }
 ```
+
 然后重写IChainDropDownService接口，公司对项目表设计 （1对多）
+
 ```java
 /**
  * 区域级联下拉 实现类
@@ -409,7 +411,8 @@ public class TestChainDropDownService implements IChainDropDownService{
 
 ```
 
-示例2 ： 
+示例2 ：
+
 ```java
     @NotBlank(message = "单位名称不能为空")
     @ChainDropDownFields(isRoot = true, sourceClass = CPChainDropDownService.class, type = ChainDropDownType.COMPANY_PROJECT)
@@ -420,7 +423,9 @@ public class TestChainDropDownService implements IChainDropDownService{
     @ChainDropDownFields(sourceClass = CPChainDropDownService.class, type = ChainDropDownType.COMPANY_PROJECT, params = {"2"})
     private String projectName;
 ```
-重写接口   
+
+重写接口
+
 ```java
 public class CPChainDropDownService implements IChainDropDownService {
 
@@ -445,11 +450,11 @@ public class CPChainDropDownService implements IChainDropDownService {
 }
 
 ```
+
 参考： https://rstyro.github.io/blog/2021/05/28/Easyexcel%E5%B8%B8%E7%94%A8%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81/
 
 小tips： 导入Excel时发现，属性值一直为null。。。。结果发现lombok和easyexcel冲突，解决方案如下
 ![img.png](docs/imgs/img.png)
-
 
 //后续看看要不要考虑，在注解上加分页条数，然后根据条数，动态sheet分页吧
 
@@ -719,6 +724,7 @@ public class ApAdmin extends BaseDO {
 ```
 
 调用http://localhost:8084//sso/user后,可看到字段已脱敏
+
 ```json
 {
   "code": "200",
@@ -746,29 +752,29 @@ public class ApAdmin extends BaseDO {
 }
 ```
 
-
 ### 使用CompletableFuture和自定义线程池加速接口响应。（空间换时间）
-```java
- private static ThreadPoolExecutor executor = new ThreadPoolExecutor(10, 10, 1000, TimeUnit.MILLISECONDS, WORK_QUEUE, HANDLER);
 
-public PageResult<RespVO>  test(PageReqVO pageVO) {
-        Page<PageReqVO> pages = MyBatisUtils.buildPage(pageVO);
-        IPage<RespVO> mpPage = baseMapper.selectPage(pages, pageVO);
-        if (mpPage.getTotal() == 0) {
-            return pageResult;
+```java
+ private static ThreadPoolExecutor executor=new ThreadPoolExecutor(10,10,1000,TimeUnit.MILLISECONDS,WORK_QUEUE,HANDLER);
+
+public PageResult<RespVO>  test(PageReqVO pageVO){
+        Page<PageReqVO> pages=MyBatisUtils.buildPage(pageVO);
+        IPage<RespVO> mpPage=baseMapper.selectPage(pages,pageVO);
+        if(mpPage.getTotal()==0){
+        return pageResult;
         }
-        PageResult<RespVO> pageResult = new PageResult(mpPage.getRecords(), mpPage.getTotal());
-        List<CompletableFuture<Void>> completableFutures = new ArrayList<>();
-        pageResult.getRows().forEach(res -> {
+        PageResult<RespVO> pageResult=new PageResult(mpPage.getRecords(),mpPage.getTotal());
+        List<CompletableFuture<Void>>completableFutures=new ArrayList<>();
+        pageResult.getRows().forEach(res->{
         // 假设查看page分页下的内容,走并行
-        CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
-            List<RespVO.DetailRespVO> details = childMapper.selectByCId(res.getId());
-            res.setExLists(details);
-        }, executor);
+        CompletableFuture<Void> future=CompletableFuture.runAsync(()->{
+        List<RespVO.DetailRespVO>details=childMapper.selectByCId(res.getId());
+        res.setExLists(details);
+        },executor);
         completableFutures.add(future);
         });
         //等待所有结果返回
-        CompletableFuture.allOf(completableFutures.toArray(new CompletableFuture[0])).get(2, TimeUnit.MINUTES);
-        return   pageResult;
+        CompletableFuture.allOf(completableFutures.toArray(new CompletableFuture[0])).get(2,TimeUnit.MINUTES);
+        return pageResult;
         }
 ```

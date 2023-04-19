@@ -265,31 +265,31 @@
         <!-- 设置构建的 jar 包名 -->
         <finalName>${project.artifactId}</finalName>
         <plugins>
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-compiler-plugin</artifactId>-->
-<!--                <version>${maven-compiler-plugin.version}</version>-->
-<!--                <configuration>-->
-<!--                    <source>${java.version}</source>-->
-<!--                    <target>${java.version}</target>-->
-<!--                    <encoding>${project.build.sourceEncoding}</encoding>-->
-<!--                    <annotationProcessorPaths>-->
-<!--                        &lt;!&ndash; 引入 lombok-processor &ndash;&gt;-->
-<!--                        <path>-->
-<!--                            <groupId>org.projectlombok</groupId>-->
-<!--                            <artifactId>lombok</artifactId>-->
-<!--                            <version>${lombok.version}</version>-->
-<!--                        </path>-->
-<!--                        &lt;!&ndash; 引入 mapstruct-processor &ndash;&gt;-->
-<!--                        <path>-->
-<!--                            <groupId>org.mapstruct</groupId>-->
-<!--                            <artifactId>mapstruct-processor</artifactId>-->
-<!--                            <version>${mapstruct.version}</version>-->
-<!--                        </path>-->
-<!--                    </annotationProcessorPaths>-->
+            <!--            <plugin>-->
+            <!--                <groupId>org.apache.maven.plugins</groupId>-->
+            <!--                <artifactId>maven-compiler-plugin</artifactId>-->
+            <!--                <version>${maven-compiler-plugin.version}</version>-->
+            <!--                <configuration>-->
+            <!--                    <source>${java.version}</source>-->
+            <!--                    <target>${java.version}</target>-->
+            <!--                    <encoding>${project.build.sourceEncoding}</encoding>-->
+            <!--                    <annotationProcessorPaths>-->
+            <!--                        &lt;!&ndash; 引入 lombok-processor &ndash;&gt;-->
+            <!--                        <path>-->
+            <!--                            <groupId>org.projectlombok</groupId>-->
+            <!--                            <artifactId>lombok</artifactId>-->
+            <!--                            <version>${lombok.version}</version>-->
+            <!--                        </path>-->
+            <!--                        &lt;!&ndash; 引入 mapstruct-processor &ndash;&gt;-->
+            <!--                        <path>-->
+            <!--                            <groupId>org.mapstruct</groupId>-->
+            <!--                            <artifactId>mapstruct-processor</artifactId>-->
+            <!--                            <version>${mapstruct.version}</version>-->
+            <!--                        </path>-->
+            <!--                    </annotationProcessorPaths>-->
 
-<!--                </configuration>-->
-<!--            </plugin>-->
+            <!--                </configuration>-->
+            <!--            </plugin>-->
             <!-- 打包 -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>

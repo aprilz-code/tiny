@@ -74,7 +74,7 @@ public class ApExcelTest2ServiceImpl {
             param.setAge(1);
             param.setTestTime(new Date());
             param.setUrl("BAIDU.COM");
-            param.setName("name"+ i);
+            param.setName("name" + i);
             param.setSex(1);
             if (i != 1955) {
                 param.setName("MZ");

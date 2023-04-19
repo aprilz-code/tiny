@@ -7,17 +7,17 @@ MySQL - 5.7.38-log : Database - tinymall
 
 /*!40101 SET NAMES utf8mb4 */;
 
-/*!40101 SET SQL_MODE=''*/;
+/*!40101 SET SQL_MODE = ''*/;
 
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+/*!40014 SET @OLD_UNIQUE_CHECKS = @@UNIQUE_CHECKS, UNIQUE_CHECKS = 0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS = 0 */;
+/*!40101 SET @OLD_SQL_MODE = @@SQL_MODE, SQL_MODE = 'NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES = @@SQL_NOTES, SQL_NOTES = 0 */;
 CREATE
-DATABASE /*!32312 IF NOT EXISTS*/`tinymall` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */;
+    DATABASE /*!32312 IF NOT EXISTS */`tinymall` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */;
 
 USE
-`tinymall`;
+    `tinymall`;
 
 /*Table structure for table `ap_ad` */
 
@@ -25,23 +25,25 @@ DROP TABLE IF EXISTS `ap_ad`;
 
 CREATE TABLE `ap_ad`
 (
-    `id`          bigint(20) NOT NULL AUTO_INCREMENT,
+    `id`          bigint(20)   NOT NULL AUTO_INCREMENT,
     `create_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time` datetime(6) DEFAULT NULL,
+    `create_time` datetime(6)                                           DEFAULT NULL,
     `update_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time` datetime(6) DEFAULT NULL,
+    `update_time` datetime(6)                                           DEFAULT NULL,
     `delete_flag` bit(1)                                                DEFAULT b'0' COMMENT '0正常 1已删除',
     `name`        varchar(63)  NOT NULL                                 DEFAULT '' COMMENT '广告标题',
     `link`        varchar(255) NOT NULL                                 DEFAULT '' COMMENT '所广告的商品页面或者活动页面链接地址',
     `url`         varchar(255) NOT NULL COMMENT '广告宣传图片',
-    `position`    tinyint(3) DEFAULT '1' COMMENT '广告位置：1则是首页',
+    `position`    tinyint(3)                                            DEFAULT '1' COMMENT '广告位置：1则是首页',
     `content`     varchar(255)                                          DEFAULT '' COMMENT '活动内容',
     `start_time`  datetime                                              DEFAULT NULL COMMENT '广告开始时间',
     `end_time`    datetime                                              DEFAULT NULL COMMENT '广告结束时间',
-    `enabled`     tinyint(1) DEFAULT '0' COMMENT '是否启动',
+    `enabled`     tinyint(1)                                            DEFAULT '0' COMMENT '是否启动',
     PRIMARY KEY (`id`),
-    KEY           `enabled` (`enabled`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='广告表';
+    KEY `enabled` (`enabled`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 4
+  DEFAULT CHARSET = utf8mb4 COMMENT ='广告表';
 
 /*Data for the table `ap_ad` */
 
@@ -64,14 +66,14 @@ DROP TABLE IF EXISTS `ap_address`;
 
 CREATE TABLE `ap_address`
 (
-    `id`             bigint(20) NOT NULL AUTO_INCREMENT,
+    `id`             bigint(20)   NOT NULL AUTO_INCREMENT,
     `create_by`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time`    datetime(6) DEFAULT NULL,
+    `create_time`    datetime(6)                                           DEFAULT NULL,
     `update_by`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time`    datetime(6) DEFAULT NULL,
+    `update_time`    datetime(6)                                           DEFAULT NULL,
     `delete_flag`    bit(1)                                                DEFAULT b'0' COMMENT '0正常 1已删除',
     `name`           varchar(63)  NOT NULL                                 DEFAULT '' COMMENT '收货人名称',
-    `user_id`        bigint(20) NOT NULL COMMENT '用户表的用户ID',
+    `user_id`        bigint(20)   NOT NULL COMMENT '用户表的用户ID',
     `province`       varchar(63)  NOT NULL COMMENT '行政区域表的省ID',
     `city`           varchar(63)  NOT NULL COMMENT '行政区域表的市ID',
     `county`         varchar(63)  NOT NULL COMMENT '行政区域表的区县ID',
@@ -79,10 +81,12 @@ CREATE TABLE `ap_address`
     `area_code`      char(6)                                               DEFAULT NULL COMMENT '地区编码',
     `postal_code`    char(6)                                               DEFAULT NULL COMMENT '邮政编码',
     `tel`            varchar(20)  NOT NULL                                 DEFAULT '' COMMENT '手机号码',
-    `is_default`     tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否默认地址',
+    `is_default`     tinyint(1)   NOT NULL                                 DEFAULT '0' COMMENT '是否默认地址',
     PRIMARY KEY (`id`),
-    KEY              `user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='收货地址表';
+    KEY `user_id` (`user_id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 3
+  DEFAULT CHARSET = utf8mb4 COMMENT ='收货地址表';
 
 /*Data for the table `ap_address` */
 
@@ -94,22 +98,24 @@ CREATE TABLE `ap_aftersale`
 (
     `id`           bigint(20) NOT NULL AUTO_INCREMENT,
     `create_by`    varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time`  datetime(6) DEFAULT NULL,
+    `create_time`  datetime(6)                                           DEFAULT NULL,
     `update_by`    varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time`  datetime(6) DEFAULT NULL,
+    `update_time`  datetime(6)                                           DEFAULT NULL,
     `delete_flag`  bit(1)                                                DEFAULT b'0' COMMENT '0正常 1已删除',
     `aftersale_sn` varchar(63)                                           DEFAULT NULL COMMENT '售后编号',
     `order_id`     bigint(20) NOT NULL COMMENT '订单ID',
     `user_id`      bigint(20) NOT NULL COMMENT '用户ID',
-    `type`         smallint(6) DEFAULT '0' COMMENT '售后类型，0是未收货退款，1是已收货（无需退货）退款，2用户退货退款',
+    `type`         smallint(6)                                           DEFAULT '0' COMMENT '售后类型，0是未收货退款，1是已收货（无需退货）退款，2用户退货退款',
     `reason`       varchar(31)                                           DEFAULT '' COMMENT '退款原因',
     `amount`       decimal(10, 2)                                        DEFAULT '0.00' COMMENT '退款金额',
     `pictures`     varchar(1023)                                         DEFAULT '[]' COMMENT '退款凭证图片链接数组',
     `comment`      varchar(511)                                          DEFAULT '' COMMENT '退款说明',
-    `status`       smallint(6) DEFAULT '0' COMMENT '售后状态，0是可申请，1是用户已申请，2是管理员审核通过，3是管理员退款成功，4是管理员审核拒绝，5是用户已取消',
+    `status`       smallint(6)                                           DEFAULT '0' COMMENT '售后状态，0是可申请，1是用户已申请，2是管理员审核通过，3是管理员退款成功，4是管理员审核拒绝，5是用户已取消',
     `handle_time`  datetime                                              DEFAULT NULL COMMENT '管理员操作时间',
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='售后表';
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 2
+  DEFAULT CHARSET = utf8mb4 COMMENT ='售后表';
 
 /*Data for the table `ap_aftersale` */
 
@@ -119,19 +125,21 @@ DROP TABLE IF EXISTS `ap_brand`;
 
 CREATE TABLE `ap_brand`
 (
-    `id`          bigint(20) NOT NULL AUTO_INCREMENT,
+    `id`          bigint(20)   NOT NULL AUTO_INCREMENT,
     `create_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time` datetime(6) DEFAULT NULL,
+    `create_time` datetime(6)                                           DEFAULT NULL,
     `update_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time` datetime(6) DEFAULT NULL,
+    `update_time` datetime(6)                                           DEFAULT NULL,
     `delete_flag` bit(1)                                                DEFAULT b'0' COMMENT '0正常 1已删除',
     `name`        varchar(255) NOT NULL                                 DEFAULT '' COMMENT '品牌商名称',
     `desc`        varchar(255) NOT NULL                                 DEFAULT '' COMMENT '品牌商简介',
     `pic_url`     varchar(255) NOT NULL                                 DEFAULT '' COMMENT '品牌商页的品牌商图片',
-    `sort_order`  tinyint(3) DEFAULT '50',
+    `sort_order`  tinyint(3)                                            DEFAULT '50',
     `floor_price` decimal(10, 2)                                        DEFAULT '0.00' COMMENT '品牌商的商品低价，仅用于页面展示',
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1046001 DEFAULT CHARSET=utf8mb4 COMMENT='品牌商表';
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 1046001
+  DEFAULT CHARSET = utf8mb4 COMMENT ='品牌商表';
 
 /*Data for the table `ap_brand` */
 
@@ -295,22 +303,24 @@ CREATE TABLE `ap_cart`
 (
     `id`             bigint(20) NOT NULL AUTO_INCREMENT,
     `create_by`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time`    datetime(6) DEFAULT NULL,
+    `create_time`    datetime(6)                                           DEFAULT NULL,
     `update_by`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time`    datetime(6) DEFAULT NULL,
+    `update_time`    datetime(6)                                           DEFAULT NULL,
     `delete_flag`    bit(1)                                                DEFAULT b'0' COMMENT '0正常 1已删除',
-    `user_id`        bigint(20) DEFAULT NULL COMMENT '用户表的用户ID',
-    `goods_id`       bigint(20) DEFAULT NULL COMMENT '商品表的商品ID',
+    `user_id`        bigint(20)                                            DEFAULT NULL COMMENT '用户表的用户ID',
+    `goods_id`       bigint(20)                                            DEFAULT NULL COMMENT '商品表的商品ID',
     `goods_sn`       varchar(63)                                           DEFAULT NULL COMMENT '商品编号',
     `goods_name`     varchar(127)                                          DEFAULT NULL COMMENT '商品名称',
-    `product_id`     bigint(20) DEFAULT NULL COMMENT '商品货品表的货品ID',
+    `product_id`     bigint(20)                                            DEFAULT NULL COMMENT '商品货品表的货品ID',
     `price`          decimal(10, 2)                                        DEFAULT '0.00' COMMENT '商品货品的价格',
-    `number`         smallint(5) DEFAULT '0' COMMENT '商品货品的数量',
+    `number`         smallint(5)                                           DEFAULT '0' COMMENT '商品货品的数量',
     `specifications` varchar(1023)                                         DEFAULT NULL COMMENT '商品规格值列表，采用JSON数组格式',
-    `checked`        tinyint(1) DEFAULT '1' COMMENT '购物车中商品是否选择状态',
+    `checked`        tinyint(1)                                            DEFAULT '1' COMMENT '购物车中商品是否选择状态',
     `pic_url`        varchar(255)                                          DEFAULT NULL COMMENT '商品图片或者商品货品图片',
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COMMENT='购物车商品表';
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 8
+  DEFAULT CHARSET = utf8mb4 COMMENT ='购物车商品表';
 
 /*Data for the table `ap_cart` */
 
@@ -337,23 +347,25 @@ DROP TABLE IF EXISTS `ap_category`;
 
 CREATE TABLE `ap_category`
 (
-    `id`          bigint(20) NOT NULL AUTO_INCREMENT,
+    `id`          bigint(20)    NOT NULL AUTO_INCREMENT,
     `create_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time` datetime(6) DEFAULT NULL,
+    `create_time` datetime(6)                                           DEFAULT NULL,
     `update_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time` datetime(6) DEFAULT NULL,
+    `update_time` datetime(6)                                           DEFAULT NULL,
     `delete_flag` bit(1)                                                DEFAULT b'0' COMMENT '0正常 1已删除',
     `name`        varchar(63)   NOT NULL                                DEFAULT '' COMMENT '类目名称',
     `keywords`    varchar(1023) NOT NULL                                DEFAULT '' COMMENT '类目关键字，以JSON数组格式',
     `desc`        varchar(255)                                          DEFAULT '' COMMENT '类目广告语介绍',
-    `pid`         bigint(20) NOT NULL DEFAULT '0' COMMENT '父类目ID',
+    `pid`         bigint(20)    NOT NULL                                DEFAULT '0' COMMENT '父类目ID',
     `icon_url`    varchar(255)                                          DEFAULT '' COMMENT '类目图标',
     `pic_url`     varchar(255)                                          DEFAULT '' COMMENT '类目图片',
     `level`       varchar(255)                                          DEFAULT 'L1',
-    `sort_order`  tinyint(3) DEFAULT '50' COMMENT '排序',
+    `sort_order`  tinyint(3)                                            DEFAULT '50' COMMENT '排序',
     PRIMARY KEY (`id`),
-    KEY           `parent_id` (`pid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1036007 DEFAULT CHARSET=utf8mb4 COMMENT='类目表';
+    KEY `parent_id` (`pid`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 1036007
+  DEFAULT CHARSET = utf8mb4 COMMENT ='类目表';
 
 /*Data for the table `ap_category` */
 
@@ -713,17 +725,18 @@ CREATE TABLE `ap_collect`
 (
     `id`          bigint(20) NOT NULL AUTO_INCREMENT,
     `create_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time` datetime(6) DEFAULT NULL,
+    `create_time` datetime(6)                                           DEFAULT NULL,
     `update_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time` datetime(6) DEFAULT NULL,
+    `update_time` datetime(6)                                           DEFAULT NULL,
     `delete_flag` bit(1)                                                DEFAULT b'0' COMMENT '0正常 1已删除',
     `user_id`     bigint(11) NOT NULL COMMENT '用户表的用户ID',
-    `value_id`    int(11) NOT NULL DEFAULT '0' COMMENT '如果type=0，则是商品ID；如果type=1，则是专题ID',
-    `type`        tinyint(3) NOT NULL DEFAULT '0' COMMENT '收藏类型，如果type=0，则是商品ID；如果type=1，则是专题ID',
+    `value_id`    int(11)    NOT NULL                                   DEFAULT '0' COMMENT '如果type=0，则是商品ID；如果type=1，则是专题ID',
+    `type`        tinyint(3) NOT NULL                                   DEFAULT '0' COMMENT '收藏类型，如果type=0，则是商品ID；如果type=1，则是专题ID',
     PRIMARY KEY (`id`),
-    KEY           `user_id` (`user_id`),
-    KEY           `goods_id` (`value_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='收藏表';
+    KEY `user_id` (`user_id`),
+    KEY `goods_id` (`value_id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4 COMMENT ='收藏表';
 
 /*Data for the table `ap_collect` */
 
@@ -735,21 +748,23 @@ CREATE TABLE `ap_comment`
 (
     `id`            bigint(20) NOT NULL AUTO_INCREMENT,
     `create_by`     varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time`   datetime(6) DEFAULT NULL,
+    `create_time`   datetime(6)                                           DEFAULT NULL,
     `update_by`     varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time`   datetime(6) DEFAULT NULL,
+    `update_time`   datetime(6)                                           DEFAULT NULL,
     `delete_flag`   bit(1)                                                DEFAULT b'0' COMMENT '0正常 1已删除',
-    `value_id`      int(11) NOT NULL DEFAULT '0' COMMENT '如果type=0，则是商品评论；如果是type=1，则是专题评论。',
-    `type`          tinyint(3) NOT NULL DEFAULT '0' COMMENT '评论类型，如果type=0，则是商品评论；如果是type=1，则是专题评论；',
+    `value_id`      int(11)    NOT NULL                                   DEFAULT '0' COMMENT '如果type=0，则是商品评论；如果是type=1，则是专题评论。',
+    `type`          tinyint(3) NOT NULL                                   DEFAULT '0' COMMENT '评论类型，如果type=0，则是商品评论；如果是type=1，则是专题评论；',
     `content`       varchar(1023)                                         DEFAULT '' COMMENT '评论内容',
     `admin_content` varchar(511)                                          DEFAULT '' COMMENT '管理员回复内容',
     `user_id`       bigint(20) NOT NULL COMMENT '用户表的用户ID',
-    `has_picture`   tinyint(1) DEFAULT '0' COMMENT '是否含有图片',
+    `has_picture`   tinyint(1)                                            DEFAULT '0' COMMENT '是否含有图片',
     `pic_urls`      varchar(1023)                                         DEFAULT NULL COMMENT '图片地址列表，采用JSON数组格式',
-    `star`          smallint(6) DEFAULT '1' COMMENT '评分， 1-5',
+    `star`          smallint(6)                                           DEFAULT '1' COMMENT '评分， 1-5',
     PRIMARY KEY (`id`),
-    KEY             `id_value` (`value_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1015 DEFAULT CHARSET=utf8mb4 COMMENT='评论表';
+    KEY `id_value` (`value_id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 1015
+  DEFAULT CHARSET = utf8mb4 COMMENT ='评论表';
 
 /*Data for the table `ap_comment` */
 
@@ -3982,31 +3997,33 @@ DROP TABLE IF EXISTS `ap_coupon`;
 
 CREATE TABLE `ap_coupon`
 (
-    `id`          bigint(20) NOT NULL AUTO_INCREMENT,
+    `id`          bigint(20)  NOT NULL AUTO_INCREMENT,
     `create_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time` datetime(6) DEFAULT NULL,
+    `create_time` datetime(6)                                           DEFAULT NULL,
     `update_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time` datetime(6) DEFAULT NULL,
+    `update_time` datetime(6)                                           DEFAULT NULL,
     `delete_flag` bit(1)                                                DEFAULT b'0' COMMENT '0正常 1已删除',
-    `status`      tinyint(4) DEFAULT '0' COMMENT '优惠券状态，如果是0则是正常可用；如果是1则是过期; 如果是2则是下架。',
+    `status`      tinyint(4)                                            DEFAULT '0' COMMENT '优惠券状态，如果是0则是正常可用；如果是1则是过期; 如果是2则是下架。',
     `name`        varchar(63) NOT NULL COMMENT '优惠券名称',
     `desc`        varchar(127)                                          DEFAULT '' COMMENT '优惠券介绍，通常是显示优惠券使用限制文字',
     `tag`         varchar(63)                                           DEFAULT '' COMMENT '优惠券标签，例如新人专用',
-    `total`       int(11) NOT NULL DEFAULT '0' COMMENT '优惠券数量，如果是0，则是无限量',
+    `total`       int(11)     NOT NULL                                  DEFAULT '0' COMMENT '优惠券数量，如果是0，则是无限量',
     `discount`    decimal(10, 2)                                        DEFAULT '0.00' COMMENT '优惠金额，',
     `min`         decimal(10, 2)                                        DEFAULT '0.00' COMMENT '最少消费金额才能使用优惠券。',
-    `limit`       smallint(6) DEFAULT '1' COMMENT '用户领券限制数量，如果是0，则是不限制；默认是1，限领一张.',
-    `type`        smallint(6) DEFAULT '0' COMMENT '优惠券赠送类型，如果是0则通用券，用户领取；如果是1，则是注册赠券；如果是2，则是优惠券码兑换；',
-    `goods_type`  smallint(6) DEFAULT '0' COMMENT '商品限制类型，如果0则全商品，如果是1则是类目限制，如果是2则是商品限制。',
+    `limit`       smallint(6)                                           DEFAULT '1' COMMENT '用户领券限制数量，如果是0，则是不限制；默认是1，限领一张.',
+    `type`        smallint(6)                                           DEFAULT '0' COMMENT '优惠券赠送类型，如果是0则通用券，用户领取；如果是1，则是注册赠券；如果是2，则是优惠券码兑换；',
+    `goods_type`  smallint(6)                                           DEFAULT '0' COMMENT '商品限制类型，如果0则全商品，如果是1则是类目限制，如果是2则是商品限制。',
     `goods_value` varchar(1023)                                         DEFAULT '[]' COMMENT '商品限制值，goods_type如果是0则空集合，如果是1则是类目集合，如果是2则是商品集合。',
     `code`        varchar(63)                                           DEFAULT NULL COMMENT '优惠券兑换码',
-    `time_type`   smallint(6) DEFAULT '0' COMMENT '有效时间限制，如果是0，则基于领取时间的有效天数days；如果是1，则start_time和end_time是优惠券有效期；',
-    `days`        smallint(6) DEFAULT '0' COMMENT '基于领取时间的有效天数days。',
+    `time_type`   smallint(6)                                           DEFAULT '0' COMMENT '有效时间限制，如果是0，则基于领取时间的有效天数days；如果是1，则start_time和end_time是优惠券有效期；',
+    `days`        smallint(6)                                           DEFAULT '0' COMMENT '基于领取时间的有效天数days。',
     `start_time`  datetime                                              DEFAULT NULL COMMENT '使用券开始时间',
     `end_time`    datetime                                              DEFAULT NULL COMMENT '使用券截至时间',
     PRIMARY KEY (`id`),
-    KEY           `code` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COMMENT='优惠券信息及规则表';
+    KEY `code` (`code`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 9
+  DEFAULT CHARSET = utf8mb4 COMMENT ='优惠券信息及规则表';
 
 /*Data for the table `ap_coupon` */
 
@@ -4034,19 +4051,21 @@ CREATE TABLE `ap_coupon_user`
 (
     `id`          bigint(20) NOT NULL AUTO_INCREMENT,
     `create_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time` datetime(6) DEFAULT NULL,
+    `create_time` datetime(6)                                           DEFAULT NULL,
     `update_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time` datetime(6) DEFAULT NULL,
+    `update_time` datetime(6)                                           DEFAULT NULL,
     `delete_flag` bit(1)                                                DEFAULT b'0' COMMENT '0正常 1已删除',
-    `status`      tinyint(4) DEFAULT '0' COMMENT '优惠券状态， 0未使用 1已使用 2 已过期',
+    `status`      tinyint(4)                                            DEFAULT '0' COMMENT '优惠券状态， 0未使用 1已使用 2 已过期',
     `user_id`     bigint(20) NOT NULL COMMENT '用户ID',
     `coupon_id`   bigint(20) NOT NULL COMMENT '优惠券ID',
     `used_time`   datetime                                              DEFAULT NULL COMMENT '使用时间',
     `start_time`  datetime                                              DEFAULT NULL COMMENT '有效期开始时间',
     `end_time`    datetime                                              DEFAULT NULL COMMENT '有效期截至时间',
-    `order_id`    bigint(20) DEFAULT NULL COMMENT '订单ID',
+    `order_id`    bigint(20)                                            DEFAULT NULL COMMENT '订单ID',
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COMMENT='优惠券用户使用表';
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 46
+  DEFAULT CHARSET = utf8mb4 COMMENT ='优惠券用户使用表';
 
 /*Data for the table `ap_coupon_user` */
 
@@ -4061,23 +4080,24 @@ DROP TABLE IF EXISTS `ap_feedback`;
 
 CREATE TABLE `ap_feedback`
 (
-    `id`          bigint(20) NOT NULL AUTO_INCREMENT,
+    `id`          bigint(20)    NOT NULL AUTO_INCREMENT,
     `create_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time` datetime(6) DEFAULT NULL,
+    `create_time` datetime(6)                                           DEFAULT NULL,
     `update_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time` datetime(6) DEFAULT NULL,
+    `update_time` datetime(6)                                           DEFAULT NULL,
     `delete_flag` bit(1)                                                DEFAULT b'0' COMMENT '0正常 1已删除',
-    `user_id`     bigint(20) NOT NULL COMMENT '用户表的用户ID',
+    `user_id`     bigint(20)    NOT NULL COMMENT '用户表的用户ID',
     `username`    varchar(63)   NOT NULL                                DEFAULT '' COMMENT '用户名称',
     `mobile`      varchar(20)   NOT NULL                                DEFAULT '' COMMENT '手机号',
     `feed_type`   varchar(63)   NOT NULL                                DEFAULT '' COMMENT '反馈类型',
     `content`     varchar(1023) NOT NULL COMMENT '反馈内容',
-    `status`      int(3) NOT NULL DEFAULT '0' COMMENT '状态',
-    `has_picture` tinyint(1) DEFAULT '0' COMMENT '是否含有图片',
+    `status`      int(3)        NOT NULL                                DEFAULT '0' COMMENT '状态',
+    `has_picture` tinyint(1)                                            DEFAULT '0' COMMENT '是否含有图片',
     `pic_urls`    varchar(1023)                                         DEFAULT NULL COMMENT '图片地址列表，采用JSON数组格式',
     PRIMARY KEY (`id`),
-    KEY           `id_value` (`status`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='意见反馈表';
+    KEY `id_value` (`status`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4 COMMENT ='意见反馈表';
 
 /*Data for the table `ap_feedback` */
 
@@ -4089,14 +4109,16 @@ CREATE TABLE `ap_footprint`
 (
     `id`          bigint(20) NOT NULL AUTO_INCREMENT,
     `create_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time` datetime(6) DEFAULT NULL,
+    `create_time` datetime(6)                                           DEFAULT NULL,
     `update_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time` datetime(6) DEFAULT NULL,
+    `update_time` datetime(6)                                           DEFAULT NULL,
     `delete_flag` bit(1)                                                DEFAULT b'0' COMMENT '0正常 1已删除',
-    `user_id`     bigint(20) NOT NULL DEFAULT '0' COMMENT '用户表的用户ID',
-    `goods_id`    bigint(20) NOT NULL DEFAULT '0' COMMENT '浏览商品ID',
+    `user_id`     bigint(20) NOT NULL                                   DEFAULT '0' COMMENT '用户表的用户ID',
+    `goods_id`    bigint(20) NOT NULL                                   DEFAULT '0' COMMENT '浏览商品ID',
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COMMENT='用户浏览足迹表';
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 20
+  DEFAULT CHARSET = utf8mb4 COMMENT ='用户浏览足迹表';
 
 /*Data for the table `ap_footprint` */
 
@@ -4125,36 +4147,38 @@ DROP TABLE IF EXISTS `ap_goods`;
 
 CREATE TABLE `ap_goods`
 (
-    `id`            bigint(20) NOT NULL AUTO_INCREMENT,
+    `id`            bigint(20)   NOT NULL AUTO_INCREMENT,
     `create_by`     varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time`   datetime(6) DEFAULT NULL,
+    `create_time`   datetime(6)                                           DEFAULT NULL,
     `update_by`     varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time`   datetime(6) DEFAULT NULL,
+    `update_time`   datetime(6)                                           DEFAULT NULL,
     `delete_flag`   bit(1)                                                DEFAULT b'0' COMMENT '0正常 1已删除',
     `goods_sn`      varchar(63)  NOT NULL                                 DEFAULT '' COMMENT '商品编号',
     `name`          varchar(127) NOT NULL                                 DEFAULT '' COMMENT '商品名称',
-    `category_id`   bigint(20) DEFAULT '0' COMMENT '商品所属类目ID',
-    `brand_id`      bigint(20) DEFAULT '0',
+    `category_id`   bigint(20)                                            DEFAULT '0' COMMENT '商品所属类目ID',
+    `brand_id`      bigint(20)                                            DEFAULT '0',
     `gallery`       varchar(1023)                                         DEFAULT NULL COMMENT '商品宣传图片列表，采用JSON数组格式',
     `keywords`      varchar(255)                                          DEFAULT '' COMMENT '商品关键字，采用逗号间隔',
     `brief`         varchar(255)                                          DEFAULT '' COMMENT '商品简介',
-    `is_on_sale`    tinyint(1) DEFAULT '1' COMMENT '是否上架',
-    `sort_order`    smallint(4) DEFAULT '100',
+    `is_on_sale`    tinyint(1)                                            DEFAULT '1' COMMENT '是否上架',
+    `sort_order`    smallint(4)                                           DEFAULT '100',
     `pic_url`       varchar(255)                                          DEFAULT NULL COMMENT '商品页面商品图片',
     `share_url`     varchar(255)                                          DEFAULT NULL COMMENT '商品分享海报',
-    `is_new`        tinyint(1) DEFAULT '0' COMMENT '是否新品首发，如果设置则可以在新品首发页面展示',
-    `is_hot`        tinyint(1) DEFAULT '0' COMMENT '是否人气推荐，如果设置则可以在人气推荐页面展示',
+    `is_new`        tinyint(1)                                            DEFAULT '0' COMMENT '是否新品首发，如果设置则可以在新品首发页面展示',
+    `is_hot`        tinyint(1)                                            DEFAULT '0' COMMENT '是否人气推荐，如果设置则可以在人气推荐页面展示',
     `unit`          varchar(31)                                           DEFAULT '’件‘' COMMENT '商品单位，例如件、盒',
     `counter_price` decimal(10, 2)                                        DEFAULT '0.00' COMMENT '专柜价格',
     `retail_price`  decimal(10, 2)                                        DEFAULT '100000.00' COMMENT '零售价格',
     `detail`        text COMMENT '商品详细介绍，是富文本格式',
-    `multiple_spec` tinyint(1) DEFAULT '0' COMMENT '默认单规格',
+    `multiple_spec` tinyint(1)                                            DEFAULT '0' COMMENT '默认单规格',
     PRIMARY KEY (`id`),
-    KEY             `goods_sn` (`goods_sn`),
-    KEY             `cat_id` (`category_id`),
-    KEY             `brand_id` (`brand_id`),
-    KEY             `sort_order` (`sort_order`)
-) ENGINE=InnoDB AUTO_INCREMENT=1181009 DEFAULT CHARSET=utf8mb4 COMMENT='商品基本信息表';
+    KEY `goods_sn` (`goods_sn`),
+    KEY `cat_id` (`category_id`),
+    KEY `brand_id` (`brand_id`),
+    KEY `sort_order` (`sort_order`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 1181009
+  DEFAULT CHARSET = utf8mb4 COMMENT ='商品基本信息表';
 
 /*Data for the table `ap_goods` */
 
@@ -6002,18 +6026,20 @@ DROP TABLE IF EXISTS `ap_goods_attribute`;
 
 CREATE TABLE `ap_goods_attribute`
 (
-    `id`          bigint(20) NOT NULL AUTO_INCREMENT,
+    `id`          bigint(20)   NOT NULL AUTO_INCREMENT,
     `create_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time` datetime(6) DEFAULT NULL,
+    `create_time` datetime(6)                                           DEFAULT NULL,
     `update_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time` datetime(6) DEFAULT NULL,
+    `update_time` datetime(6)                                           DEFAULT NULL,
     `delete_flag` bit(1)                                                DEFAULT b'0' COMMENT '0正常 1已删除',
-    `goods_id`    bigint(20) NOT NULL DEFAULT '0' COMMENT '商品表的商品ID',
+    `goods_id`    bigint(20)   NOT NULL                                 DEFAULT '0' COMMENT '商品表的商品ID',
     `attribute`   varchar(255) NOT NULL COMMENT '商品参数名称',
     `value`       varchar(255) NOT NULL COMMENT '商品参数值',
     PRIMARY KEY (`id`),
-    KEY           `goods_id` (`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=877 DEFAULT CHARSET=utf8mb4 COMMENT='商品参数表';
+    KEY `goods_id` (`goods_id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 877
+  DEFAULT CHARSET = utf8mb4 COMMENT ='商品参数表';
 
 /*Data for the table `ap_goods_attribute` */
 
@@ -7514,20 +7540,22 @@ DROP TABLE IF EXISTS `ap_goods_product`;
 
 CREATE TABLE `ap_goods_product`
 (
-    `id`             bigint(20) NOT NULL AUTO_INCREMENT,
+    `id`             bigint(20)     NOT NULL AUTO_INCREMENT,
     `create_by`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time`    datetime(6) DEFAULT NULL,
+    `create_time`    datetime(6)                                           DEFAULT NULL,
     `update_by`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time`    datetime(6) DEFAULT NULL,
+    `update_time`    datetime(6)                                           DEFAULT NULL,
     `delete_flag`    bit(1)                                                DEFAULT b'0' COMMENT '0正常 1已删除',
-    `goods_id`       bigint(20) NOT NULL DEFAULT '0' COMMENT '商品表的商品ID',
+    `goods_id`       bigint(20)     NOT NULL                               DEFAULT '0' COMMENT '商品表的商品ID',
     `specifications` varchar(1023)  NOT NULL COMMENT '商品规格值列表，采用JSON数组格式',
     `price`          decimal(10, 2) NOT NULL                               DEFAULT '0.00' COMMENT '商品货品价格',
-    `number`         int(11) NOT NULL DEFAULT '0' COMMENT '商品货品数量',
+    `number`         int(11)        NOT NULL                               DEFAULT '0' COMMENT '商品货品数量',
     `url`            varchar(125)                                          DEFAULT NULL COMMENT '商品货品图片',
     PRIMARY KEY (`id`),
-    KEY              `goods_id` (`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=265 DEFAULT CHARSET=utf8mb4 COMMENT='商品货品表';
+    KEY `goods_id` (`goods_id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 265
+  DEFAULT CHARSET = utf8mb4 COMMENT ='商品货品表';
 
 /*Data for the table `ap_goods_product` */
 
@@ -8183,19 +8211,21 @@ DROP TABLE IF EXISTS `ap_goods_specification`;
 
 CREATE TABLE `ap_goods_specification`
 (
-    `id`            bigint(20) NOT NULL AUTO_INCREMENT,
+    `id`            bigint(20)   NOT NULL AUTO_INCREMENT,
     `create_by`     varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time`   datetime(6) DEFAULT NULL,
+    `create_time`   datetime(6)                                           DEFAULT NULL,
     `update_by`     varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time`   datetime(6) DEFAULT NULL,
+    `update_time`   datetime(6)                                           DEFAULT NULL,
     `delete_flag`   bit(1)                                                DEFAULT b'0' COMMENT '0正常 1已删除',
-    `goods_id`      bigint(20) NOT NULL DEFAULT '0' COMMENT '商品表的商品ID',
+    `goods_id`      bigint(20)   NOT NULL                                 DEFAULT '0' COMMENT '商品表的商品ID',
     `specification` varchar(255) NOT NULL                                 DEFAULT '' COMMENT '商品规格名称',
     `value`         varchar(255) NOT NULL                                 DEFAULT '' COMMENT '商品规格值',
     `pic_url`       varchar(255) NOT NULL                                 DEFAULT '' COMMENT '商品规格图片',
     PRIMARY KEY (`id`),
-    KEY             `goods_id` (`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=264 DEFAULT CHARSET=utf8mb4 COMMENT='商品规格表';
+    KEY `goods_id` (`goods_id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 264
+  DEFAULT CHARSET = utf8mb4 COMMENT ='商品规格表';
 
 /*Data for the table `ap_goods_specification` */
 
@@ -8460,20 +8490,22 @@ CREATE TABLE `ap_groupon`
 (
     `id`                bigint(20) NOT NULL AUTO_INCREMENT,
     `create_by`         varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time`       datetime(6) DEFAULT NULL,
+    `create_time`       datetime(6)                                           DEFAULT NULL,
     `update_by`         varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time`       datetime(6) DEFAULT NULL,
+    `update_time`       datetime(6)                                           DEFAULT NULL,
     `delete_flag`       bit(1)                                                DEFAULT b'0' COMMENT '0正常 1已删除',
     `order_id`          bigint(20) NOT NULL COMMENT '关联的订单ID',
-    `groupon_id`        bigint(20) DEFAULT '0' COMMENT '如果是开团用户，则groupon_id是0；如果是参团用户，则groupon_id是团购活动ID',
+    `groupon_id`        bigint(20)                                            DEFAULT '0' COMMENT '如果是开团用户，则groupon_id是0；如果是参团用户，则groupon_id是团购活动ID',
     `rules_id`          bigint(20) NOT NULL COMMENT '团购规则ID，关联ap_groupon_rules表ID字段',
     `user_id`           bigint(20) NOT NULL COMMENT '用户ID',
     `share_url`         varchar(255)                                          DEFAULT NULL COMMENT '团购分享图片地址',
     `creator_user_id`   bigint(20) NOT NULL COMMENT '开团用户ID',
     `creator_user_time` datetime                                              DEFAULT NULL COMMENT '开团时间',
-    `status`            smallint(6) DEFAULT '0' COMMENT '团购活动状态，开团未支付则0，开团中则1，开团失败则2',
+    `status`            smallint(6)                                           DEFAULT '0' COMMENT '团购活动状态，开团未支付则0，开团中则1，开团失败则2',
     PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='团购活动表';
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  ROW_FORMAT = DYNAMIC COMMENT ='团购活动表';
 
 /*Data for the table `ap_groupon` */
 
@@ -8483,22 +8515,25 @@ DROP TABLE IF EXISTS `ap_groupon_rules`;
 
 CREATE TABLE `ap_groupon_rules`
 (
-    `id`              bigint(20) NOT NULL AUTO_INCREMENT,
+    `id`              bigint(20)     NOT NULL AUTO_INCREMENT,
     `create_by`       varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time`     datetime(6) DEFAULT NULL,
+    `create_time`     datetime(6)                                           DEFAULT NULL,
     `update_by`       varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time`     datetime(6) DEFAULT NULL,
+    `update_time`     datetime(6)                                           DEFAULT NULL,
     `delete_flag`     bit(1)                                                DEFAULT b'0' COMMENT '0正常 1已删除',
-    `goods_id`        bigint(20) NOT NULL COMMENT '商品表的商品ID',
+    `goods_id`        bigint(20)     NOT NULL COMMENT '商品表的商品ID',
     `goods_name`      varchar(127)   NOT NULL COMMENT '商品名称',
     `pic_url`         varchar(255)                                          DEFAULT NULL COMMENT '商品图片或者商品货品图片',
     `discount`        decimal(63, 0) NOT NULL COMMENT '优惠金额',
-    `discount_member` int(11) NOT NULL COMMENT '达到优惠条件的人数',
+    `discount_member` int(11)        NOT NULL COMMENT '达到优惠条件的人数',
     `expire_time`     datetime                                              DEFAULT NULL COMMENT '团购过期时间',
-    `status`          smallint(6) DEFAULT '0' COMMENT '团购规则状态，正常上线则0，到期自动下线则1，管理手动下线则2',
+    `status`          smallint(6)                                           DEFAULT '0' COMMENT '团购规则状态，正常上线则0，到期自动下线则1，管理手动下线则2',
     PRIMARY KEY (`id`) USING BTREE,
-    KEY               `goods_id` (`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='团购规则表';
+    KEY `goods_id` (`goods_id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 4
+  DEFAULT CHARSET = utf8mb4
+  ROW_FORMAT = DYNAMIC COMMENT ='团购规则表';
 
 /*Data for the table `ap_groupon_rules` */
 
@@ -8520,14 +8555,16 @@ CREATE TABLE `ap_issue`
 (
     `id`          bigint(20) NOT NULL AUTO_INCREMENT,
     `create_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time` datetime(6) DEFAULT NULL,
+    `create_time` datetime(6)                                           DEFAULT NULL,
     `update_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time` datetime(6) DEFAULT NULL,
+    `update_time` datetime(6)                                           DEFAULT NULL,
     `delete_flag` bit(1)                                                DEFAULT b'0' COMMENT '0正常 1已删除',
     `question`    varchar(255)                                          DEFAULT NULL COMMENT '问题标题',
     `answer`      varchar(255)                                          DEFAULT NULL COMMENT '问题答案',
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='常见问题表';
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 5
+  DEFAULT CHARSET = utf8mb4 COMMENT ='常见问题表';
 
 /*Data for the table `ap_issue` */
 
@@ -8548,19 +8585,21 @@ DROP TABLE IF EXISTS `ap_keyword`;
 
 CREATE TABLE `ap_keyword`
 (
-    `id`          bigint(20) NOT NULL AUTO_INCREMENT,
+    `id`          bigint(20)   NOT NULL AUTO_INCREMENT,
     `create_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time` datetime(6) DEFAULT NULL,
+    `create_time` datetime(6)                                           DEFAULT NULL,
     `update_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time` datetime(6) DEFAULT NULL,
+    `update_time` datetime(6)                                           DEFAULT NULL,
     `delete_flag` bit(1)                                                DEFAULT b'0' COMMENT '0正常 1已删除',
     `keyword`     varchar(127) NOT NULL                                 DEFAULT '' COMMENT '关键字',
     `url`         varchar(255) NOT NULL                                 DEFAULT '' COMMENT '关键字的跳转链接',
-    `is_hot`      tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否是热门关键字',
-    `is_default`  tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否是默认关键字',
-    `sort_order`  int(11) NOT NULL DEFAULT '100' COMMENT '排序',
+    `is_hot`      tinyint(1)   NOT NULL                                 DEFAULT '0' COMMENT '是否是热门关键字',
+    `is_default`  tinyint(1)   NOT NULL                                 DEFAULT '0' COMMENT '是否是默认关键字',
+    `sort_order`  int(11)      NOT NULL                                 DEFAULT '100' COMMENT '排序',
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COMMENT='关键字表';
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 9
+  DEFAULT CHARSET = utf8mb4 COMMENT ='关键字表';
 
 /*Data for the table `ap_keyword` */
 
@@ -8584,19 +8623,22 @@ CREATE TABLE `ap_log`
 (
     `id`          bigint(20) NOT NULL AUTO_INCREMENT,
     `create_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time` datetime(6) DEFAULT NULL,
+    `create_time` datetime(6)                                           DEFAULT NULL,
     `update_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time` datetime(6) DEFAULT NULL,
+    `update_time` datetime(6)                                           DEFAULT NULL,
     `delete_flag` bit(1)                                                DEFAULT b'0' COMMENT '0正常 1已删除',
     `admin`       varchar(45) COLLATE utf8mb4_unicode_ci                DEFAULT NULL COMMENT '管理员',
     `ip`          varchar(45) COLLATE utf8mb4_unicode_ci                DEFAULT NULL COMMENT '管理员地址',
-    `type`        int(11) DEFAULT NULL COMMENT '操作分类',
+    `type`        int(11)                                               DEFAULT NULL COMMENT '操作分类',
     `action`      varchar(45) COLLATE utf8mb4_unicode_ci                DEFAULT NULL COMMENT '操作动作',
-    `status`      tinyint(1) DEFAULT NULL COMMENT '操作状态',
+    `status`      tinyint(1)                                            DEFAULT NULL COMMENT '操作状态',
     `result`      varchar(127) COLLATE utf8mb4_unicode_ci               DEFAULT NULL COMMENT '操作结果，或者成功消息，或者失败消息',
     `comment`     varchar(255) COLLATE utf8mb4_unicode_ci               DEFAULT NULL COMMENT '补充信息',
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='操作日志表';
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 48
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci COMMENT ='操作日志表';
 
 /*Data for the table `ap_log` */
 
@@ -8608,15 +8650,17 @@ CREATE TABLE `ap_notice`
 (
     `id`          bigint(20) NOT NULL AUTO_INCREMENT,
     `create_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time` datetime(6) DEFAULT NULL,
+    `create_time` datetime(6)                                           DEFAULT NULL,
     `update_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time` datetime(6) DEFAULT NULL,
+    `update_time` datetime(6)                                           DEFAULT NULL,
     `delete_flag` bit(1)                                                DEFAULT b'0' COMMENT '0正常 1已删除',
     `title`       varchar(63)                                           DEFAULT NULL COMMENT '通知标题',
     `content`     varchar(511)                                          DEFAULT NULL COMMENT '通知内容',
-    `admin_id`    bigint(20) DEFAULT '0' COMMENT '创建通知的管理员ID，如果是系统内置通知则是0.',
+    `admin_id`    bigint(20)                                            DEFAULT '0' COMMENT '创建通知的管理员ID，如果是系统内置通知则是0.',
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='通知表';
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 3
+  DEFAULT CHARSET = utf8mb4 COMMENT ='通知表';
 
 /*Data for the table `ap_notice` */
 
@@ -8628,16 +8672,18 @@ CREATE TABLE `ap_notice_admin`
 (
     `id`           bigint(20) NOT NULL AUTO_INCREMENT,
     `create_by`    varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time`  datetime(6) DEFAULT NULL,
+    `create_time`  datetime(6)                                           DEFAULT NULL,
     `update_by`    varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time`  datetime(6) DEFAULT NULL,
+    `update_time`  datetime(6)                                           DEFAULT NULL,
     `delete_flag`  bit(1)                                                DEFAULT b'0' COMMENT '0正常 1已删除',
-    `notice_id`    bigint(20) DEFAULT NULL COMMENT '通知ID',
+    `notice_id`    bigint(20)                                            DEFAULT NULL COMMENT '通知ID',
     `notice_title` varchar(63)                                           DEFAULT NULL COMMENT '通知标题',
-    `admin_id`     bigint(20) DEFAULT NULL COMMENT '接收通知的管理员ID',
+    `admin_id`     bigint(20)                                            DEFAULT NULL COMMENT '接收通知的管理员ID',
     `read_time`    datetime                                              DEFAULT NULL COMMENT '阅读时间，如果是NULL则是未读状态',
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COMMENT='通知管理员表';
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 7
+  DEFAULT CHARSET = utf8mb4 COMMENT ='通知管理员表';
 
 /*Data for the table `ap_notice_admin` */
 
@@ -8647,16 +8693,16 @@ DROP TABLE IF EXISTS `ap_order`;
 
 CREATE TABLE `ap_order`
 (
-    `id`               bigint(20) NOT NULL AUTO_INCREMENT,
+    `id`               bigint(20)     NOT NULL AUTO_INCREMENT,
     `create_by`        varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time`      datetime(6) DEFAULT NULL,
+    `create_time`      datetime(6)                                           DEFAULT NULL,
     `update_by`        varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time`      datetime(6) DEFAULT NULL,
+    `update_time`      datetime(6)                                           DEFAULT NULL,
     `delete_flag`      bit(1)                                                DEFAULT b'0' COMMENT '0正常 1已删除',
-    `user_id`          bigint(20) NOT NULL COMMENT '用户表的用户ID',
+    `user_id`          bigint(20)     NOT NULL COMMENT '用户表的用户ID',
     `order_sn`         varchar(63)    NOT NULL COMMENT '订单编号',
-    `order_status`     smallint(6) NOT NULL COMMENT '订单状态',
-    `aftersale_status` smallint(6) DEFAULT '0' COMMENT '售后状态，0是可申请，1是用户已申请，2是管理员审核通过，3是管理员退款成功，4是管理员审核拒绝，5是用户已取消',
+    `order_status`     smallint(6)    NOT NULL COMMENT '订单状态',
+    `aftersale_status` smallint(6)                                           DEFAULT '0' COMMENT '售后状态，0是可申请，1是用户已申请，2是管理员审核通过，3是管理员退款成功，4是管理员审核拒绝，5是用户已取消',
     `consignee`        varchar(63)    NOT NULL COMMENT '收货人名称',
     `mobile`           varchar(63)    NOT NULL COMMENT '收货人手机号',
     `address`          varchar(127)   NOT NULL COMMENT '收货具体地址',
@@ -8678,10 +8724,12 @@ CREATE TABLE `ap_order`
     `refund_content`   varchar(127)                                          DEFAULT NULL COMMENT '退款备注',
     `refund_time`      datetime                                              DEFAULT NULL COMMENT '退款时间',
     `confirm_time`     datetime                                              DEFAULT NULL COMMENT '用户确认收货时间',
-    `comments`         smallint(6) DEFAULT '0' COMMENT '待评价订单商品数量',
+    `comments`         smallint(6)                                           DEFAULT '0' COMMENT '待评价订单商品数量',
     `end_time`         datetime                                              DEFAULT NULL COMMENT '订单关闭时间',
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='订单表';
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 3
+  DEFAULT CHARSET = utf8mb4 COMMENT ='订单表';
 
 /*Data for the table `ap_order` */
 
@@ -8691,26 +8739,28 @@ DROP TABLE IF EXISTS `ap_order_goods`;
 
 CREATE TABLE `ap_order_goods`
 (
-    `id`             bigint(20) NOT NULL AUTO_INCREMENT,
+    `id`             bigint(20)     NOT NULL AUTO_INCREMENT,
     `create_by`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time`    datetime(6) DEFAULT NULL,
+    `create_time`    datetime(6)                                           DEFAULT NULL,
     `update_by`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time`    datetime(6) DEFAULT NULL,
+    `update_time`    datetime(6)                                           DEFAULT NULL,
     `delete_flag`    bit(1)                                                DEFAULT b'0' COMMENT '0正常 1已删除',
-    `order_id`       bigint(20) NOT NULL DEFAULT '0' COMMENT '订单表的订单ID',
-    `goods_id`       bigint(20) NOT NULL DEFAULT '0' COMMENT '商品表的商品ID',
+    `order_id`       bigint(20)     NOT NULL                               DEFAULT '0' COMMENT '订单表的订单ID',
+    `goods_id`       bigint(20)     NOT NULL                               DEFAULT '0' COMMENT '商品表的商品ID',
     `goods_name`     varchar(127)   NOT NULL                               DEFAULT '' COMMENT '商品名称',
     `goods_sn`       varchar(63)    NOT NULL                               DEFAULT '' COMMENT '商品编号',
-    `product_id`     bigint(20) NOT NULL DEFAULT '0' COMMENT '商品货品表的货品ID',
-    `number`         smallint(5) NOT NULL DEFAULT '0' COMMENT '商品货品的购买数量',
+    `product_id`     bigint(20)     NOT NULL                               DEFAULT '0' COMMENT '商品货品表的货品ID',
+    `number`         smallint(5)    NOT NULL                               DEFAULT '0' COMMENT '商品货品的购买数量',
     `price`          decimal(10, 2) NOT NULL                               DEFAULT '0.00' COMMENT '商品货品的售价',
     `specifications` varchar(1023)  NOT NULL COMMENT '商品货品的规格列表',
     `pic_url`        varchar(255)   NOT NULL                               DEFAULT '' COMMENT '商品货品图片或者商品图片',
-    `comment`        int(11) DEFAULT '0' COMMENT '订单商品评论，如果是-1，则超期不能评价；如果是0，则可以评价；如果其他值，则是comment表里面的评论ID。',
+    `comment`        int(11)                                               DEFAULT '0' COMMENT '订单商品评论，如果是-1，则超期不能评价；如果是0，则可以评价；如果其他值，则是comment表里面的评论ID。',
     PRIMARY KEY (`id`),
-    KEY              `order_id` (`order_id`),
-    KEY              `goods_id` (`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='订单商品表';
+    KEY `order_id` (`order_id`),
+    KEY `goods_id` (`goods_id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 3
+  DEFAULT CHARSET = utf8mb4 COMMENT ='订单商品表';
 
 /*Data for the table `ap_order_goods` */
 
@@ -8720,21 +8770,23 @@ DROP TABLE IF EXISTS `ap_region`;
 
 CREATE TABLE `ap_region`
 (
-    `id`          bigint(20) NOT NULL AUTO_INCREMENT,
+    `id`          bigint(20)   NOT NULL AUTO_INCREMENT,
     `create_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time` datetime(6) DEFAULT NULL,
+    `create_time` datetime(6)                                           DEFAULT NULL,
     `update_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time` datetime(6) DEFAULT NULL,
+    `update_time` datetime(6)                                           DEFAULT NULL,
     `delete_flag` bit(1)                                                DEFAULT b'0' COMMENT '0正常 1已删除',
-    `pid`         bigint(20) NOT NULL DEFAULT '0' COMMENT '行政区域父ID，例如区县的pid指向市，市的pid指向省，省的pid则是0',
+    `pid`         bigint(20)   NOT NULL                                 DEFAULT '0' COMMENT '行政区域父ID，例如区县的pid指向市，市的pid指向省，省的pid则是0',
     `name`        varchar(120) NOT NULL                                 DEFAULT '' COMMENT '行政区域名称',
-    `type`        tinyint(3) NOT NULL DEFAULT '0' COMMENT '行政区域类型，如如1则是省， 如果是2则是市，如果是3则是区县',
-    `code`        int(11) NOT NULL DEFAULT '0' COMMENT '行政区域编码',
+    `type`        tinyint(3)   NOT NULL                                 DEFAULT '0' COMMENT '行政区域类型，如如1则是省， 如果是2则是市，如果是3则是区县',
+    `code`        int(11)      NOT NULL                                 DEFAULT '0' COMMENT '行政区域编码',
     PRIMARY KEY (`id`),
-    KEY           `parent_id` (`pid`),
-    KEY           `region_type` (`type`),
-    KEY           `agency_id` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=3232 DEFAULT CHARSET=utf8mb4 COMMENT='行政区域表';
+    KEY `parent_id` (`pid`),
+    KEY `region_type` (`type`),
+    KEY `agency_id` (`code`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 3232
+  DEFAULT CHARSET = utf8mb4 COMMENT ='行政区域表';
 
 /*Data for the table `ap_region` */
 
@@ -11978,17 +12030,19 @@ DROP TABLE IF EXISTS `ap_search_history`;
 
 CREATE TABLE `ap_search_history`
 (
-    `id`          bigint(20) NOT NULL AUTO_INCREMENT,
+    `id`          bigint(20)  NOT NULL AUTO_INCREMENT,
     `create_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time` datetime(6) DEFAULT NULL,
+    `create_time` datetime(6)                                           DEFAULT NULL,
     `update_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time` datetime(6) DEFAULT NULL,
+    `update_time` datetime(6)                                           DEFAULT NULL,
     `delete_flag` bit(1)                                                DEFAULT b'0' COMMENT '0正常 1已删除',
-    `user_id`     bigint(20) NOT NULL COMMENT '用户表的用户ID',
+    `user_id`     bigint(20)  NOT NULL COMMENT '用户表的用户ID',
     `keyword`     varchar(63) NOT NULL COMMENT '搜索关键字',
     `from`        varchar(63) NOT NULL                                  DEFAULT '' COMMENT '搜索来源，如pc、wx、app',
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COMMENT='搜索历史表';
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 7
+  DEFAULT CHARSET = utf8mb4 COMMENT ='搜索历史表';
 
 /*Data for the table `ap_search_history` */
 
@@ -11998,20 +12052,22 @@ DROP TABLE IF EXISTS `ap_storage`;
 
 CREATE TABLE `ap_storage`
 (
-    `id`          bigint(20) NOT NULL AUTO_INCREMENT,
+    `id`          bigint(20)   NOT NULL AUTO_INCREMENT,
     `create_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time` datetime(6) DEFAULT NULL,
+    `create_time` datetime(6)                                           DEFAULT NULL,
     `update_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time` datetime(6) DEFAULT NULL,
+    `update_time` datetime(6)                                           DEFAULT NULL,
     `delete_flag` bit(1)                                                DEFAULT b'0' COMMENT '0正常 1已删除',
     `key`         varchar(63)  NOT NULL COMMENT '文件的唯一索引',
     `name`        varchar(255) NOT NULL COMMENT '文件名',
     `type`        varchar(20)  NOT NULL COMMENT '文件类型',
-    `size`        int(11) NOT NULL COMMENT '文件大小',
+    `size`        int(11)      NOT NULL COMMENT '文件大小',
     `url`         varchar(255)                                          DEFAULT NULL COMMENT '文件访问链接',
     PRIMARY KEY (`id`),
-    KEY           `key` (`key`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COMMENT='文件存储表';
+    KEY `key` (`key`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 23
+  DEFAULT CHARSET = utf8mb4 COMMENT ='文件存储表';
 
 /*Data for the table `ap_storage` */
 
@@ -12021,17 +12077,20 @@ DROP TABLE IF EXISTS `ap_system`;
 
 CREATE TABLE `ap_system`
 (
-    `id`          bigint(20) NOT NULL AUTO_INCREMENT,
+    `id`          bigint(20)   NOT NULL AUTO_INCREMENT,
     `create_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time` datetime(6) DEFAULT NULL,
+    `create_time` datetime(6)                                           DEFAULT NULL,
     `update_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time` datetime(6) DEFAULT NULL,
+    `update_time` datetime(6)                                           DEFAULT NULL,
     `delete_flag` bit(1)                                                DEFAULT b'0' COMMENT '0正常 1已删除',
     `key_name`    varchar(255) NOT NULL COMMENT '系统配置名',
     `key_value`   varchar(255) NOT NULL COMMENT '系统配置值',
     `description` varchar(64)                                           DEFAULT NULL,
     PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='系统配置表';
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 19
+  DEFAULT CHARSET = utf8mb4
+  ROW_FORMAT = DYNAMIC COMMENT ='系统配置表';
 
 /*Data for the table `ap_system` */
 
@@ -12080,11 +12139,11 @@ DROP TABLE IF EXISTS `ap_topic`;
 
 CREATE TABLE `ap_topic`
 (
-    `id`          bigint(20) NOT NULL AUTO_INCREMENT,
+    `id`          bigint(20)   NOT NULL AUTO_INCREMENT,
     `create_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time` datetime(6) DEFAULT NULL,
+    `create_time` datetime(6)                                           DEFAULT NULL,
     `update_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time` datetime(6) DEFAULT NULL,
+    `update_time` datetime(6)                                           DEFAULT NULL,
     `delete_flag` bit(1)                                                DEFAULT b'0' COMMENT '0正常 1已删除',
     `title`       varchar(255) NOT NULL                                 DEFAULT '''' COMMENT '专题标题',
     `subtitle`    varchar(255)                                          DEFAULT '''' COMMENT '专题子标题',
@@ -12092,11 +12151,13 @@ CREATE TABLE `ap_topic`
     `price`       decimal(10, 2)                                        DEFAULT '0.00' COMMENT '专题相关商品最低价',
     `read_count`  varchar(255)                                          DEFAULT '1k' COMMENT '专题阅读量',
     `pic_url`     varchar(255)                                          DEFAULT '' COMMENT '专题图片',
-    `sort_order`  int(11) DEFAULT '100' COMMENT '排序',
+    `sort_order`  int(11)                                               DEFAULT '100' COMMENT '排序',
     `goods`       varchar(1023)                                         DEFAULT '' COMMENT '专题相关商品，采用JSON数组格式',
     PRIMARY KEY (`id`),
-    KEY           `topic_id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=319 DEFAULT CHARSET=utf8mb4 COMMENT='专题表';
+    KEY `topic_id` (`id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 319
+  DEFAULT CHARSET = utf8mb4 COMMENT ='专题表';
 
 /*Data for the table `ap_topic` */
 
@@ -12189,20 +12250,20 @@ DROP TABLE IF EXISTS `ap_user`;
 
 CREATE TABLE `ap_user`
 (
-    `id`              bigint(20) NOT NULL AUTO_INCREMENT,
+    `id`              bigint(20)   NOT NULL AUTO_INCREMENT,
     `create_by`       varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_time`     datetime(6) DEFAULT NULL,
+    `create_time`     datetime(6)                                           DEFAULT NULL,
     `update_by`       varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-    `update_time`     datetime(6) DEFAULT NULL,
+    `update_time`     datetime(6)                                           DEFAULT NULL,
     `delete_flag`     bit(1)                                                DEFAULT b'0' COMMENT '0正常 1已删除',
-    `status`          tinyint(4) DEFAULT '1' COMMENT '帐号启用状态：0->禁用；1->启用',
+    `status`          tinyint(4)                                            DEFAULT '1' COMMENT '帐号启用状态：0->禁用；1->启用',
     `username`        varchar(63)  NOT NULL COMMENT '用户名称',
     `password`        varchar(63)  NOT NULL                                 DEFAULT '' COMMENT '用户密码',
-    `gender`          tinyint(3) NOT NULL DEFAULT '0' COMMENT '性别：0 未知， 1男， 1 女',
+    `gender`          tinyint(3)   NOT NULL                                 DEFAULT '0' COMMENT '性别：0 未知， 1男， 1 女',
     `birthday`        date                                                  DEFAULT NULL COMMENT '生日',
     `last_login_time` datetime                                              DEFAULT NULL COMMENT '最近一次登录时间',
     `last_login_ip`   varchar(63)  NOT NULL                                 DEFAULT '' COMMENT '最近一次登录IP地址',
-    `user_level`      tinyint(3) DEFAULT '0' COMMENT '0 普通用户，1 VIP用户，2 高级VIP用户',
+    `user_level`      tinyint(3)                                            DEFAULT '0' COMMENT '0 普通用户，1 VIP用户，2 高级VIP用户',
     `nickname`        varchar(63)  NOT NULL                                 DEFAULT '' COMMENT '用户昵称或网络名称',
     `mobile`          varchar(20)  NOT NULL                                 DEFAULT '' COMMENT '用户手机号码',
     `avatar`          varchar(255) NOT NULL                                 DEFAULT '' COMMENT '用户头像图片',
@@ -12210,7 +12271,9 @@ CREATE TABLE `ap_user`
     `session_key`     varchar(100) NOT NULL                                 DEFAULT '' COMMENT '微信登录会话KEY',
     PRIMARY KEY (`id`),
     UNIQUE KEY `user_name` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 12
+  DEFAULT CHARSET = utf8mb4 COMMENT ='用户表';
 
 /*Data for the table `ap_user` */
 
@@ -12228,7 +12291,7 @@ values (10, 'ADMIN', '2022-07-15 11:57:39.142000', 'ADMIN', '2022-07-15 11:57:39
         'https://thirdwx.qlogo.cn/mmopen/vi_32/2KOBFlndeR5aIzSMFAzfQewiawkmT6LnZpiaf5DAKWAcTn0qaXCmI6wzP71qXHL55xAwqZLVvvs9j7wUYNlmmpiaw/132',
         'oPr2q1V-icWtUTe8FXCCf6yeryBg', 'BiweJj03oHmnSCkVNnyXGg==');
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+/*!40101 SET SQL_MODE = @OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS = @OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES = @OLD_SQL_NOTES */;

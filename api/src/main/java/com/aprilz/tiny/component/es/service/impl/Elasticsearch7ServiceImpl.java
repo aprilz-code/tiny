@@ -10,7 +10,6 @@ import co.elastic.clients.transport.endpoints.BooleanResponse;
 import com.aprilz.tiny.component.es.service.ElasticsearchService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
