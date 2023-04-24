@@ -1,6 +1,8 @@
 package com.aprilz.excel.core.handler;
 
 import cn.hutool.core.util.ReflectUtil;
+import cn.hutool.core.util.StrUtil;
+import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.exception.ExcelAnalysisException;
 import com.aprilz.excel.core.Validators;
@@ -42,6 +44,11 @@ public class DefaultAnalysisEventListener extends ListAnalysisEventListener<Obje
         }
 
         lineNum++;
+
+        // 如果一行Excel数据均为空值，则不装载该行数据 (tips 发现excel不填值，修改单行行高也会读取到，故这里排除掉)
+        if (isLineNullValue(o)) {
+            return;
+        }
 
         //自定义参数
         String[] custom = (String[]) analysisContext.getCustom();
@@ -109,4 +116,29 @@ public class DefaultAnalysisEventListener extends ListAnalysisEventListener<Obje
         return errorMessageList;
     }
 
+
+    private boolean isLineNullValue(Object data) {
+        if (data instanceof String) {
+            return StrUtil.isBlank(data.toString());
+        }
+        try {
+            List<Field> fields = Arrays.stream(data.getClass().getDeclaredFields())
+                    .filter(f -> f.isAnnotationPresent(ExcelProperty.class))
+                    .collect(Collectors.toList());
+            List<Boolean> lineNullList = new ArrayList<>(fields.size());
+            for (Field field : fields) {
+                field.setAccessible(true);
+                Object value = field.get(data);
+                if (Objects.isNull(value)) {
+                    lineNullList.add(Boolean.TRUE);
+                } else {
+                    lineNullList.add(Boolean.FALSE);
+                }
+            }
+            return lineNullList.stream().allMatch(Boolean.TRUE::equals);
+        } catch (Exception e) {
+            log.error("读取数据行[{}]解析失败: {}", data, e.getMessage());
+        }
+        return true;
+    }
 }
