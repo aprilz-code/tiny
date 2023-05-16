@@ -20,7 +20,7 @@ public final class Validators {
     static {
 //        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 //        VALIDATOR = factory.getValidator();
-        VALIDATOR = SpringUtil.getBean("validator");
+        VALIDATOR = SpringUtil.getBean(Validator.class);
     }
 
     /**
