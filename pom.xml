@@ -33,7 +33,6 @@
 
     <!-- 以下依赖 全局所有的模块都会引入  -->
     <dependencies>
-
         <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
