@@ -2,23 +2,27 @@ package com.aprilz.tiny.common.utils;
 
 import io.micrometer.core.instrument.util.NamedThreadFactory;
 
+import java.util.Optional;
 import java.util.concurrent.*;
 
 /**
- * 线程池
+ * cpu密集型线程池
  *
- * @author Chopper
+ * @author aprilz
  */
 public class ThreadPoolUtil {
+
+    //获取当前机器的核数
+    public static final Integer cpuNum = Runtime.getRuntime().availableProcessors();
 
     /**
      * 核心线程数，会一直存活，即使没有任务，线程池也会维护线程的最少数量
      */
-    private static final int SIZE_CORE_POOL = 5;
+    private static final int SIZE_CORE_POOL =  Optional.ofNullable(cpuNum).orElse(8);
     /**
      * 线程池维护线程的最大数量
      */
-    private static final int SIZE_MAX_POOL = 10;
+    private static final int SIZE_MAX_POOL = SIZE_CORE_POOL;
     /**
      * 线程池维护线程所允许的空闲时间
      */
@@ -67,7 +71,8 @@ public class ThreadPoolUtil {
         if (threadPool == null) {
             synchronized (ThreadPoolUtil.class) {
                 if (threadPool == null) {
-                    threadPool = new ThreadPoolExecutor(SIZE_CORE_POOL, SIZE_MAX_POOL, ALIVE_TIME, TimeUnit.MILLISECONDS, bqueue, new NamedThreadFactory("delay"), new ThreadPoolExecutor.CallerRunsPolicy());
+                    threadPool = new ThreadPoolExecutor(SIZE_CORE_POOL, SIZE_MAX_POOL, ALIVE_TIME, TimeUnit.MILLISECONDS, bqueue,
+                            new NamedThreadFactory("common-task-"), new ThreadPoolExecutor.CallerRunsPolicy());
                     //  threadPool = (ThreadPoolExecutor) Executors.newCachedThreadPool();
                     return threadPool;
                 }
