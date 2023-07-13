@@ -64,7 +64,7 @@ public class ExcelUtils {
         try {
             out = response.getOutputStream();
             excelWriter = EasyExcel.write(out, templateClass).registerWriteHandler(new DropDownWriteHandler(map))
-                    .registerWriteHandler(new ChainDropDownWriteHandler(integerChainDropDownMap)).build();
+                    .registerWriteHandler(new ChainDropDownWriteHandler(integerChainDropDownMap,1)).build();
             // 分页写入
             pageWrite(excelWriter, data, pageSize);
         } catch (Throwable e) {

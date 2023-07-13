@@ -21,10 +21,6 @@ public class ChainDropDownWriteHandler implements SheetWriteHandler {
 
     private int headRowNumber = 1;
 
-    public ChainDropDownWriteHandler(Map<Integer, ChainDropDown> map) {
-        this.map = map;
-    }
-
     public ChainDropDownWriteHandler(Map<Integer, ChainDropDown> map, int headRowNumber) {
         this.map = map;
         this.headRowNumber = headRowNumber;
@@ -45,18 +41,22 @@ public class ChainDropDownWriteHandler implements SheetWriteHandler {
             // k 为存在下拉数据集的单元格下表 v为下拉数据集
             Integer k = e.getKey();
             ChainDropDown v = e.getValue();
+            Integer rowIndex = v.getRowIndex();
             CellRangeAddressList rangeList = new CellRangeAddressList(headRowNumber, 65536, k, k);
             Sheet hideSheet = getSheet(workbook, v.getTypeName());
             if (v.isRootFlag()) {
-                Row firstRow = hideSheet.createRow(v.getRowIndex());
+                Row firstRow = hideSheet.createRow(rowIndex);
                 List<String> values = v.getDataMap().get(ChainDropDown.ROOT_KEY);
                 for (int i = 0; i < values.size(); i++) {
                     Cell rowCell = firstRow.createCell(i);
                     rowCell.setCellValue(values.get(i));
                 }
+                // 设置级联有效性
 
-                // v 就是下拉列表的具体数据，下拉列表约束数据
-                DataValidationConstraint constraint = helper.createExplicitListConstraint(values.toArray(new String[values.size()]));
+                // v 就是下拉列表的具体数据，下拉列表约束数据+，按区域设置不然会超长255字符
+                String listFormula = v.getTypeName()+"!$1:$1";
+                DataValidationConstraint constraint = helper.createFormulaListConstraint(listFormula);
+//                DataValidationConstraint constraint = helper.createExplicitListConstraint(values.toArray(new String[values.size()]));
                 // 设置下拉约束
                 DataValidation validation = helper.createValidation(constraint, rangeList);
                 // 阻止输入非下拉选项的值
@@ -66,8 +66,10 @@ public class ChainDropDownWriteHandler implements SheetWriteHandler {
                 validation.createErrorBox("提示", "此值与单元格定义格式不一致");
                 sheet.addValidationData(validation);
 
+
+
             } else {
-                Integer rowIndex = v.getRowIndex();
+
                 Map<String, List<String>> dataMap = v.getDataMap();
 
                 for (Map.Entry<String, List<String>> entry : dataMap.entrySet()) {
@@ -82,17 +84,17 @@ public class ChainDropDownWriteHandler implements SheetWriteHandler {
                     // 添加名称管理器
                     String range = getRange(1, rowIndex, childValues.size());
                     Name name = workbook.createName();
-                    //key不可重复
-                    name.setNameName(parentValue);
+                    //key不可重复,+排除部分特殊字符，首字母不可为数字
+                    name.setNameName("s"+parentValue.replaceAll("（","_").replaceAll("）","_").replaceAll("-","").replaceAll("“","").replaceAll("”","").replaceAll("、","").replaceAll(" ","").replaceAll("，",""));
                     String formula = v.getTypeName() + "!" + range;
                     name.setRefersToFormula(formula);
                 }
 
             }
-            // 从第二行开始，第一行是标题
-            int beginRow = 2;
+            // 这里头有两行 headNUM
+            int beginRow = 3;
             // 设置级联有效性
-            String listFormula = "INDIRECT($" + ExcelUtils.getColNum(k - 1) + beginRow + ")";
+            String listFormula = "INDIRECT(CONCAT(\"s\",SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE("+ExcelUtils.getColNum(k - 1) + beginRow+",\"（\",\"_\"),\"）\",\"_\"),\"-\",\"\"),\"“\",\"\"),\"”\",\"\"),\"、\",\"\"),\" \",\"\"),\"，\",\"\")))";
             DataValidationConstraint formulaListConstraint = helper.createFormulaListConstraint(listFormula);
             // 设置下拉约束
             DataValidation validation = helper.createValidation(formulaListConstraint, rangeList);
@@ -103,6 +105,11 @@ public class ChainDropDownWriteHandler implements SheetWriteHandler {
             validation.createPromptBox("下拉选择提示", "请使用下拉方式选择合适的值！");
             sheet.addValidationData(validation);
         }
+        // 设置存储下拉列值得sheet为隐藏
+//        int hiddenIndex = workbook.getSheetIndex(sheet.getSheetName());
+//        if (!workbook.isSheetHidden(hiddenIndex)) {
+//            workbook.setSheetHidden(hiddenIndex, true);
+//        }
     }
 
     public Sheet getSheet(Workbook workbook, String sheetName) {

@@ -82,7 +82,7 @@ public class SingleSheetWrite extends AbstractSheetWrite {
         int headRowNumber = responseExcel.headRowNumber();
 
         DropDownWriteHandler dropDownWriteHandler = new DropDownWriteHandler(map, headRowNumber);
-        ChainDropDownWriteHandler chainDropDownWriteHandler = new ChainDropDownWriteHandler(integerChainDropDownMap);
+        ChainDropDownWriteHandler chainDropDownWriteHandler = new ChainDropDownWriteHandler(integerChainDropDownMap, headRowNumber);
         ExcelWriter excelWriter = getExcelWriter(response, responseExcel, dropDownWriteHandler, chainDropDownWriteHandler);
 
         // 获取 Sheet 配置
