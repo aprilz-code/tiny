@@ -23,7 +23,7 @@ public class DropDownWriteHandler implements SheetWriteHandler {
     /**
      * 设置阈值，避免生成的导入模板下拉值获取不到
      */
-    private static final Integer LIMIT_NUMBER = 100;
+    private static final Integer LIMIT_NUMBER = 10;
 
     public DropDownWriteHandler(Map<Integer, String[]> map) {
         this.map = map;
@@ -69,23 +69,30 @@ public class DropDownWriteHandler implements SheetWriteHandler {
                 // 将刚才设置的sheet引用到你的下拉列表中
                 DataValidationConstraint constraint = helper.createFormulaListConstraint(refers);
                 DataValidation dataValidation = helper.createValidation(constraint, rangeList);
+                // 阻止输入非下拉选项的值
+                dataValidation.setErrorStyle(DataValidation.ErrorStyle.STOP);
+                dataValidation.setShowErrorBox(true);
+                dataValidation.setSuppressDropDownArrow(true);
+                dataValidation.createErrorBox("提示", "此值与单元格定义格式不一致");
                 writeSheetHolder.getSheet().addValidationData(dataValidation);
                 // 设置存储下拉列值得sheet为隐藏
                 int hiddenIndex = workbook.getSheetIndex(sheetName);
                 if (!workbook.isSheetHidden(hiddenIndex)) {
                     workbook.setSheetHidden(hiddenIndex, true);
                 }
+            }else{
+                // v 就是下拉列表的具体数据，下拉列表约束数据
+                DataValidationConstraint constraint = helper.createExplicitListConstraint(v);
+                // 设置下拉约束
+                DataValidation validation = helper.createValidation(constraint, rangeList);
+                // 阻止输入非下拉选项的值
+                validation.setErrorStyle(DataValidation.ErrorStyle.STOP);
+                validation.setShowErrorBox(true);
+                validation.setSuppressDropDownArrow(true);
+                validation.createErrorBox("提示", "此值与单元格定义格式不一致");
+                sheet.addValidationData(validation);
             }
-            // v 就是下拉列表的具体数据，下拉列表约束数据
-            DataValidationConstraint constraint = helper.createExplicitListConstraint(v);
-            // 设置下拉约束
-            DataValidation validation = helper.createValidation(constraint, rangeList);
-            // 阻止输入非下拉选项的值
-            validation.setErrorStyle(DataValidation.ErrorStyle.STOP);
-            validation.setShowErrorBox(true);
-            validation.setSuppressDropDownArrow(true);
-            validation.createErrorBox("提示", "此值与单元格定义格式不一致");
-            sheet.addValidationData(validation);
+
         });
     }
 }
