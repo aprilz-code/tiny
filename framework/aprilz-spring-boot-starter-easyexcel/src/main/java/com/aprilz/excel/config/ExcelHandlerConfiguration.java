@@ -6,6 +6,7 @@ import com.aprilz.excel.core.handler.ManySheetWrite;
 import com.aprilz.excel.core.handler.SheetWrite;
 import com.aprilz.excel.core.handler.SingleSheetWrite;
 import com.aprilz.excel.core.properties.ExcelConfigProperties;
+import com.aprilz.excel.core.util.ExcelUtils;
 import com.aprilz.excel.enhance.DefaultWriterBuilderEnhancer;
 import com.aprilz.excel.enhance.WriterBuilderEnhancer;
 import lombok.RequiredArgsConstructor;
@@ -66,6 +67,13 @@ public class ExcelHandlerConfiguration {
     public ResponseExcelReturnValueHandler responseExcelReturnValueHandler(
             List<SheetWrite> sheetWriteList) {
         return new ResponseExcelReturnValueHandler(sheetWriteList);
+    }
+
+
+    @Bean
+    @ConditionalOnMissingBean
+    public ExcelUtils excelUtils() {
+        return new ExcelUtils(configProperties);
     }
 
 

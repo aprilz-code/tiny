@@ -1,7 +1,6 @@
 package com.aprilz.excel.core.handler;
 
 import cn.hutool.core.util.ReflectUtil;
-import cn.hutool.core.util.StrUtil;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.exception.ExcelAnalysisException;
@@ -34,7 +33,7 @@ public class DefaultAnalysisEventListener extends ListAnalysisEventListener<Obje
     //防止内存溢出，加到redis？
     private Set<String> sets = new HashSet<>();
 
-    private Long lineNum = 1L;
+    private Long lineNum;
 
     @Override
     public void invoke(Object o, AnalysisContext analysisContext) {
@@ -43,9 +42,10 @@ public class DefaultAnalysisEventListener extends ListAnalysisEventListener<Obje
             throw new ExcelAnalysisException("超出总行数限制(30000)，总行数为：" + totalRowNumber);
         }
 
-        lineNum++;
+        lineNum = analysisContext.readRowHolder().getRowIndex().longValue();
 
-        // 如果一行Excel数据均为空值，则不装载该行数据 (tips 发现excel不填值，修改单行行高也会读取到，故这里排除掉)
+
+        // 如果一行Excel数据均为空值，则不装载该行数据
         if (isLineNullValue(o)) {
             return;
         }
@@ -103,7 +103,7 @@ public class DefaultAnalysisEventListener extends ListAnalysisEventListener<Obje
             sets.add(sb.toString());
         });
 
-        //如果需要校验和数据库数据是否有重复，可以新建自定义listener，然后进行查询
+
     }
 
     @Override
@@ -119,7 +119,7 @@ public class DefaultAnalysisEventListener extends ListAnalysisEventListener<Obje
 
     private boolean isLineNullValue(Object data) {
         if (data instanceof String) {
-            return StrUtil.isBlank(data.toString());
+            return Objects.isNull(data);
         }
         try {
             List<Field> fields = Arrays.stream(data.getClass().getDeclaredFields())

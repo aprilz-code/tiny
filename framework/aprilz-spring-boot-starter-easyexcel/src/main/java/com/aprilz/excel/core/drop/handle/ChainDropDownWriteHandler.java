@@ -54,7 +54,7 @@ public class ChainDropDownWriteHandler implements SheetWriteHandler {
                 // 设置级联有效性
 
                 // v 就是下拉列表的具体数据，下拉列表约束数据+，按区域设置不然会超长255字符
-                String listFormula = v.getTypeName()+"!$1:$1";
+                String listFormula = v.getTypeName() + "!$1:$1";
                 DataValidationConstraint constraint = helper.createFormulaListConstraint(listFormula);
 //                DataValidationConstraint constraint = helper.createExplicitListConstraint(values.toArray(new String[values.size()]));
                 // 设置下拉约束
@@ -65,7 +65,6 @@ public class ChainDropDownWriteHandler implements SheetWriteHandler {
                 validation.setSuppressDropDownArrow(true);
                 validation.createErrorBox("提示", "此值与单元格定义格式不一致");
                 sheet.addValidationData(validation);
-
 
 
             } else {
@@ -85,7 +84,7 @@ public class ChainDropDownWriteHandler implements SheetWriteHandler {
                     String range = getRange(1, rowIndex, childValues.size());
                     Name name = workbook.createName();
                     //key不可重复,+排除部分特殊字符，首字母不可为数字
-                    name.setNameName("s"+parentValue.replaceAll("（","_").replaceAll("）","_").replaceAll("-","").replaceAll("“","").replaceAll("”","").replaceAll("、","").replaceAll(" ","").replaceAll("，",""));
+                    name.setNameName("s" + parentValue.replaceAll("（", "_").replaceAll("）", "_").replaceAll("-", "").replaceAll("“", "").replaceAll("”", "").replaceAll("、", "").replaceAll(" ", "").replaceAll("，", ""));
                     String formula = v.getTypeName() + "!" + range;
                     name.setRefersToFormula(formula);
                 }
@@ -94,7 +93,7 @@ public class ChainDropDownWriteHandler implements SheetWriteHandler {
             // 这里头有两行 headNUM
             int beginRow = 3;
             // 设置级联有效性
-            String listFormula = "INDIRECT(CONCAT(\"s\",SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE("+ExcelUtils.getColNum(k - 1) + beginRow+",\"（\",\"_\"),\"）\",\"_\"),\"-\",\"\"),\"“\",\"\"),\"”\",\"\"),\"、\",\"\"),\" \",\"\"),\"，\",\"\")))";
+            String listFormula = "INDIRECT(CONCAT(\"s\",SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(" + ExcelUtils.getColNum(k - 1) + beginRow + ",\"（\",\"_\"),\"）\",\"_\"),\"-\",\"\"),\"“\",\"\"),\"”\",\"\"),\"、\",\"\"),\" \",\"\"),\"，\",\"\")))";
             DataValidationConstraint formulaListConstraint = helper.createFormulaListConstraint(listFormula);
             // 设置下拉约束
             DataValidation validation = helper.createValidation(formulaListConstraint, rangeList);

@@ -1,6 +1,5 @@
 package com.aprilz.excel.core.util;
 
-
 import cn.hutool.extra.spring.SpringUtil;
 import com.aprilz.excel.core.drop.annotations.ChainDropDownFields;
 import com.aprilz.excel.core.drop.annotations.DropDownFields;
@@ -22,7 +21,7 @@ public class ResolveAnnotation {
      * @param dropDownField 注解
      * @return string[]
      */
-    public static String[] resolve(DropDownFields dropDownField) {
+    public static String[] resolve(DropDownFields dropDownField, String params) {
         if (!Optional.ofNullable(dropDownField).isPresent()) {
             return new String[0];
         }
@@ -36,7 +35,7 @@ public class ResolveAnnotation {
         Class<? extends IDropDownService> classes = dropDownField.sourceClass();
         if (null != classes) {
             IDropDownService dropDownService = SpringUtil.getBean(classes);
-            String[] dynamicSource = dropDownService.getSource(dropDownField.type().getValue());
+            String[] dynamicSource = dropDownService.getSource(dropDownField.type().getValue(), params);
             if (null != dynamicSource && dynamicSource.length > 0) {
                 return dynamicSource;
             }

@@ -6,7 +6,7 @@ package com.aprilz.excel.core.drop.services;
  */
 public interface IDropDownService {
 
-    default public String[] getSource(String param) {
+    default public String[] getSource(String value, String params) {
         return new String[]{};
     }
 

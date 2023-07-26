@@ -80,7 +80,7 @@ public class DropDownWriteHandler implements SheetWriteHandler {
                 if (!workbook.isSheetHidden(hiddenIndex)) {
                     workbook.setSheetHidden(hiddenIndex, true);
                 }
-            }else{
+            } else {
                 // v 就是下拉列表的具体数据，下拉列表约束数据
                 DataValidationConstraint constraint = helper.createExplicitListConstraint(v);
                 // 设置下拉约束

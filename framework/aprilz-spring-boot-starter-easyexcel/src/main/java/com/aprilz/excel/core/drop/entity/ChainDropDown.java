@@ -17,18 +17,18 @@ import java.util.Map;
 @Accessors(chain = true)
 @NoArgsConstructor
 public class ChainDropDown {
-    /**
-     * 名称
-     */
-    private String value;
-    /**
-     * 是否有子类
-     */
-    private boolean hasChild = true;
-    /**
-     * 子类的集合
-     */
-    private List<ChainDropDown> subList;
+//        /**
+//     * 名称
+//     */
+//    private String value;
+//    /**
+//     * 是否有子类
+//     */
+//    private boolean hasChild=true;
+//    /**
+//     * 子类的集合
+//     */
+//    private List<ChainDropDown> subList;
 
 
     public static final String ROOT_KEY = "root";

@@ -6,7 +6,6 @@ package com.aprilz.excel.core.drop.enums;
 public enum DropDownType {
     NONE("NONE", "无"),
     YES_NO("YES_NO", "是否 1 是 2 否"),
-    DIC_SEX("DIC_SEX", "男女"),
     DEPT("dept", "部门");
 
     private String value;
