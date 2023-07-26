@@ -20,8 +20,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author Aprilz
@@ -71,6 +73,11 @@ public class SingleSheetWrite extends AbstractSheetWrite {
 
         //解析出下拉框
         Field[] fields = dataClass.getDeclaredFields();
+        //移除serialVersionUID
+        if (fields.length > 0) {
+            fields = Arrays.stream(fields).filter(field -> !field.getName().equals("serialVersionUID")).collect(Collectors.toList()).toArray(new Field[0]);
+        }
+
         Map<Integer, String[]> map = ExcelUtils.processDropDown(fields);
         Map<Integer, ChainDropDown> integerChainDropDownMap = ExcelUtils.processChainDropDown(fields);
 
