@@ -28,7 +28,7 @@
 ///**
 // * @author Aprilz
 // * @date 2023/3/10-15:38
-// * @description 批量导入学校端在线报名
+// * @description 批量导入在线报名
 // */
 //@Slf4j
 //@Component
