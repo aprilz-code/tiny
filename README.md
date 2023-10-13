@@ -774,7 +774,16 @@ public PageResult<RespVO>  test(PageReqVO pageVO){
         completableFutures.add(future);
         });
         //等待所有结果返回
-        CompletableFuture.allOf(completableFutures.toArray(new CompletableFuture[0])).get(2,TimeUnit.MINUTES);
+        try {
+        CompletableFuture.allOf(completableFutures.toArray(new CompletableFuture[0])).get(2, TimeUnit.MINUTES);
+        } catch (InterruptedException | ExecutionException e) {
+        e.printStackTrace();
+        } catch (TimeoutException e) {
+        throw new RuntimeException("请求超时");
+        }
         return pageResult;
         }
 ```
+
+
+
