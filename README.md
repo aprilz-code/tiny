@@ -787,3 +787,196 @@ public PageResult<RespVO>  test(PageReqVO pageVO){
 
 
 
+### excel导出成Zip
+
+```java
+    @PostMapping("/excelZip")
+    @ApiOperation("导出excel成zip")
+    public void excelZip(@RequestBody List<Long> ids, HttpServletRequest request,
+                         HttpServletResponse response) {
+        takeStockService.excelZip(ids, request, response);
+    }
+    
+    
+```
+//    service
+
+
+```java
+ public void downloadFiles(HttpServletRequest request, HttpServletResponse response, File file) {
+        //File file = new File(filePath);
+        //创建输出流
+        OutputStream out = null;
+        ZipOutputStream zos = null;
+        try {
+            out = response.getOutputStream();
+            zos = new ZipOutputStream(out);
+            compress(file, zos, file.getName()); //压缩文件方法
+            //刷新流和关闭流,注意流的关闭顺序，否则压缩文件出来会损坏
+            zos.flush();
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (zos != null) {
+                try {
+                    zos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (file.exists()) {
+                removeDirectory(file);
+            }
+        }
+    }
+
+
+    private static void compress(File sourceFile, ZipOutputStream zos, String name) throws IOException {
+        byte[] buf = new byte[1024];
+        if (sourceFile.isFile()) { //判断是否为文件
+            // 压缩单个文件，压缩后文件名为当前文件名
+            zos.putNextEntry(new ZipEntry(name));
+            // copy文件到zip输出流中
+            int len;
+            FileInputStream in = new FileInputStream(sourceFile);
+            while ((len = in.read(buf)) > 0) {
+                zos.write(buf, 0, len);
+            }
+            zos.closeEntry();
+            in.close();
+        } else { //路径文件为文件夹，用递归的方法压缩文件夹下的文件
+            File[] listFiles = sourceFile.listFiles();
+            if (listFiles == null || listFiles.length == 0) {
+                // 空文件夹的处理
+            } else {
+                // 递归压缩文件夹下的文件
+                for (File file : listFiles) {
+                    compress(file, zos, name + "/" + file.getName());
+                }
+            }
+        }
+    }
+
+
+    //多sheet
+    public void excelZip(List<Long> ids, HttpServletRequest request, HttpServletResponse response) {
+        ApiAssert.isFalse(ResultEnum.CRUD_VALID_NOT.overrideMsg("请需要导出的数据！"), CollUtil.isEmpty(ids));
+        String dirName = getPath("成本盘点");
+        File dir = new File(dirName);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        TakeStockDO byId = this.getById(ids.get(0));
+        ProjectDTO projectDTO = projectApi.getProjectInfoById(byId.getProjectId());
+        String projectName = projectDTO.getProjectName();
+        List<CompletableFuture<Void>> futures = ids.stream().map(id -> CompletableFuture.runAsync(() -> {
+            TakeStockDO one = this.getById(id);
+            LocalDate yearMonth = one.getYearMonth();
+            //项目名称 + 年 + 月
+            String fileName = dirName + "/" + projectName + yearMonth.getYear() + yearMonth.getMonthValue() + ExcelTypeEnum.XLSX.getValue();
+            ExcelWriter excelWriter = EasyExcel.write(fileName).excelType(ExcelTypeEnum.XLSX).build();
+            //成本合计
+            List<TakeStockTotalDO> totalDOS = takeStockTotalService.lambdaQuery().eq(TakeStockTotalDO::getTakeStockId, id)
+                    .orderByAsc(TakeStockTotalDO::getType)
+                    .orderByAsc(TakeStockTotalDO::getCreateTime).list();
+            List<TakeStockTotalExcelVO> totalExcelVOS = TakeStockTotalConvert.INSTANCE.convertExcelList(totalDOS);
+            WriteSheet writeSheet = EasyExcel.writerSheet("成本合计").head(TakeStockTotalExcelVO.class)
+                    .registerWriteHandler(BeanUtils.instantiateClass(AutoHeadColumnWidthStyleStrategy.class))
+                    .registerConverter(new LongStringConverter())
+                    .registerConverter(LocalDateStringConverter.INSTANCE)
+                    .registerConverter(LocalDateTimeStringConverter.INSTANCE)
+                    .registerConverter(new BigDecimalStringConverter())
+                    .build();
+            excelWriter.write(totalExcelVOS, writeSheet);
+
+            //
+            List<LabourDO> labourDOS = labourService.lambdaQuery().eq(LabourDO::getTakeStockId, id)
+                    .orderByAsc(LabourDO::getType)
+                    .orderByAsc(LabourDO::getCreateTime).list();
+            List<LabourExcelVO> labourExcelVOS = LabourConvert.INSTANCE.convertExcelList(labourDOS);
+            // 使用 Stream 获取所有 type=1 元素的索引
+            List<Integer> indexs = IntStream.range(0, labourDOS.size())
+                    .filter(i -> labourDOS.get(i).getType() == 1)
+                    .boxed()
+                    .collect(Collectors.toList());
+
+            writeSheet = EasyExcel.writerSheet("费用1")
+                    .registerWriteHandler(BeanUtils.instantiateClass(AutoHeadColumnWidthStyleStrategy.class))
+                    .registerConverter(new LongStringConverter())
+                    .registerConverter(LocalDateStringConverter.INSTANCE)
+                    .registerConverter(LocalDateTimeStringConverter.INSTANCE)
+                    .registerConverter(new BigDecimalStringConverter())
+                    .registerWriteHandler(new CustomMergeStrategy(1, indexs, 0, 1))
+                    .head(LabourExcelVO.class)
+                    .build();
+            excelWriter.write(labourExcelVOS, writeSheet);
+
+            //
+            List<MaterialsDO> materialsDOS = materialsService.lambdaQuery().eq(MaterialsDO::getTakeStockId, id)
+                    .orderByAsc(MaterialsDO::getType)
+                    .orderByAsc(MaterialsDO::getCreateTime).list();
+            List<MaterialsExcelVO> materialsExcelVOS = MaterialsConvert.INSTANCE.convertExcelList(materialsDOS);
+            materialsExcelVOS.forEach(tmp -> {
+                if (StrUtil.isAllNotBlank(tmp.getResourceStandardName(), tmp.getResourceModelNoName())) {
+                    tmp.setSpecificationsAndModels(Optional.ofNullable(tmp).map(MaterialsExcelVO::getResourceStandardName).orElse("") + "-" + Optional.ofNullable(tmp).map(MaterialsExcelVO::getResourceModelNoName).orElse(""));
+                }
+            });
+            indexs = IntStream.range(0, materialsDOS.size())
+                    .filter(i -> materialsDOS.get(i).getType() == 1)
+                    .boxed()
+                    .collect(Collectors.toList());
+            writeSheet = EasyExcel.writerSheet("费用2")
+                    .registerWriteHandler(BeanUtils.instantiateClass(AutoHeadColumnWidthStyleStrategy.class))
+                    .registerConverter(new LongStringConverter())
+                    .registerConverter(LocalDateStringConverter.INSTANCE)
+                    .registerConverter(LocalDateTimeStringConverter.INSTANCE)
+                    .registerConverter(new BigDecimalStringConverter())
+                    .registerWriteHandler(new CustomMergeStrategy(2, indexs, 0, 3))
+                    .head(MaterialsExcelVO.class)
+                    .build();
+            excelWriter.write(materialsExcelVOS, writeSheet);
+
+            excelWriter.finish();
+
+        }, excelThreadPool)).collect(Collectors.toList());
+        CompletableFuture<Void> allFutures = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
+
+        allFutures.thenRun(() -> {
+            downloadFiles(request, response, dir);
+
+        });
+        allFutures.join();
+    }
+
+
+    private static void removeDirectory(File directory) {
+        if (directory == null || !directory.exists()) {
+            return;
+        }
+
+        if (directory.isDirectory()) {
+            File[] files = directory.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    removeDirectory(file);
+                }
+            }
+        }
+
+        directory.delete();
+    }
+
+    private static String getPath(String s) {
+        return System.getProperty("java.io.tmpdir") + "/" + s + "_" + System.currentTimeMillis();
+    }
+
+```
+
