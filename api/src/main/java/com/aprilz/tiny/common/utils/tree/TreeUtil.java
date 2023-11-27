@@ -2,10 +2,10 @@ package com.aprilz.tiny.common.utils.tree;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ReflectUtil;
+import com.alibaba.fastjson.util.TypeUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -143,9 +143,9 @@ public class TreeUtil {
                     //无节点则直接计算
                     for (String fieldName : fieldNames) {
                         Object fieldValue = Objects.isNull(ReflectUtil.getFieldValue(tree, fieldName)) ? 0 : ReflectUtil.getFieldValue(tree, fieldName);
-                        Integer sum = TypeUtils.toInteger(fieldValue);
+                        Integer sum = TypeUtils.castToInt(fieldValue);
                         for (BaseTree child : childList) {
-                            sum += TypeUtils.toInteger( Objects.isNull(ReflectUtil.getFieldValue(child, fieldName)) ? 0 : ReflectUtil.getFieldValue(child, fieldName));
+                            sum += TypeUtils.castToInt( Objects.isNull(ReflectUtil.getFieldValue(child, fieldName)) ? 0 : ReflectUtil.getFieldValue(child, fieldName));
                         }
                         ReflectUtil.setFieldValue(tree, fieldName, sum);
                     }
@@ -319,7 +319,7 @@ public class TreeUtil {
     private static boolean isRemoveNode(BaseTree root, List<Long> list) {
         List<? extends BaseTree> children = root.getChildList();
         // 叶子节点
-        if (CollectionUtils.isEmpty(children)) {
+        if (CollUtil.isEmpty(children)) {
             return !list.contains(root.getId());
         }
         // 子节点
@@ -350,7 +350,7 @@ public class TreeUtil {
             return;
         }
         List<? extends BaseTree> childrenList = child.getChildList();
-        if (CollectionUtils.isEmpty(childrenList)) {
+        if (CollUtil.isEmpty(childrenList)) {
             return;
         }
         Iterator<? extends BaseTree> children = childrenList.iterator();
