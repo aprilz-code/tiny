@@ -18,6 +18,7 @@ import com.aprilz.tiny.service.IApUserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.micrometer.core.instrument.util.NamedThreadFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -91,6 +92,7 @@ public class TinyApplicationTests {
     }
 
     /**
+     *  如下只能保证单个线程内数据保证事务回滚，而不会整体回滚
      * @param
      * @return void
      * @author aprilz
@@ -108,7 +110,7 @@ public class TinyApplicationTests {
         final Integer dataPartionLength = (allStudents.size() + threadCount - 1) / threadCount;
 
         // 创建多线程处理任务
-        ExecutorService studentThreadPool = Executors.newFixedThreadPool(threadCount);
+        ExecutorService studentThreadPool = Executors.newFixedThreadPool(threadCount,new NamedThreadFactory("testTrans"));
         CountDownLatch countDownLatch = new CountDownLatch(threadCount);
 
         for (int i = 0; i < threadCount; i++) {
