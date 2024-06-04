@@ -24,7 +24,7 @@ public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
     public void insertFill(MetaObject metaObject) {
         //  log.info("start insert fill ....");
         String username = "ADMIN";
-        if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
+        if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken) && SecurityContextHolder.getContext().getAuthentication() != null) {
             username = SecurityContextHolder.getContext().getAuthentication().getName();
         }
         if (metaObject.hasGetter("createTime") && Objects.isNull(metaObject.getValue("createTime"))) {
@@ -52,7 +52,7 @@ public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
     public void updateFill(MetaObject metaObject) {
         //    log.info("start update fill ....");
         String username = "ADMIN";
-        if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
+        if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken) && SecurityContextHolder.getContext().getAuthentication() != null) {
             username = SecurityContextHolder.getContext().getAuthentication().getName();
         }
         if (metaObject.hasGetter("updateTime") && Objects.isNull(metaObject.getValue("updateTime"))) {

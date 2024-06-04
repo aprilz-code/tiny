@@ -102,6 +102,7 @@ ignored:
     - /*.html
     - /sso/*
     - /excel/**
+    - /test/**
 
 # wx相关配置
 wx:

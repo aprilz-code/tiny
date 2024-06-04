@@ -50,7 +50,9 @@ public class ThreadPoolUtil {
      * @param runnable
      */
     public static void execute(Runnable runnable) {
-        getThreadPool().execute(runnable);
+        ThreadPoolExecutor poolExecutor = getThreadPool();
+        poolExecutor.execute(runnable);
+        poolExecutor.shutdown();
     }
 
     /**
@@ -59,7 +61,10 @@ public class ThreadPoolUtil {
      * @param callable
      */
     public static <T> Future<T> submit(Callable<T> callable) {
-        return getThreadPool().submit(callable);
+        ThreadPoolExecutor poolExecutor  = getThreadPool();
+        Future<T> future  = poolExecutor.submit(callable);
+        poolExecutor.shutdown();
+        return future ;
     }
 
     /**
@@ -81,6 +86,32 @@ public class ThreadPoolUtil {
         }
         return threadPool;
     }
+
+
+    /**
+     * 获取当前线程池线程数量
+     */
+    public static int getSize() {
+        return getThreadPool().getPoolSize();
+    }
+
+    /**
+     * 获取当前活动的线程数量
+     */
+    public static int getActiveCount() {
+        return getThreadPool().getActiveCount();
+    }
+
+    /**
+     * 从线程队列中移除对象
+     */
+    public static void cancel(Runnable runnable) {
+        ThreadPoolExecutor poolExecutor = getThreadPool();
+        if (poolExecutor != null) {
+            poolExecutor.getQueue().remove(runnable);
+        }
+    }
+
 
 //    public static ThreadPoolExecutor getPool() {
 //        return pool;
