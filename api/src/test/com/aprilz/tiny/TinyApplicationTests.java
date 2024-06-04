@@ -60,7 +60,7 @@ public class TinyApplicationTests {
         LambdaQueryWrapper<ApUser> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(ApUser::getId, 1);
         Page<ApUser> apAdminEntityPage = apUserService.page(PageUtil.initPage(new PageVO()), wrapper);
-        System.out.println(apAdminEntityPage);
+        System.out.println(apAdminEntityPage.getRecords());
     }
 
     /**

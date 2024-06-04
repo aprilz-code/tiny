@@ -1,6 +1,6 @@
 package com.aprilz.tiny.mbg.entity;
 
-import com.alibaba.excel.annotation.ExcelIgnore;
+
 import com.aprilz.desensitize.core.annotations.Desensitize;
 import com.aprilz.desensitize.core.enums.DesensitizeRuleEnums;
 import com.aprilz.tiny.mbg.base.BaseDO;
@@ -30,7 +30,6 @@ public class ApAdmin extends BaseDO {
 
     @TableId(value = "id")
     @ApiModelProperty(value = "唯一标识")
-    @ExcelIgnore
     private Long id;
 
     @ApiModelProperty("帐号启用状态：0->禁用；1->启用")

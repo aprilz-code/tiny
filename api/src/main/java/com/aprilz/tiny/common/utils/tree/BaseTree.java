@@ -16,8 +16,7 @@ public class BaseTree {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "id", required = true, example = "32741")
-    private Long id;
+    @ApiModelProperty(value = "id", required = true, example = "32741")    private Long id;
 
     @ApiModelProperty(value = "父id，顶级父id默认为0", required = true)
     private Long parentId;

@@ -1,6 +1,6 @@
 package com.aprilz.tiny.mbg.entity;
 
-import com.alibaba.excel.annotation.ExcelIgnore;
+
 import com.aprilz.tiny.mbg.base.BaseDO;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -25,7 +25,6 @@ public class ApAdminPermissionRelation extends BaseDO {
 
     @TableId(value = "id")
     @ApiModelProperty(value = "唯一标识")
-    @ExcelIgnore
     private Long id;
 
     private static final long serialVersionUID = 1L;

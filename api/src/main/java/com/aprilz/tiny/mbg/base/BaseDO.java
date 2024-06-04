@@ -1,6 +1,5 @@
 package com.aprilz.tiny.mbg.base;
 
-import com.alibaba.excel.annotation.ExcelIgnore;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
@@ -26,29 +25,24 @@ public abstract class BaseDO implements Serializable {
 
     @TableField(value = "create_by", fill = FieldFill.INSERT)
     @ApiModelProperty(value = "创建者", hidden = true)
-    @ExcelIgnore
     private String createBy;
 
 
     @TableField(value = "create_time", fill = FieldFill.INSERT)
     @ApiModelProperty(value = "创建时间", hidden = true)
-    @ExcelIgnore
     private LocalDateTime createTime;
 
     @TableField(fill = FieldFill.INSERT_UPDATE, jdbcType = JdbcType.VARCHAR)
     @ApiModelProperty(value = "更新者", hidden = true)
-    @ExcelIgnore
     private String updateBy;
 
 
     @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
     @ApiModelProperty(value = "更新时间", hidden = true)
-    @ExcelIgnore
     private LocalDateTime updateTime;
 
     @TableLogic
     @ApiModelProperty(value = "删除标志 0->正常；1->已删除", hidden = true)
-    @ExcelIgnore
     private Boolean deleteFlag;
 
 }

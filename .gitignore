@@ -1,6 +1,10 @@
 HELP.md
-/target/
+target/
+logs/
+file/
 !.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**
+!**/src/test/**
 
 ### STS ###
 .apt_generated
@@ -12,10 +16,12 @@ HELP.md
 .sts4-cache
 
 ### IntelliJ IDEA ###
-.idea
+/.idea/
 *.iws
 *.iml
 *.ipr
+.flattened-pom.xml
+rebel.xml
 
 ### NetBeans ###
 /nbproject/private/
@@ -23,7 +29,6 @@ HELP.md
 /dist/
 /nbdist/
 /.nb-gradle/
-/build/
 
 ### VS Code ###
 .vscode/

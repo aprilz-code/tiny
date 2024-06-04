@@ -1,6 +1,6 @@
 package com.aprilz.tiny.mbg.entity;
 
-import com.alibaba.excel.annotation.ExcelIgnore;
+
 import com.aprilz.tiny.mbg.base.BaseDO;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -24,7 +24,6 @@ public class ApRegion extends BaseDO {
 
     @TableId(value = "id")
     @ApiModelProperty(value = "唯一标识")
-    @ExcelIgnore
     private Long id;
 
     @ApiModelProperty("行政区域父ID，例如区县的pid指向市，市的pid指向省，省的pid则是0")

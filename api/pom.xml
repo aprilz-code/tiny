@@ -239,10 +239,10 @@
         </dependency>
 
 
-        <dependency>
-            <groupId>com.aprilz</groupId>
-            <artifactId>aprilz-spring-boot-starter-easyexcel</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.aprilz</groupId>-->
+<!--            <artifactId>aprilz-spring-boot-starter-easyexcel</artifactId>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>com.aprilz</groupId>
@@ -253,6 +253,7 @@
             <groupId>com.aprilz</groupId>
             <artifactId>aprilz-core</artifactId>
         </dependency>
+
 
         <dependency>
             <groupId>org.mapstruct</groupId>

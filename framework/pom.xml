@@ -6,11 +6,13 @@
         <groupId>com.aprilz</groupId>
         <artifactId>tiny</artifactId>
         <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>framework</artifactId>
     <name>framework</name>
     <packaging>pom</packaging>
+    <description>framework</description>
 
     <modules>
         <module>aprilz-core</module>
@@ -18,8 +20,6 @@
         <module>aprilz-spring-boot-starter-dtp</module>
         <module>aprilz-spring-boot-starter-desensitize</module>
     </modules>
-
-    <description>framework</description>
 
 
 </project>
