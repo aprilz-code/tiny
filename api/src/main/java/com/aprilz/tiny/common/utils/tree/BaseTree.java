@@ -16,7 +16,8 @@ public class BaseTree {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "id", required = true, example = "32741")    private Long id;
+    @ApiModelProperty(value = "id", required = true, example = "32741")
+    private Long id;
 
     @ApiModelProperty(value = "父id，顶级父id默认为0", required = true)
     private Long parentId;
@@ -35,6 +36,6 @@ public class BaseTree {
 
 
     @ApiModelProperty(value = "是否计算本身")
-    private boolean addSelf=false;
+    private boolean addSelf = false;
 
 }

@@ -111,7 +111,7 @@ public abstract class AbstractDelayQueueMachineFactory {
     public abstract String setDelayQueueName();
 
 
-    @PostConstruct
+    //@PostConstruct
     public void init() {
         new Thread(this::startDelayQueueMachine).start();
     }
