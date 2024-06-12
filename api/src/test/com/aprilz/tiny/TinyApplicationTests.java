@@ -11,7 +11,7 @@ import com.aprilz.tiny.designMode.proxy.proxy.CglibProxy;
 import com.aprilz.tiny.designMode.proxy.proxy.StarProxy;
 import com.aprilz.tiny.designMode.strategy.Context;
 import com.aprilz.tiny.designMode.strategy.Strategy;
-import com.aprilz.tiny.mbg.entity.ApUser;
+import com.aprilz.tiny.model.ApUser;
 import com.aprilz.tiny.service.IApUserService;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.micrometer.core.instrument.util.NamedThreadFactory;

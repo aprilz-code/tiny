@@ -1,7 +1,7 @@
 package com.aprilz.tiny.service.impl;
 
 import com.aprilz.tiny.mapper.ApRoleMapper;
-import com.aprilz.tiny.mbg.entity.ApRole;
+import com.aprilz.tiny.model.ApRole;
 import com.aprilz.tiny.service.IApRoleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;

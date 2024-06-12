@@ -1,6 +1,6 @@
 package com.aprilz.tiny.mapper;
 
-import com.aprilz.tiny.mbg.entity.ApAdminRoleRelation;
+import com.aprilz.tiny.model.ApAdminRoleRelation;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

@@ -3,7 +3,7 @@ package com.aprilz.tiny.common.utils;
 import cn.hutool.core.util.StrUtil;
 import com.aprilz.tiny.common.cache.Cache;
 import com.aprilz.tiny.mapper.ApSystemMapper;
-import com.aprilz.tiny.mbg.entity.ApSystem;
+import com.aprilz.tiny.model.ApSystem;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

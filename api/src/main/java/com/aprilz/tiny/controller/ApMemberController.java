@@ -3,8 +3,8 @@ package com.aprilz.tiny.controller;
 
 import com.aprilz.tiny.common.api.CommonResult;
 import com.aprilz.tiny.dto.ApAdminLoginParam;
-import com.aprilz.tiny.mbg.entity.ApAdmin;
-import com.aprilz.tiny.mbg.entity.ApPermission;
+import com.aprilz.tiny.model.ApAdmin;
+import com.aprilz.tiny.model.ApPermission;
 import com.aprilz.tiny.service.IApAdminService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

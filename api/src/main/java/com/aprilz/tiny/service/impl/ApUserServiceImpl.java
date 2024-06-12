@@ -1,7 +1,7 @@
 package com.aprilz.tiny.service.impl;
 
 import com.aprilz.tiny.mapper.ApUserMapper;
-import com.aprilz.tiny.mbg.entity.ApUser;
+import com.aprilz.tiny.model.ApUser;
 import com.aprilz.tiny.service.IApUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +26,8 @@ public class ApUserServiceImpl extends ServiceImpl<ApUserMapper, ApUser> impleme
     @Transactional(rollbackFor = Exception.class)
     public void testTs() {
         //随意插入一个人员
-        ApUser apUser = new ApUser().setNickname("bob");
+        ApUser apUser = new ApUser();
+        apUser.setNickname("bob");
         save(apUser);
 
         //不需要受事务回滚 ，比如发短信，mq等

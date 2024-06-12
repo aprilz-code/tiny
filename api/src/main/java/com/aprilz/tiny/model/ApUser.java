@@ -1,13 +1,17 @@
-package com.aprilz.tiny.mbg.entity;
+package com.aprilz.tiny.model;
 
 
-import com.aprilz.tiny.mbg.base.BaseDO;
+import com.aprilz.tiny.component.mybatis.base.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
 
@@ -22,7 +26,11 @@ import java.util.Date;
 @Data
 @TableName("ap_user")
 @ApiModel(value = "ApUser对象", description = "用户表")
-public class ApUser extends BaseDO {
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+@SuperBuilder(toBuilder = true)
+@NoArgsConstructor
+public class ApUser extends BaseEntity {
 
     @TableId(value = "id")
     @ApiModelProperty(value = "唯一标识")

@@ -1,6 +1,6 @@
 package com.aprilz.tiny.mapper;
 
-import com.aprilz.tiny.mbg.entity.ApStorage;
+import com.aprilz.tiny.model.ApStorage;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

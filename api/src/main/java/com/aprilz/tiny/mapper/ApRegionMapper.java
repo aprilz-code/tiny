@@ -1,6 +1,6 @@
 package com.aprilz.tiny.mapper;
 
-import com.aprilz.tiny.mbg.entity.ApRegion;
+import com.aprilz.tiny.model.ApRegion;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

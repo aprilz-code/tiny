@@ -1,7 +1,7 @@
 package com.aprilz.tiny.dto;
 
-import com.aprilz.tiny.mbg.entity.ApAdmin;
-import com.aprilz.tiny.mbg.entity.ApPermission;
+import com.aprilz.tiny.model.ApAdmin;
+import com.aprilz.tiny.model.ApPermission;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
