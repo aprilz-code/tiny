@@ -1,9 +1,7 @@
 package com.aprilz.tiny;
 
 
-import com.aprilz.tiny.common.api.PageVO;
 import com.aprilz.tiny.common.cache.LocalCache;
-import com.aprilz.tiny.common.utils.PageUtil;
 import com.aprilz.tiny.designMode.observer.impl.MySubject;
 import com.aprilz.tiny.designMode.observer.impl.ObserverA;
 import com.aprilz.tiny.designMode.observer.impl.ObserverB;
@@ -15,9 +13,7 @@ import com.aprilz.tiny.designMode.strategy.Context;
 import com.aprilz.tiny.designMode.strategy.Strategy;
 import com.aprilz.tiny.mbg.entity.ApUser;
 import com.aprilz.tiny.service.IApUserService;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.micrometer.core.instrument.util.NamedThreadFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,10 +53,7 @@ public class TinyApplicationTests {
      **/
     @Test
     public void contextLoads() {
-        LambdaQueryWrapper<ApUser> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(ApUser::getId, 1);
-        Page<ApUser> apAdminEntityPage = apUserService.page(PageUtil.initPage(new PageVO()), wrapper);
-        System.out.println(apAdminEntityPage.getRecords());
+
     }
 
     /**

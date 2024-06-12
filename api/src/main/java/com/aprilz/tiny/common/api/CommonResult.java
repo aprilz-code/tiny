@@ -6,7 +6,7 @@ package com.aprilz.tiny.common.api;
  */
 public class CommonResult<T> {
     private long code;
-    private String message;
+    private String msg;
     private T data;
 
     /**
@@ -17,9 +17,9 @@ public class CommonResult<T> {
     protected CommonResult() {
     }
 
-    protected CommonResult(long code, String message, T data) {
+    protected CommonResult(long code, String msg, T data) {
         this.code = code;
-        this.message = message;
+        this.msg = msg;
         this.data = data;
     }
 
@@ -114,12 +114,12 @@ public class CommonResult<T> {
         this.code = code;
     }
 
-    public String getMessage() {
-        return message;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMsg(String message) {
+        this.msg = message;
     }
 
     public T getData() {

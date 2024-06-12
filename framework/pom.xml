@@ -16,7 +16,6 @@
 
     <modules>
         <module>aprilz-core</module>
-        <module>aprilz-spring-boot-starter-easyexcel</module>
         <module>aprilz-spring-boot-starter-dtp</module>
         <module>aprilz-spring-boot-starter-desensitize</module>
     </modules>

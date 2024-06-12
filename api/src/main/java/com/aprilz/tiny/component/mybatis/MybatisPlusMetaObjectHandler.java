@@ -28,10 +28,10 @@ public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
             username = SecurityContextHolder.getContext().getAuthentication().getName();
         }
         if (metaObject.hasGetter("createTime") && Objects.isNull(metaObject.getValue("createTime"))) {
-            this.strictInsertFill(metaObject, "createTime", () -> new Date(), Date.class);
+            this.strictInsertFill(metaObject, "createTime", () -> LocalDateTime.now(), LocalDateTime.class);
         }
         if (metaObject.hasGetter("updateTime") && Objects.isNull(metaObject.getValue("updateTime"))) {
-            this.strictUpdateFill(metaObject, "updateTime", () -> new Date(), Date.class);
+            this.strictUpdateFill(metaObject, "updateTime", () -> LocalDateTime.now(), LocalDateTime.class);
         }
         if (metaObject.hasGetter("createBy") && Objects.isNull(metaObject.getValue("createBy"))) {
             this.strictInsertFill(metaObject, "createBy", String.class, username);
