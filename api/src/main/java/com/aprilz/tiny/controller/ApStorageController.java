@@ -3,7 +3,7 @@ package com.aprilz.tiny.controller;
 import com.aprilz.tiny.common.api.CommonResult;
 import com.aprilz.tiny.common.storage.StorageService;
 import com.aprilz.tiny.common.utils.CharUtil;
-import com.aprilz.tiny.mbg.entity.ApStorage;
+import com.aprilz.tiny.model.ApStorage;
 import com.aprilz.tiny.service.IApStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;

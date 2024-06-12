@@ -1,12 +1,16 @@
-package com.aprilz.tiny.mbg.entity;
+package com.aprilz.tiny.model;
 
-import com.aprilz.tiny.mbg.base.BaseDO;
+import com.aprilz.tiny.component.mybatis.base.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 /**
  * <p>
@@ -19,7 +23,11 @@ import lombok.Data;
 @Data
 @TableName("ap_system")
 @ApiModel(value = "ApSystem对象", description = "系统配置表")
-public class ApSystem extends BaseDO {
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+@SuperBuilder(toBuilder = true)
+@NoArgsConstructor
+public class ApSystem extends BaseEntity {
 
     @TableId(value = "id")
     @ApiModelProperty(value = "唯一标识")

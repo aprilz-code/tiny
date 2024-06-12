@@ -1,7 +1,7 @@
 package com.aprilz.tiny.common.storage;
 
 import com.aprilz.tiny.common.utils.CharUtil;
-import com.aprilz.tiny.mbg.entity.ApStorage;
+import com.aprilz.tiny.model.ApStorage;
 import com.aprilz.tiny.service.IApStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;

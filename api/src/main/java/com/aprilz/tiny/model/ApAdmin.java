@@ -1,15 +1,19 @@
-package com.aprilz.tiny.mbg.entity;
+package com.aprilz.tiny.model;
 
 
 import com.aprilz.desensitize.core.annotations.Desensitize;
 import com.aprilz.desensitize.core.enums.DesensitizeRuleEnums;
-import com.aprilz.tiny.mbg.base.BaseDO;
+import com.aprilz.tiny.component.mybatis.base.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
 
@@ -21,10 +25,14 @@ import java.util.Date;
  * @author aprilz
  * @since 2022-08-11
  */
-@Data
 @TableName("ap_admin")
 @ApiModel(value = "ApAdmin对象", description = "后台用户表")
-public class ApAdmin extends BaseDO {
+@Data
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+@SuperBuilder(toBuilder = true)
+@NoArgsConstructor
+public class ApAdmin extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 

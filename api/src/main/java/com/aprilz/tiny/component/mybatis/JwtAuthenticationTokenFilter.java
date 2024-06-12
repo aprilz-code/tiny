@@ -3,7 +3,7 @@ package com.aprilz.tiny.component.mybatis;
 import com.aprilz.tiny.common.cache.Cache;
 import com.aprilz.tiny.common.cache.CachePrefix;
 import com.aprilz.tiny.common.utils.JwtTokenUtil;
-import com.aprilz.tiny.mbg.entity.ApAdmin;
+import com.aprilz.tiny.model.ApAdmin;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

@@ -4,7 +4,7 @@ import cn.hutool.json.JSONUtil;
 import com.aprilz.tiny.common.cache.Cache;
 import com.aprilz.tiny.common.cache.CachePrefix;
 import com.aprilz.tiny.dto.AdminUserDetails;
-import com.aprilz.tiny.mbg.entity.ApAdmin;
+import com.aprilz.tiny.model.ApAdmin;
 import com.aprilz.tiny.vo.Token;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -156,7 +156,9 @@ public class JwtTokenUtil {
     public Token generateToken(UserDetails userDetails) {
         AdminUserDetails userInfo = (AdminUserDetails) userDetails;
         Map<String, Object> claims = new HashMap<>();
-        claims.put(CLAIM_KEY_USERINFO, JSONUtil.toJsonStr(userInfo.getApAdmin().setPassword(null)));
+        ApAdmin apAdmin = userInfo.getApAdmin();
+        apAdmin.setPassword(null);
+        claims.put(CLAIM_KEY_USERINFO, JSONUtil.toJsonStr(apAdmin));
         claims.put(CLAIM_KEY_CREATED, new Date());
         return generateToken(claims);
     }

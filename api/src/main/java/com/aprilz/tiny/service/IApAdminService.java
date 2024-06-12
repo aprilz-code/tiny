@@ -1,7 +1,7 @@
 package com.aprilz.tiny.service;
 
-import com.aprilz.tiny.mbg.entity.ApAdmin;
-import com.aprilz.tiny.mbg.entity.ApPermission;
+import com.aprilz.tiny.model.ApAdmin;
+import com.aprilz.tiny.model.ApPermission;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;

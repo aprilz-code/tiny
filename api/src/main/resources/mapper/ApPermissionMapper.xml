@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aprilz.tiny.mapper.ApPermissionMapper">
 
-    <select id="getPermissionList" resultType="com.aprilz.tiny.mbg.entity.ApPermission">
+    <select id="getPermissionList" resultType="com.aprilz.tiny.model.ApPermission">
         SELECT p.*
         FROM ap_admin_role_relation ar
                  LEFT JOIN ap_role r ON ar.role_id = r.id

@@ -1,7 +1,7 @@
 package com.aprilz.tiny.service.impl;
 
 import com.aprilz.tiny.mapper.ApPermissionMapper;
-import com.aprilz.tiny.mbg.entity.ApPermission;
+import com.aprilz.tiny.model.ApPermission;
 import com.aprilz.tiny.service.IApPermissionService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;

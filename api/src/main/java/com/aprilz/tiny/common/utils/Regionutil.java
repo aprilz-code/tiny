@@ -6,7 +6,7 @@ import cn.hutool.json.JSONUtil;
 import com.aprilz.tiny.common.cache.Cache;
 import com.aprilz.tiny.common.consts.CacheConst;
 import com.aprilz.tiny.mapper.ApRegionMapper;
-import com.aprilz.tiny.mbg.entity.ApRegion;
+import com.aprilz.tiny.model.ApRegion;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -3,7 +3,7 @@ package com.aprilz.tiny.common.consts;
 import cn.hutool.core.collection.CollUtil;
 import com.aprilz.tiny.common.cache.Cache;
 import com.aprilz.tiny.mapper.ApSystemMapper;
-import com.aprilz.tiny.mbg.entity.ApSystem;
+import com.aprilz.tiny.model.ApSystem;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

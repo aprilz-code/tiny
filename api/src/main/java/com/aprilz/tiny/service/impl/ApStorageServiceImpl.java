@@ -1,7 +1,7 @@
 package com.aprilz.tiny.service.impl;
 
 import com.aprilz.tiny.mapper.ApStorageMapper;
-import com.aprilz.tiny.mbg.entity.ApStorage;
+import com.aprilz.tiny.model.ApStorage;
 import com.aprilz.tiny.service.IApStorageService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
 package com.aprilz.tiny.common.utils;
 
 import com.aprilz.tiny.dto.AdminUserDetails;
-import com.aprilz.tiny.mbg.entity.ApAdmin;
+import com.aprilz.tiny.model.ApAdmin;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 

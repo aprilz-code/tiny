@@ -1,7 +1,7 @@
 package com.aprilz.tiny.service.impl;
 
 import com.aprilz.tiny.mapper.ApAdminRoleRelationMapper;
-import com.aprilz.tiny.mbg.entity.ApAdminRoleRelation;
+import com.aprilz.tiny.model.ApAdminRoleRelation;
 import com.aprilz.tiny.service.IApAdminRoleRelationService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
