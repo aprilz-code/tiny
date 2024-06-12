@@ -17,7 +17,6 @@ import java.util.Objects;
  * @since: 2022/7/13
  **/
 @Slf4j
-@Component
 public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
 
     @Override
