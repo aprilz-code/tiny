@@ -980,3 +980,9 @@ public PageResult<RespVO>  test(PageReqVO pageVO){
 
 ```
 
+
+    
+         .and(StrUtil.isNotBlank(reqVO.getKeyword()), wrapper-> {
+                    wrapper.or().like(ADO::getDescription,reqVO.getKeyword())
+                            .or().like(ADO::getName,reqVO.getKeyword());
+                })
