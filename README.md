@@ -986,3 +986,27 @@ public PageResult<RespVO>  test(PageReqVO pageVO){
                     wrapper.or().like(ADO::getDescription,reqVO.getKeyword())
                             .or().like(ADO::getName,reqVO.getKeyword());
                 })
+
+
+### sql定时生成excel并发送邮箱
+
+```sql
+DROP TABLE IF EXISTS `ap_excel_job`;
+CREATE TABLE `ap_excel_job`
+(
+    `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `card_no`     VARCHAR(64)          DEFAULT NULL COMMENT '卡密',
+    `cron`        VARCHAR(64)          DEFAULT NULL COMMENT '执行计划',
+    `execute_type`    INT         NOT NULL DEFAULT 0 COMMENT '执行类型 0按结束时间 1按执行次数',
+    `end_time`    TIMESTAMP   DEFAULT NULL COMMENT '结束时间',
+    `frequency`    INT         DEFAULT NULL COMMENT '执行次数(不包含手动执行)',
+    `execute_sql`      LONGTEXT         NOT NULL COMMENT '执行sql',
+    `excel_log`         LONGTEXT          DEFAULT NULL COMMENT '存放执行记录,json格式[{"time":xx,"path":xx}]',
+    `creator` VARCHAR(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT '创建者',
+    `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updater` VARCHAR(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT '更新者',
+    `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `deleted` BIT(1) NOT NULL DEFAULT b'0' COMMENT '是否删除',
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE = INNODB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT='exceljob表';
+```
