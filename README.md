@@ -1010,3 +1010,15 @@ CREATE TABLE `ap_excel_job`
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = INNODB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT='exceljob表';
 ```
+
+
+
+###  screw 使用
+
+        <dependency>
+            <groupId>cn.smallbun.screw</groupId>
+            <artifactId>screw-core</artifactId>
+            <version>1.0.5</version>
+        </dependency>
+
+    后参考ScrewTest
