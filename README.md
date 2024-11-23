@@ -1022,3 +1022,8 @@ CREATE TABLE `ap_excel_job`
         </dependency>
 
     后参考ScrewTest
+
+
+### 解决MapStruct转换时间默认时区UTC问题
+
+@Mapper(uses = MapStructUtil.class)
