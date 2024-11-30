@@ -1027,3 +1027,10 @@ CREATE TABLE `ap_excel_job`
 ### 解决MapStruct转换时间默认时区UTC问题
 
 @Mapper(uses = MapStructUtil.class)
+
+
+
+#### 在事务成功提交后执行
+
+@TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+http://localhost:8084/test/testTransactionalEventListener

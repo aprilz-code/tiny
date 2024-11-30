@@ -42,7 +42,7 @@ public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
         if (metaObject.hasGetter("deleteFlag")) {
             //无值则写入
             if (Objects.isNull(metaObject.getValue("deleteFlag"))) {
-                this.setFieldValByName("deleteFlag", false, metaObject);
+                this.setFieldValByName("deleteFlag", 0, metaObject);
             }
         }
     }

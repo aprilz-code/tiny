@@ -1,12 +1,22 @@
 package com.aprilz.tiny.service.impl;
+import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.Objects;
 
 import com.aprilz.tiny.mapper.ApUserMapper;
 import com.aprilz.tiny.model.ApUser;
+import com.aprilz.tiny.service.IApStorageService;
 import com.aprilz.tiny.service.IApUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.event.TransactionPhase;
+import org.springframework.transaction.event.TransactionalEventListener;
 import org.springframework.transaction.support.TransactionSynchronization;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
@@ -21,6 +31,10 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 @Slf4j
 @Service
 public class ApUserServiceImpl extends ServiceImpl<ApUserMapper, ApUser> implements IApUserService {
+
+
+    @Autowired
+    ApplicationEventPublisher eventPublisher;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -60,5 +74,59 @@ public class ApUserServiceImpl extends ServiceImpl<ApUserMapper, ApUser> impleme
             }
         });
 
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class )
+    public void testTransactionalEventListener() {
+        eventPublisher.publishEvent(new UserRegisterEvent(1L));
+        eventPublisher.publishEvent(new UserRegisterEvent(2L));
+        ApUser apUser = new ApUser();
+        apUser.setId(1L);
+        apUser.setUsername("bob");
+        apUser.setPassword("2323");
+        apUser.setGender(0);
+        apUser.setBirthday(new Date());
+        apUser.setLastLoginTime(new Date());
+        apUser.setLastLoginIp("");
+        apUser.setUserLevel(0);
+        apUser.setNickname("bob");
+        apUser.setMobile("23");
+        apUser.setAvatar("23");
+        apUser.setWxOpenid("23");
+        apUser.setSessionKey("23");
+        apUser.setStatus(0);
+        save(apUser);
+
+        ApUser apUser2 = new ApUser();
+        apUser2.setId(2L);
+        apUser2.setUsername("bob222");
+        apUser2.setPassword("2323");
+        apUser2.setGender(0);
+        apUser2.setBirthday(new Date());
+        apUser2.setLastLoginTime(new Date());
+        apUser2.setLastLoginIp("");
+        apUser2.setUserLevel(0);
+        apUser2.setNickname("bob222");
+        apUser2.setMobile("23");
+        apUser2.setAvatar("23");
+        apUser2.setWxOpenid("23");
+        apUser2.setSessionKey("23");
+        apUser2.setStatus(0);
+        save(apUser2);
+
+       // throw new RuntimeException("抛出异常");
+//        apUser.setUsername("bobbbbbbb");
+//        updateById(apUser);
+    }
+
+    @Async
+    //@TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+     ApUser search( Long id){
+        ApUser byId = getById(id);
+        if(Objects.isNull(byId)){
+            throw new RuntimeException("未查询到");
+        }
+        return byId;
     }
 }

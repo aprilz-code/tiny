@@ -15,4 +15,6 @@ public interface IApUserService extends IService<ApUser> {
 
     void testTs();
 
+    void testTransactionalEventListener();
+
 }

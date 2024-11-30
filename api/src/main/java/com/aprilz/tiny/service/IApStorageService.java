@@ -1,6 +1,7 @@
 package com.aprilz.tiny.service;
 
 import com.aprilz.tiny.model.ApStorage;
+import com.aprilz.tiny.model.ApUser;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -14,4 +15,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface IApStorageService extends IService<ApStorage> {
 
     ApStorage findByKey(String key);
+
+    ApUser search(long id);
 }
